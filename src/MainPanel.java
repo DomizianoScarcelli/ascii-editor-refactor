@@ -39,33 +39,28 @@ public class MainPanel extends JFrame {
 
         //JPanel containing the buttons
         JPanel buttonPanel = new JPanel(new GridBagLayout());
-        buttonPanel.setSize(300,300);
         GridBagConstraints bc = new GridBagConstraints();
         bc.fill = GridBagConstraints.BOTH;
         bc.weighty = 1;
         bc.weightx = 2;
         bc.insets = new Insets(0,30,0,30);
-        JButton paint = new JButton("Paint");
-        JButton fill = new JButton("Fill");
-        JButton pick = new JButton("Pick");
-
-        paint.setBackground(new Color(255, 255, 255));
-        paint.setBorderPainted(false);
-        fill.setBackground(new Color(255, 255, 255));
-        fill.setBorderPainted(false);
-        pick.setBackground(new Color(255, 255, 255));
-        pick.setBorderPainted(false);
+        JButton paint = createButton("Paint","src/resources/pencil.png", 50, 50, Color.white);
+        JButton fill = createButton("Fill","src/resources/bucket.png", 50, 50, Color.white);
+        JButton pick = createButton("Pick","src/resources/tap.png", 50, 50, Color.white);
         buttonPanel.add(paint, bc);
         buttonPanel.add(fill, bc);
         buttonPanel.add(pick, bc);
 
-        //Insert icon inside buttons
-        ImageIcon pickIcon = getImageIcon("src/resources/tap.png", 50, 50);
-        ImageIcon fillIcon = getImageIcon("src/resources/bucket.png", 50, 50);
-        ImageIcon paintIcon = getImageIcon("src/resources/pencil.png", 50, 50);
-        setButtonIcon(pick, pickIcon);
-        setButtonIcon(fill, fillIcon);
-        setButtonIcon(paint, paintIcon);
+        //JPanel containing color selection and color display
+        JPanel colorPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints cp = new GridBagConstraints();
+        JPanel foregroundColorPanel = new JPanel();
+        JPanel backgrundColorPanel = new JPanel();
+        foregroundColorPanel.setBackground(Color.black);
+        backgrundColorPanel.setBackground(Color.white);
+        colorPanel.add(foregroundColorPanel, cp);
+        colorPanel.add(foregroundColorPanel, cp);
+
 
 
 
@@ -81,6 +76,7 @@ public class MainPanel extends JFrame {
         c.insets = new Insets(10,10,10,10);
         c.fill = GridBagConstraints.BOTH; //Vertical
         toolsPanel.add(buttonPanel,c);
+//        toolsPanel.add(colorPanel, c);
 
 
         //JPanel containing the AsciiPanel
@@ -93,30 +89,27 @@ public class MainPanel extends JFrame {
     }
 
     /**
-     * Import and scales an image from the filesystem
-     * @param filename
-     * @param width
-     * @param height
+     * Creates a styled JButton
+     * @param buttonText
+     * @param iconFileName
+     * @param iconWidth
+     * @param iconHeight
+     * @param backgroundColor
      * @return
      */
-    public ImageIcon getImageIcon(String filename, int width, int height){
-        ImageIcon imageIcon = new ImageIcon(filename);
+    public JButton createButton(String buttonText, String iconFileName , int iconWidth, int iconHeight, Color backgroundColor){
+        JButton button = new JButton(buttonText);
+        ImageIcon imageIcon = new ImageIcon(iconFileName);
         Image image = imageIcon.getImage(); // transform it
-        Image newimg = image.getScaledInstance(width, height,  java.awt.Image.SCALE_SMOOTH);
+        Image newimg = image.getScaledInstance(iconWidth, iconHeight,  java.awt.Image.SCALE_SMOOTH);
         imageIcon = new ImageIcon(newimg);  // transform it back
-        return imageIcon;
-    }
-
-    /**
-     * Sets the icon to the button and puts the text on the center bottom
-     * @param button
-     * @param icon
-     */
-    public void setButtonIcon(JButton button, ImageIcon icon){
-        button.setIcon(icon);
+        button.setIcon(imageIcon);
         button.setFocusPainted(false);
         button.setHorizontalTextPosition(AbstractButton.CENTER);
         button.setVerticalTextPosition(AbstractButton.BOTTOM);
+        button.setBackground(new Color(255, 255, 255));
+        button.setBorderPainted(false);
+        return button;
     }
 
 
