@@ -31,7 +31,7 @@ public class MainPanel extends JFrame {
         //Creates the panel where the tools and the menu bar will be inserted
         GridBagConstraints mainConstraints = new GridBagConstraints();
         mainConstraints.weightx = 1;
-        mainConstraints.weighty = 0.1;
+        mainConstraints.weighty = 0.05;
         mainConstraints.fill = GridBagConstraints.BOTH;
         mainConstraints.ipady = 40;
         mainConstraints.gridx = 0;
@@ -57,17 +57,29 @@ public class MainPanel extends JFrame {
         cp.fill = GridBagConstraints.BOTH;
         cp.weighty = 1;
         cp.weightx =1;
+        cp.gridx = 0;
+        cp.gridy = 0;
         JPanel foregroundColorPanel = new JPanel();
         JPanel backgroundColorPanel = new JPanel();
         foregroundColorPanel.setBackground(Color.black);
         backgroundColorPanel.setBackground(Color.white);
         colorPanel.add(foregroundColorPanel, cp);
+        cp.gridx = 1;
+        cp.gridy = 1;
+        cp.weighty = 0.7;
+        cp.weightx = 0.7;
         colorPanel.add(backgroundColorPanel, cp);
+
+        //JPanel wrapper for the color panel to be squared
+        JPanel colorPanelWrapper = new JPanel();
+        colorPanel.setPreferredSize(new Dimension(150,150));
+        colorPanel.setMinimumSize(new Dimension(150,150));
+        colorPanelWrapper.add(colorPanel);
+
 
         //JPanel containing the character preview and character selector
         JPanel characterPanel = new JPanel(new GridBagLayout());
         GridBagConstraints charP = new GridBagConstraints();
-
 
 
         //JPanel containing other JPanels
@@ -82,7 +94,9 @@ public class MainPanel extends JFrame {
         c.insets = new Insets(10,10,10,10);
         c.fill = GridBagConstraints.BOTH; //Vertical
         toolsPanel.add(buttonPanel,c);
-        toolsPanel.add(colorPanel, c);
+        c.weightx=0.3;
+        toolsPanel.add(colorPanelWrapper, c);
+
 
 
         //JPanel containing the AsciiPanel
@@ -105,6 +119,8 @@ public class MainPanel extends JFrame {
      */
     public JButton createButton(String buttonText, String iconFileName , int iconWidth, int iconHeight, Color backgroundColor){
         JButton button = new JButton(buttonText);
+        button.setMinimumSize(new Dimension(100,100));
+        button.setPreferredSize(new Dimension(100,100));
         ImageIcon imageIcon = new ImageIcon(iconFileName);
         Image image = imageIcon.getImage(); // transform it
         Image newimg = image.getScaledInstance(iconWidth, iconHeight,  java.awt.Image.SCALE_SMOOTH);
@@ -117,8 +133,6 @@ public class MainPanel extends JFrame {
         button.setBorderPainted(false);
         return button;
     }
-
-
 
 
     public static void main(String[] args) {
