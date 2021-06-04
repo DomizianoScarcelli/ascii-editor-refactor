@@ -14,8 +14,10 @@ public class MainPanel extends JFrame {
         super("Pannello principale");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(800, 800);
-        this.setMinimumSize(new Dimension(200, 100));
+        this.setMinimumSize(new Dimension(700, 700));
         this.setLayout(new BorderLayout());
+
+
 
         //Creates the Menu Bar and puts it on the top of the window
         JMenuBar menuBar = new JMenuBar();
@@ -25,86 +27,56 @@ public class MainPanel extends JFrame {
 
         //Creates the main container
         JPanel mainContainer = new JPanel();
-        mainContainer.setLayout(new GridBagLayout());
+        mainContainer.setLayout(new BorderLayout());
         this.add(mainContainer, BorderLayout.CENTER);
 
-        //Creates the panel where the tools and the menu bar will be inserted
-        GridBagConstraints mainConstraints = new GridBagConstraints();
-        mainConstraints.weightx = 1;
-        mainConstraints.weighty = 0.05;
-        mainConstraints.fill = GridBagConstraints.BOTH;
-        mainConstraints.ipady = 40;
-        mainConstraints.gridx = 0;
-        mainConstraints.gridy = 0;
 
         //JPanel containing the buttons
-        JPanel buttonPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints bc = new GridBagConstraints();
-        bc.fill = GridBagConstraints.BOTH;
-        bc.weighty = 1;
-        bc.weightx = 2;
-        bc.insets = new Insets(0,30,0,30);
+        JPanel buttonPanel = new JPanel();
+
         JButton paint = createButton("Paint","src/resources/pencil.png", 50, 50, Color.white);
         JButton fill = createButton("Fill","src/resources/bucket.png", 50, 50, Color.white);
         JButton pick = createButton("Pick","src/resources/tap.png", 50, 50, Color.white);
-        buttonPanel.add(paint, bc);
-        buttonPanel.add(fill, bc);
-        buttonPanel.add(pick, bc);
+        buttonPanel.add(paint);
+        buttonPanel.add(fill);
+        buttonPanel.add(pick);
 
         //JPanel containing color selection and color display
-        JPanel colorPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints cp = new GridBagConstraints();
-        cp.fill = GridBagConstraints.BOTH;
-        cp.weighty = 1;
-        cp.weightx =1;
-        cp.gridx = 0;
-        cp.gridy = 0;
+        JPanel colorPanel = new JPanel(new GridLayout(2,2));
         JPanel foregroundColorPanel = new JPanel();
         JPanel backgroundColorPanel = new JPanel();
         foregroundColorPanel.setBackground(Color.black);
         backgroundColorPanel.setBackground(Color.white);
-        colorPanel.add(foregroundColorPanel, cp);
-        cp.gridx = 1;
-        cp.gridy = 1;
-        cp.weighty = 0.7;
-        cp.weightx = 0.7;
-        colorPanel.add(backgroundColorPanel, cp);
-
-        //JPanel wrapper for the color panel to be squared
-        JPanel colorPanelWrapper = new JPanel();
-        colorPanel.setPreferredSize(new Dimension(150,150));
-        colorPanel.setMinimumSize(new Dimension(150,150));
-        colorPanelWrapper.add(colorPanel);
+        foregroundColorPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        backgroundColorPanel.setBorder(BorderFactory.createLoweredBevelBorder());
+        colorPanel.setPreferredSize(new Dimension(100,100));
+        colorPanel.add(foregroundColorPanel);
+        colorPanel.add(new JPanel()); //aggiungo due pannelli vuoti per dare l'effetto scacchiera
+        colorPanel.add(new JPanel());
+        colorPanel.add((backgroundColorPanel));
 
 
         //JPanel containing the character preview and character selector
-        JPanel characterPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints charP = new GridBagConstraints();
+        JPanel characterPanel = new JPanel();
 
 
-        //JPanel containing other JPanels
+        //JPanel containing other JPanels that contains tools
         JPanel toolsPanel = new JPanel();
-        toolsPanel.setBackground(new Color(0, 100, 0));
-        mainContainer.add(toolsPanel, mainConstraints);
-        toolsPanel.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-        c.anchor = GridBagConstraints.LINE_START;
-        c.weighty = 1;
-        c.weightx = 1;
-        c.insets = new Insets(10,10,10,10);
-        c.fill = GridBagConstraints.BOTH; //Vertical
-        toolsPanel.add(buttonPanel,c);
-        c.weightx=0.3;
-        toolsPanel.add(colorPanelWrapper, c);
-
+        mainContainer.add(toolsPanel, BorderLayout.NORTH);
+//        toolsPanel.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
+        toolsPanel.setBackground(Color.WHITE);
+        toolsPanel.setLayout(new BorderLayout());
+        toolsPanel.setMinimumSize(new Dimension(300,110));
+        toolsPanel.setPreferredSize(new Dimension(300, 110));
+        toolsPanel.add(buttonPanel, BorderLayout.WEST);
+        toolsPanel.add(colorPanel, BorderLayout.EAST);
+        toolsPanel.add(characterPanel, BorderLayout.CENTER);
 
 
         //JPanel containing the AsciiPanel
         JPanel asciiPanel = new JPanel();
-        mainConstraints.gridy = GridBagConstraints.RELATIVE;
-        mainConstraints.weighty = 1;
-        asciiPanel.setBackground(new Color(100,0,0));
-        mainContainer.add(asciiPanel, mainConstraints);
+        asciiPanel.setBackground(new Color(0,0,0));
+        mainContainer.add(asciiPanel, BorderLayout.CENTER);
 
     }
 
@@ -131,6 +103,8 @@ public class MainPanel extends JFrame {
         button.setVerticalTextPosition(AbstractButton.BOTTOM);
         button.setBackground(new Color(255, 255, 255));
         button.setBorderPainted(false);
+        button.setMinimumSize(new Dimension(100,100));
+        button.setPreferredSize(new Dimension(100,100));
         return button;
     }
 
