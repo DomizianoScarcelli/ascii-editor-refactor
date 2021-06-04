@@ -54,13 +54,19 @@ public class MainPanel extends JFrame {
         //JPanel containing color selection and color display
         JPanel colorPanel = new JPanel(new GridBagLayout());
         GridBagConstraints cp = new GridBagConstraints();
+        cp.fill = GridBagConstraints.BOTH;
+        cp.weighty = 1;
+        cp.weightx =1;
         JPanel foregroundColorPanel = new JPanel();
-        JPanel backgrundColorPanel = new JPanel();
+        JPanel backgroundColorPanel = new JPanel();
         foregroundColorPanel.setBackground(Color.black);
-        backgrundColorPanel.setBackground(Color.white);
+        backgroundColorPanel.setBackground(Color.white);
         colorPanel.add(foregroundColorPanel, cp);
-        colorPanel.add(foregroundColorPanel, cp);
+        colorPanel.add(backgroundColorPanel, cp);
 
+        //JPanel containing the character preview and character selector
+        JPanel characterPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints charP = new GridBagConstraints();
 
 
 
@@ -76,7 +82,7 @@ public class MainPanel extends JFrame {
         c.insets = new Insets(10,10,10,10);
         c.fill = GridBagConstraints.BOTH; //Vertical
         toolsPanel.add(buttonPanel,c);
-//        toolsPanel.add(colorPanel, c);
+        toolsPanel.add(colorPanel, c);
 
 
         //JPanel containing the AsciiPanel
