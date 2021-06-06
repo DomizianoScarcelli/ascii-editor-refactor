@@ -1,5 +1,11 @@
+package view;
+
+import model.AsciiFont;
+import model.AsciiPanel;
+
 import javax.swing.*;
 import java.awt.*;
+
 
 
 public class MainPanel extends JFrame {
@@ -30,9 +36,9 @@ public class MainPanel extends JFrame {
 
         //JPanel containing the buttons
         JPanel buttonPanel = new JPanel();
-        JButton paint = ButtonFactory.createToolButton("Paint","src/resources/pencil.png");
-        JButton fill = ButtonFactory.createToolButton("Fill","src/resources/bucket.png");
-        JButton pick = ButtonFactory.createToolButton("Pick","src/resources/tap.png");
+        JButton paint = ButtonFactory.createToolButton("Paint","src/main/resources/pencil.png");
+        JButton fill = ButtonFactory.createToolButton("Fill","src/main/resources/bucket.png");
+        JButton pick = ButtonFactory.createToolButton("Pick","src/main/resources/tap.png");
         buttonPanel.add(paint);
         buttonPanel.add(fill);
         buttonPanel.add(pick);
@@ -71,8 +77,9 @@ public class MainPanel extends JFrame {
         mainContainer.add(toolsPanel, BorderLayout.NORTH);
 
         //JPanel containing the AsciiPanel
-        JPanel asciiPanel = new JPanel();
-        asciiPanel.setBackground(new Color(0,0,0));
+        AsciiPanel asciiPanel = new AsciiPanel(80, 60, AsciiFont.CP437_16x16);
+        asciiPanel.write("Marion");
+//        asciiPanel.setBackground(new Color(0,0,0));
         mainContainer.add(asciiPanel, BorderLayout.CENTER);
     }
 
