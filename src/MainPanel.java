@@ -31,10 +31,9 @@ public class MainPanel extends JFrame {
 
         //JPanel containing the buttons
         JPanel buttonPanel = new JPanel();
-
-        JButton paint = createButton("Paint","src/resources/pencil.png", 50, 50, Color.white);
-        JButton fill = createButton("Fill","src/resources/bucket.png", 50, 50, Color.white);
-        JButton pick = createButton("Pick","src/resources/tap.png", 50, 50, Color.white);
+        JButton paint = ButtonFactory.createToolButton("Paint","src/resources/pencil.png");
+        JButton fill = ButtonFactory.createToolButton("Fill","src/resources/bucket.png");
+        JButton pick = ButtonFactory.createToolButton("Pick","src/resources/tap.png");
         buttonPanel.add(paint);
         buttonPanel.add(fill);
         buttonPanel.add(pick);
@@ -86,33 +85,6 @@ public class MainPanel extends JFrame {
 
     }
 
-    /**
-     * Creates a styled JButton
-     * @param buttonText
-     * @param iconFileName
-     * @param iconWidth
-     * @param iconHeight
-     * @param backgroundColor
-     * @return
-     */
-    public JButton createButton(String buttonText, String iconFileName , int iconWidth, int iconHeight, Color backgroundColor){
-        JButton button = new JButton(buttonText);
-        button.setMinimumSize(new Dimension(100,100));
-        button.setPreferredSize(new Dimension(100,100));
-        ImageIcon imageIcon = new ImageIcon(iconFileName);
-        Image image = imageIcon.getImage(); // transform it
-        Image newimg = image.getScaledInstance(iconWidth, iconHeight,  java.awt.Image.SCALE_SMOOTH);
-        imageIcon = new ImageIcon(newimg);  // transform it back
-        button.setIcon(imageIcon);
-        button.setFocusPainted(false);
-        button.setHorizontalTextPosition(AbstractButton.CENTER);
-        button.setVerticalTextPosition(AbstractButton.BOTTOM);
-        button.setBackground(new Color(255, 255, 255));
-        button.setBorderPainted(false);
-        button.setMinimumSize(new Dimension(100,100));
-        button.setPreferredSize(new Dimension(100,100));
-        return button;
-    }
 
 
     public static void main(String[] args) {
