@@ -9,9 +9,12 @@ import javax.swing.*;
 import java.awt.*;
 
 
-
 public class MainPanel extends JFrame {
     private AsciiPanel asciiPanel;
+    /**
+     * An integer that identifies the current selected tool
+     */
+    private int currentToolId = 0;
     private static MainPanel instance;
 
     public static MainPanel getInstance() {
@@ -81,20 +84,24 @@ public class MainPanel extends JFrame {
 
         //JPanel containing the AsciiPanel
         asciiPanel = new AsciiPanel(80, 60, AsciiFont.CP437_16x16);
-        asciiPanel.write("Marion");
-//        asciiPanel.setBackground(new Color(0,0,0));
         mainContainer.add(asciiPanel, BorderLayout.CENTER);
 
-
-        //Add listeners
+        asciiPanel.write("Marion");
         asciiPanel.setCursorX(0);
         asciiPanel.setCursorY(0);
+
+
+        // -------------------------------------Add Listeners-------------------------------------------------
         asciiPanel.addMouseListener(new AsciiPanelMouseListener(this));
         asciiPanel.addMouseMotionListener(new AsciiPanelMouseMotionListener(this));
     }
 
     public AsciiPanel getAsciiPanel() {
         return asciiPanel;
+    }
+
+    public int getCurrentToolId() {
+        return currentToolId;
     }
 
     public static void main(String[] args) {

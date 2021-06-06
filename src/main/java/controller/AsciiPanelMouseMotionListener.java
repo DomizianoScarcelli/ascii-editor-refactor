@@ -41,8 +41,6 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
         mainPanel.getAsciiPanel().setMouseCursorX(e.getX() / 16);
         mainPanel.getAsciiPanel().setMouseCursorY(e.getY() / 16);
         mainPanel.getAsciiPanel().repaint();
-
-
     }
 
 }

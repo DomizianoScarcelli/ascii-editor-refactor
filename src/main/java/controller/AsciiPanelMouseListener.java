@@ -36,7 +36,19 @@ public class AsciiPanelMouseListener implements MouseListener {
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        System.out.println("Mouse clicked");
+        switch(mainPanel.getCurrentToolId()){
+            case 0:
+                this.onPaint(e.getButton());
+                break;
+            case 1:
+                this.onPick(e.getButton());
+                break;
+            case 2:
+                this.onFill(e.getButton());
+                break;
+            default:
+                break;
+        }
 
     }
 
@@ -55,6 +67,17 @@ public class AsciiPanelMouseListener implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {
+
+    }
+
+    public void onPaint(int button){
+        System.out.println("Painted");
+    }
+    public void onPick(int button){
+        System.out.println("Picked");
+    }
+    public void onFill(int button){
+        System.out.println("Filled");
 
     }
 
