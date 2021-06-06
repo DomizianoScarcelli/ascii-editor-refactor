@@ -17,8 +17,6 @@ public class MainPanel extends JFrame {
         this.setMinimumSize(new Dimension(700, 700));
         this.setLayout(new BorderLayout());
 
-
-
         //Creates the Menu Bar and puts it on the top of the window
         JMenuBar menuBar = new JMenuBar();
         JMenuItem file = new JMenuItem("File");
@@ -57,20 +55,28 @@ public class MainPanel extends JFrame {
 
 
         //JPanel containing the character preview and character selector
-        JPanel characterPanel = new JPanel();
+        JPanel characterPanel = new JPanel(new BorderLayout());
+        JPanel previewCharacter = new JPanel();
+        previewCharacter.setPreferredSize(new Dimension(50,50));
+        previewCharacter.setBackground(Color.BLACK);
+        JLabel selectedCharacterLabel = new JLabel("Character");
+        characterPanel.add(previewCharacter, BorderLayout.CENTER);
+        characterPanel.add(selectedCharacterLabel, BorderLayout.SOUTH);
+
 
 
         //JPanel containing other JPanels that contains tools
         JPanel toolsPanel = new JPanel();
         mainContainer.add(toolsPanel, BorderLayout.NORTH);
-//        toolsPanel.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
-        toolsPanel.setBackground(Color.WHITE);
-        toolsPanel.setLayout(new BorderLayout());
+//        toolsPanel.setBackground(Color.WHITE);
+        toolsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 0));
         toolsPanel.setMinimumSize(new Dimension(300,110));
         toolsPanel.setPreferredSize(new Dimension(300, 110));
-        toolsPanel.add(buttonPanel, BorderLayout.WEST);
-        toolsPanel.add(colorPanel, BorderLayout.EAST);
-        toolsPanel.add(characterPanel, BorderLayout.CENTER);
+        toolsPanel.add(buttonPanel);
+        toolsPanel.add(characterPanel);
+        toolsPanel.add(colorPanel);
+
+
 
 
         //JPanel containing the AsciiPanel
