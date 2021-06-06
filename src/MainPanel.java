@@ -28,7 +28,6 @@ public class MainPanel extends JFrame {
         mainContainer.setLayout(new BorderLayout());
         this.add(mainContainer, BorderLayout.CENTER);
 
-
         //JPanel containing the buttons
         JPanel buttonPanel = new JPanel();
         JButton paint = ButtonFactory.createToolButton("Paint","src/resources/pencil.png");
@@ -52,7 +51,6 @@ public class MainPanel extends JFrame {
         colorPanel.add(new JPanel());
         colorPanel.add((backgroundColorPanel));
 
-
         //JPanel containing the character preview and character selector
         JPanel characterPanel = new JPanel(new BorderLayout());
         JPanel previewCharacter = new JPanel();
@@ -62,27 +60,20 @@ public class MainPanel extends JFrame {
         characterPanel.add(previewCharacter, BorderLayout.CENTER);
         characterPanel.add(selectedCharacterLabel, BorderLayout.SOUTH);
 
-
-
         //JPanel containing other JPanels that contains tools
         JPanel toolsPanel = new JPanel();
-        mainContainer.add(toolsPanel, BorderLayout.NORTH);
-//        toolsPanel.setBackground(Color.WHITE);
         toolsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 0));
         toolsPanel.setMinimumSize(new Dimension(300,110));
         toolsPanel.setPreferredSize(new Dimension(300, 110));
         toolsPanel.add(buttonPanel);
         toolsPanel.add(characterPanel);
         toolsPanel.add(colorPanel);
-
-
-
+        mainContainer.add(toolsPanel, BorderLayout.NORTH);
 
         //JPanel containing the AsciiPanel
         JPanel asciiPanel = new JPanel();
         asciiPanel.setBackground(new Color(0,0,0));
         mainContainer.add(asciiPanel, BorderLayout.CENTER);
-
     }
 
 
