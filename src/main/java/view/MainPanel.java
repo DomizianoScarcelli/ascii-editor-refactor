@@ -1,5 +1,7 @@
 package view;
 
+import controller.AsciiPanelMouseListener;
+import controller.AsciiPanelMouseMotionListener;
 import model.AsciiFont;
 import model.AsciiPanel;
 
@@ -9,6 +11,7 @@ import java.awt.*;
 
 
 public class MainPanel extends JFrame {
+    private AsciiPanel asciiPanel;
     private static MainPanel instance;
 
     public static MainPanel getInstance() {
@@ -77,13 +80,22 @@ public class MainPanel extends JFrame {
         mainContainer.add(toolsPanel, BorderLayout.NORTH);
 
         //JPanel containing the AsciiPanel
-        AsciiPanel asciiPanel = new AsciiPanel(80, 60, AsciiFont.CP437_16x16);
+        asciiPanel = new AsciiPanel(80, 60, AsciiFont.CP437_16x16);
         asciiPanel.write("Marion");
 //        asciiPanel.setBackground(new Color(0,0,0));
         mainContainer.add(asciiPanel, BorderLayout.CENTER);
+
+
+        //Add listeners
+        asciiPanel.setCursorX(0);
+        asciiPanel.setCursorY(0);
+        asciiPanel.addMouseListener(new AsciiPanelMouseListener(this));
+        asciiPanel.addMouseMotionListener(new AsciiPanelMouseMotionListener(this));
     }
 
-
+    public AsciiPanel getAsciiPanel() {
+        return asciiPanel;
+    }
 
     public static void main(String[] args) {
         MainPanel.getInstance().setVisible(true);
