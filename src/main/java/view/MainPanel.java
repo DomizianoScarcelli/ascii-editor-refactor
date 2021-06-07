@@ -16,7 +16,8 @@ public class MainPanel extends JFrame {
     private AsciiPanel asciiPanel;
     private int currentToolId = 0;
     private int selectedChar = 1;
-    private JButton characterSelector;
+
+    private AsciiPanel charPreviewPanel;
     private static MainPanel instance;
 
     public static MainPanel getInstance() {
@@ -70,11 +71,11 @@ public class MainPanel extends JFrame {
 
         //JPanel containing the character preview and character selector
         JPanel characterPanel = new JPanel(new BorderLayout());
-        JPanel previewCharacter = new JPanel();
-        previewCharacter.setPreferredSize(new Dimension(50, 50));
-        previewCharacter.setBackground(Color.BLACK);
+        charPreviewPanel = new AsciiPanel(3,3, AsciiFont.CP437_16x16);
+        charPreviewPanel.setPreferredSize(new Dimension(50, 50));
+        charPreviewPanel.setBackground(Color.BLACK);
         JLabel selectedCharacterLabel = new JLabel("Character");
-        characterPanel.add(previewCharacter, BorderLayout.NORTH);
+        characterPanel.add(charPreviewPanel, BorderLayout.CENTER);
         characterPanel.add(selectedCharacterLabel, BorderLayout.SOUTH);
         characterPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         //JPanel containing other JPanels that contains tools
@@ -177,12 +178,15 @@ public class MainPanel extends JFrame {
         this.selectedChar = selectedChar;
     }
 
-    /**
-     * The {@link JButton} component that allows to select a character from a grid of characters.
-     */
-    public JButton getSelectCharButton() {
-        return characterSelector;
+
+    public AsciiPanel getCharPreviewPanel() {
+        return charPreviewPanel;
     }
+
+    public void setCharPreviewPanel(AsciiPanel charPreviewPanel) {
+        this.charPreviewPanel = charPreviewPanel;
+    }
+
 
     public static void main(String[] args) {
         MainPanel.getInstance().setVisible(true);

@@ -31,7 +31,7 @@ public class CharActionListener implements MouseListener {
         System.out.println("Selected char: " + (char) selectedChar);
         MainPanel.getInstance().setSelectedChar(selectedChar);
 //        MainPanel.getInstance().getSelectCharButton().setText((char) selectedChar + "");
-//        MainPanel.getInstance().updatePreview();
+        ToolsPanelController.getInstance().updatePreview();
     }
 
     @Override
