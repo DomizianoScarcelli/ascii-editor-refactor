@@ -1,9 +1,8 @@
 package controller;
 
-import model.AsciiPanel;
 import view.MainPanel;
 
-import java.awt.*;
+
 
 public class ToolsPanelController {
     private static ToolsPanelController instance;
@@ -17,7 +16,8 @@ public class ToolsPanelController {
 
     public void updatePreview(){
         mainPanel.getCharPreviewPanel().clear();
-        mainPanel.getCharPreviewPanel().write((char) mainPanel.getSelectedChar(), 1, 1, Color.WHITE);
+//        mainPanel.getCharPreviewPanel().setDefaultBackgroundColor(mainPanel.getDefaultBackgroundColor());
+        mainPanel.getCharPreviewPanel().write((char) mainPanel.getSelectedChar(), 1, 1, mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
         mainPanel.getCharPreviewPanel().repaint();
     }
 }

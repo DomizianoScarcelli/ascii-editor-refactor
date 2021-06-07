@@ -1,8 +1,6 @@
 package view;
 
-import controller.AsciiPanelMouseListener;
-import controller.AsciiPanelMouseMotionListener;
-import controller.CharActionListener;
+import controller.*;
 import model.AsciiFont;
 import model.AsciiPanel;
 
@@ -16,8 +14,13 @@ public class MainPanel extends JFrame {
     private AsciiPanel asciiPanel;
     private int currentToolId = 0;
     private int selectedChar = 1;
+    private Color defaultForegroundColor;
+    private Color defaultBackgroundColor;
 
     private AsciiPanel charPreviewPanel;
+    private JPanel foregroundColorPanel;
+    private JPanel backgroundColorPanel;
+
     private static MainPanel instance;
 
     public static MainPanel getInstance() {
@@ -54,11 +57,11 @@ public class MainPanel extends JFrame {
 
         //JPanel containing color selection and color display
         JPanel colorPanel = new JPanel(new GridLayout(2, 2));
-        JPanel foregroundColorPanel = new JPanel();
-        JPanel backgroundColorPanel = new JPanel();
-        foregroundColorPanel.setBackground(Color.black);
-        backgroundColorPanel.setBackground(Color.white);
-        foregroundColorPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        foregroundColorPanel = new JPanel();
+        backgroundColorPanel = new JPanel();
+        foregroundColorPanel.setBackground(Color.white);
+        backgroundColorPanel.setBackground(Color.black);
+        foregroundColorPanel.setBorder(BorderFactory.createLineBorder(Color.white));
         backgroundColorPanel.setBorder(BorderFactory.createLoweredBevelBorder());
         foregroundColorPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         backgroundColorPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -129,6 +132,10 @@ public class MainPanel extends JFrame {
             }
         });
 
+        //-------------------Color Panels Mouse Listeners-----------------
+        foregroundColorPanel.addMouseListener(new ForegroundColorPanelMouseListener(this));
+        backgroundColorPanel.addMouseListener(new BackgroundColorPanelMouseListener(this));
+
         // -------Change currentToolId on tool button click-------
         //Todo implementa un modo di riuso del codice per il cambio di sfondo
         paint.addActionListener(e -> {
@@ -183,10 +190,30 @@ public class MainPanel extends JFrame {
         return charPreviewPanel;
     }
 
-    public void setCharPreviewPanel(AsciiPanel charPreviewPanel) {
-        this.charPreviewPanel = charPreviewPanel;
+
+    public Color getDefaultBackgroundColor() {
+        return defaultBackgroundColor;
     }
 
+    public Color getDefaultForegroundColor() {
+        return defaultForegroundColor;
+    }
+
+    public void setDefaultForegroundColor(Color defaultForegroundColor) {
+        this.defaultForegroundColor = defaultForegroundColor;
+    }
+
+    public void setDefaultBackgroundColor(Color defaultBackgroundColor) {
+        this.defaultBackgroundColor = defaultBackgroundColor;
+    }
+
+    public JPanel getForegroundColorPanel() {
+        return foregroundColorPanel;
+    }
+
+    public JPanel getBackgroundColorPanel() {
+        return backgroundColorPanel;
+    }
 
     public static void main(String[] args) {
         MainPanel.getInstance().setVisible(true);
