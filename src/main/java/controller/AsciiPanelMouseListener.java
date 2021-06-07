@@ -37,13 +37,13 @@ public class AsciiPanelMouseListener implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         switch(mainPanel.getCurrentToolId()){
-            case 0:
+            case 0: //current tool is paint
                 this.onPaint(e.getButton());
                 break;
-            case 1:
+            case 1: //current tool is pick
                 this.onPick(e.getButton());
                 break;
-            case 2:
+            case 2: //current tool is fill
                 this.onFill(e.getButton());
                 break;
             default:
