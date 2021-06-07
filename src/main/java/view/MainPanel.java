@@ -2,18 +2,21 @@ package view;
 
 import controller.AsciiPanelMouseListener;
 import controller.AsciiPanelMouseMotionListener;
+import controller.CharActionListener;
 import model.AsciiFont;
 import model.AsciiPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 
 public class MainPanel extends JFrame {
     private AsciiPanel asciiPanel;
     private int currentToolId = 0;
     private int selectedChar = 1;
-    private JButton selectCharButton;
+    private JButton characterSelector;
     private static MainPanel instance;
 
     public static MainPanel getInstance() {
@@ -56,11 +59,14 @@ public class MainPanel extends JFrame {
         backgroundColorPanel.setBackground(Color.white);
         foregroundColorPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         backgroundColorPanel.setBorder(BorderFactory.createLoweredBevelBorder());
+        foregroundColorPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        backgroundColorPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         colorPanel.setPreferredSize(new Dimension(100, 100));
         colorPanel.add(foregroundColorPanel);
         colorPanel.add(new JPanel()); //aggiungo due pannelli vuoti per dare l'effetto scacchiera
         colorPanel.add(new JPanel());
         colorPanel.add((backgroundColorPanel));
+
 
         //JPanel containing the character preview and character selector
         JPanel characterPanel = new JPanel(new BorderLayout());
@@ -68,9 +74,9 @@ public class MainPanel extends JFrame {
         previewCharacter.setPreferredSize(new Dimension(50, 50));
         previewCharacter.setBackground(Color.BLACK);
         JLabel selectedCharacterLabel = new JLabel("Character");
-        characterPanel.add(previewCharacter, BorderLayout.CENTER);
+        characterPanel.add(previewCharacter, BorderLayout.NORTH);
         characterPanel.add(selectedCharacterLabel, BorderLayout.SOUTH);
-
+        characterPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         //JPanel containing other JPanels that contains tools
         JPanel toolsPanel = new JPanel();
         toolsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 0));
@@ -93,6 +99,34 @@ public class MainPanel extends JFrame {
         // -------------------------------------Add Listeners-------------------------------------------------
         asciiPanel.addMouseListener(new AsciiPanelMouseListener(this));
         asciiPanel.addMouseMotionListener(new AsciiPanelMouseMotionListener(this));
+
+        // Adds character selector event listeners
+        characterPanel.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                CharacterSelector.getInstance().setVisible(true);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
 
         // -------Change currentToolId on tool button click-------
         //Todo implementa un modo di riuso del codice per il cambio di sfondo
@@ -147,7 +181,7 @@ public class MainPanel extends JFrame {
      * The {@link JButton} component that allows to select a character from a grid of characters.
      */
     public JButton getSelectCharButton() {
-        return selectCharButton;
+        return characterSelector;
     }
 
     public static void main(String[] args) {

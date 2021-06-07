@@ -45,7 +45,7 @@ public class CharacterSelector extends JDialog {
             JButton glyphButton = new JButton(new ImageIcon(glyphsArray[i]));
             this.add(glyphButton);
             glyphButton.setBounds(x * 16, y * 16, 16, 16);
-            glyphButton.addActionListener(new CharActionListener(i));
+            glyphButton.addMouseListener(new CharActionListener(i));
         }
 
     }
