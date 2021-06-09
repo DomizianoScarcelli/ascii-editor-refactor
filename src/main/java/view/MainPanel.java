@@ -215,6 +215,7 @@ public class MainPanel extends JFrame {
         return backgroundColorPanel;
     }
 
+
     public static void main(String[] args) {
         MainPanel.getInstance().setVisible(true);
     }

@@ -3,7 +3,6 @@ package controller;
 import view.MainPanel;
 
 
-
 public class ToolsPanelController {
     private static ToolsPanelController instance;
 
@@ -16,7 +15,6 @@ public class ToolsPanelController {
 
     public void updatePreview(){
         mainPanel.getCharPreviewPanel().clear();
-//        mainPanel.getCharPreviewPanel().setDefaultBackgroundColor(mainPanel.getDefaultBackgroundColor());
         mainPanel.getCharPreviewPanel().write((char) mainPanel.getSelectedChar(), 1, 1, mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
         mainPanel.getCharPreviewPanel().repaint();
     }
