@@ -6,8 +6,7 @@ import model.AsciiPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+
 
 
 public class MainPanel extends JFrame {
@@ -20,6 +19,8 @@ public class MainPanel extends JFrame {
     private AsciiPanel charPreviewPanel;
     private JPanel foregroundColorPanel;
     private JPanel backgroundColorPanel;
+
+    private JButton paint, fill, pick;
 
     private static MainPanel instance;
 
@@ -48,9 +49,9 @@ public class MainPanel extends JFrame {
 
         //JPanel containing the buttons
         JPanel buttonPanel = new JPanel();
-        JButton paint = ButtonFactory.createToolButton("Paint", "src/main/resources/pencil.png");
-        JButton fill = ButtonFactory.createToolButton("Fill", "src/main/resources/bucket.png");
-        JButton pick = ButtonFactory.createToolButton("Pick", "src/main/resources/tap.png");
+        paint = ButtonFactory.createToolButton("Paint", "src/main/resources/pencil.png");
+        fill = ButtonFactory.createToolButton("Fill", "src/main/resources/bucket.png");
+        pick = ButtonFactory.createToolButton("Pick", "src/main/resources/tap.png");
         buttonPanel.add(paint);
         buttonPanel.add(fill);
         buttonPanel.add(pick);
@@ -105,32 +106,7 @@ public class MainPanel extends JFrame {
         asciiPanel.addMouseMotionListener(new AsciiPanelMouseMotionListener(this));
 
         // Adds character selector event listeners
-        characterPanel.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                CharacterSelector.getInstance().setVisible(true);
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        });
+        characterPanel.addMouseListener(new CharacterPanelMouseListener());
 
         //-------------------Color Panels Mouse Listeners-----------------
         foregroundColorPanel.addMouseListener(new ForegroundColorPanelMouseListener(this));
@@ -140,21 +116,15 @@ public class MainPanel extends JFrame {
         //Todo implementa un modo di riuso del codice per il cambio di sfondo
         paint.addActionListener(e -> {
             setCurrentToolId(0);
-            paint.setBackground(Color.GRAY);
-            pick.setBackground(Color.WHITE);
-            fill.setBackground(Color.WHITE);
+            ToolsPanelController.updateSelectedToolButtonBackground();
         });
         pick.addActionListener(e -> {
             setCurrentToolId(1);
-            paint.setBackground(Color.WHITE);
-            pick.setBackground(Color.GRAY);
-            fill.setBackground(Color.WHITE);
+            ToolsPanelController.updateSelectedToolButtonBackground();
         });
         fill.addActionListener(e -> {
             setCurrentToolId(2);
-            paint.setBackground(Color.WHITE);
-            pick.setBackground(Color.WHITE);
-            fill.setBackground(Color.GRAY);
+            ToolsPanelController.updateSelectedToolButtonBackground();
         });
     }
 
@@ -215,6 +185,17 @@ public class MainPanel extends JFrame {
         return backgroundColorPanel;
     }
 
+    public JButton getPaint() {
+        return paint;
+    }
+
+    public JButton getFill() {
+        return fill;
+    }
+
+    public JButton getPick() {
+        return pick;
+    }
 
     public static void main(String[] args) {
         MainPanel.getInstance().setVisible(true);

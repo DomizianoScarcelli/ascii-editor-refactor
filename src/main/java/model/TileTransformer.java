@@ -12,6 +12,6 @@ package model;
          * @param y the y position of the character.
          * @param data the data that will be overwritten to the one of the character.
          */
-        public void transformTile(int x, int y, AsciiCharacterData data);
+        void transformTile(int x, int y, AsciiCharacterData data);
     }
 

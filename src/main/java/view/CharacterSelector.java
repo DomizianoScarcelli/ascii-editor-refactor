@@ -60,13 +60,4 @@ public class CharacterSelector extends JDialog {
         return instance;
     }
 
-    /**
-     * Closes the GUI components that are used to select a certain character.
-     */
-    public void close() {
-        instance.setVisible(false);
-        instance.dispose();
-        instance = null;
-
-    }
 }
