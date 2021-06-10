@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class CharActionListener implements MouseListener {
+public class CharacterSelectorActionListener implements MouseListener {
     /**
      * The character on which the action is performed
      */
@@ -18,7 +18,7 @@ public class CharActionListener implements MouseListener {
      *
      * @param selectedChar the character.
      */
-    public CharActionListener(int selectedChar) {
+    public CharacterSelectorActionListener(int selectedChar) {
         this.selectedChar = selectedChar;
     }
 
@@ -30,7 +30,6 @@ public class CharActionListener implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         System.out.println("Selected char: " + (char) selectedChar);
         MainPanel.getInstance().setSelectedChar(selectedChar);
-//        MainPanel.getInstance().getSelectCharButton().setText((char) selectedChar + "");
         ToolsPanelController.getInstance().updatePreview();
     }
 

@@ -1,7 +1,10 @@
 package controller;
 
+import model.AsciiFont;
+import model.AsciiPanel;
 import view.MainPanel;
 
+import javax.swing.*;
 import java.awt.*;
 
 
@@ -24,7 +27,7 @@ public class ToolsPanelController {
     public void updatePreview() {
         mainPanel.getCharPreviewPanel().clear();
         mainPanel.getCharPreviewPanel().write((char) mainPanel.getSelectedChar(), 1, 1, mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
-        mainPanel.getCharPreviewPanel().repaint();
+        SwingUtilities.updateComponentTreeUI(mainPanel); //Prevents a weird bug when a character was selected
     }
 
     public static void updateSelectedToolButtonBackground() {
@@ -45,6 +48,19 @@ public class ToolsPanelController {
                 mainPanel.getFill().setBackground(Color.GRAY);
                 break;
         }
+    }
+    
+    public static void reset(int sx, int sy){
+        mainPanel.getMainContainer().remove(mainPanel.getAsciiPanel());
+        mainPanel.setAsciiPanel(new AsciiPanel(sx, sy, AsciiFont.CP437_16x16));
+        mainPanel.getMainContainer().add((mainPanel.getAsciiPanel()), BorderLayout.CENTER);
+        mainPanel.getAsciiPanel().clear();
+        mainPanel.getAsciiPanel().setCursorX(0);
+        mainPanel.getAsciiPanel().setCursorY(0);
+        mainPanel.getAsciiPanel().write("Empty");
+        mainPanel.getAsciiPanel().addMouseListener(new AsciiPanelMouseListener(mainPanel));
+        mainPanel.getAsciiPanel().addMouseMotionListener(new AsciiPanelMouseMotionListener(mainPanel));
+        SwingUtilities.updateComponentTreeUI(mainPanel);
     }
 
 

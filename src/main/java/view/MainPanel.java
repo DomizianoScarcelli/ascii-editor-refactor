@@ -1,12 +1,16 @@
 package view;
 
 import controller.*;
+import controller.menubar.MenuBarActionImport;
+import controller.menubar.MenuBarActionLoad;
+import controller.menubar.ImageNewActionNew;
+import controller.menubar.MenuBarActionSave;
 import model.AsciiFont;
 import model.AsciiPanel;
 
 import javax.swing.*;
 import java.awt.*;
-
+import java.awt.image.BufferedImage;
 
 
 public class MainPanel extends JFrame {
@@ -22,6 +26,10 @@ public class MainPanel extends JFrame {
 
     private JButton paint, fill, pick;
 
+    private BufferedImage importedBufferedImage;
+
+    private JPanel mainContainer;
+
     private static MainPanel instance;
 
     public static MainPanel getInstance() {
@@ -36,14 +44,31 @@ public class MainPanel extends JFrame {
         this.setMinimumSize(new Dimension(700, 700));
         this.setLayout(new BorderLayout());
 
+        //---------------------MenuBar items-------------------------
         //Creates the Menu Bar and puts it on the top of the window
         JMenuBar menuBar = new JMenuBar();
-        JMenuItem file = new JMenuItem("File");
-        menuBar.add(file);
+        JMenu menuBarFile = new JMenu("File");
+        menuBar.add(menuBarFile);
         this.add(menuBar, BorderLayout.NORTH);
+        JMenuItem menuBarFileNew = new JMenuItem("New...");
+        JMenuItem menuBarFileLoad = new JMenuItem("Load...");
+        JMenuItem menuBarFileSave = new JMenuItem("Save...");
+        JMenuItem menuBarFileImport = new JMenuItem("Import...");
+        menuBarFile.add(menuBarFileNew);
+        menuBarFile.add(menuBarFileLoad);
+        menuBarFile.add(menuBarFileSave);
+        menuBarFile.add(menuBarFileImport);
+
+        //MenuBar action listeners
+        menuBarFileNew.addActionListener(new MenuBarActionNew());
+        menuBarFileLoad.addActionListener(new MenuBarActionLoad());
+        menuBarFileSave.addActionListener(new MenuBarActionSave());
+        menuBarFileImport.addActionListener(new MenuBarActionImport());
+
+
 
         //Creates the main container
-        JPanel mainContainer = new JPanel();
+        mainContainer = new JPanel();
         mainContainer.setLayout(new BorderLayout());
         this.add(mainContainer, BorderLayout.CENTER);
 
@@ -113,7 +138,7 @@ public class MainPanel extends JFrame {
         backgroundColorPanel.addMouseListener(new BackgroundColorPanelMouseListener(this));
 
         // -------Change currentToolId on tool button click-------
-        //Todo implementa un modo di riuso del codice per il cambio di sfondo
+        //TODO inserisci degli action listener ad hoc da mettere nel controller
         paint.addActionListener(e -> {
             setCurrentToolId(0);
             ToolsPanelController.updateSelectedToolButtonBackground();
@@ -126,10 +151,17 @@ public class MainPanel extends JFrame {
             setCurrentToolId(2);
             ToolsPanelController.updateSelectedToolButtonBackground();
         });
+
+
+
     }
 
     public AsciiPanel getAsciiPanel() {
         return asciiPanel;
+    }
+
+    public void setAsciiPanel(AsciiPanel asciiPanel) {
+        this.asciiPanel = asciiPanel;
     }
 
     /**
@@ -196,6 +228,19 @@ public class MainPanel extends JFrame {
     public JButton getPick() {
         return pick;
     }
+
+    public BufferedImage getImportedBufferedImage() {
+        return importedBufferedImage;
+    }
+
+    public void setImportedBufferedImage(BufferedImage importedBufferedImage) {
+        this.importedBufferedImage = importedBufferedImage;
+    }
+
+    public JPanel getMainContainer() {
+        return mainContainer;
+    }
+
 
     public static void main(String[] args) {
         MainPanel.getInstance().setVisible(true);
