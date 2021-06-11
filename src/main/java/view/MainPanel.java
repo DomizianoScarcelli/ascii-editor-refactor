@@ -101,13 +101,21 @@ public class MainPanel extends JFrame {
 
         //JPanel containing the character preview and character selector
         JPanel characterPanel = new JPanel(new BorderLayout());
+
         charPreviewPanel = new AsciiPanel(3,3, AsciiFont.CP437_16x16);
-        charPreviewPanel.setPreferredSize(new Dimension(50, 50));
         charPreviewPanel.setBackground(Color.BLACK);
-        JLabel selectedCharacterLabel = new JLabel("Character");
+        charPreviewPanel.setPreferredSize(new Dimension(40,50));
         characterPanel.add(charPreviewPanel, BorderLayout.CENTER);
-        characterPanel.add(selectedCharacterLabel, BorderLayout.SOUTH);
         characterPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        JButton previousCharacter = ButtonFactory.createCharacterSelectorButton("src/main/resources/previous.png");
+        JButton nextCharacter = ButtonFactory.createCharacterSelectorButton("src/main/resources/next.png");
+
+        JPanel characterNextPrevSelectorPanel = new JPanel();
+        characterNextPrevSelectorPanel.add(previousCharacter);
+        characterNextPrevSelectorPanel.add(nextCharacter);
+        characterPanel.add(characterNextPrevSelectorPanel, BorderLayout.SOUTH);
+
+
         //JPanel containing other JPanels that contains tools
         JPanel toolsPanel = new JPanel();
         toolsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 0));
@@ -136,10 +144,13 @@ public class MainPanel extends JFrame {
 
         // Adds character selector event listeners
         characterPanel.addMouseListener(new CharacterPanelMouseListener());
+        previousCharacter.addActionListener(new PreviousCharacterActionListener());
+        nextCharacter.addActionListener(new NextCharacterActionListener());
 
         //-------------------Color Panels Mouse Listeners-----------------
         foregroundColorPanel.addMouseListener(new ForegroundColorPanelMouseListener(this));
         backgroundColorPanel.addMouseListener(new BackgroundColorPanelMouseListener(this));
+
 
         // -------Change currentToolId on tool button click-------
         //TODO inserisci degli action listener ad hoc da mettere nel controller

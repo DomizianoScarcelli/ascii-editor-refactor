@@ -8,6 +8,7 @@ package model;
  * @author zn80
  */
 public class AsciiFont {
+
     /**
      * 8x8 pixels-per-character Code page 437 font
      */
