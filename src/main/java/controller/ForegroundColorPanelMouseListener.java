@@ -22,7 +22,7 @@ public class ForegroundColorPanelMouseListener implements MouseListener {
         Color newColor = JColorChooser.showDialog(mainPanel.getForegroundColorPanel(), "Choose Foreground Color", mainPanel.getForegroundColorPanel().getBackground());
 
         if (newColor != null) {
-            mainPanel.setDefaultBackgroundColor(newColor);
+            mainPanel.setDefaultForegroundColor(newColor);
             mainPanel.getForegroundColorPanel().setBackground(newColor);
         }
         ToolsPanelController.getInstance().updatePreview();

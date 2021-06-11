@@ -80,12 +80,13 @@ public class MainPanel extends JFrame {
         buttonPanel.add(paint);
         buttonPanel.add(fill);
         buttonPanel.add(pick);
+        paint.setBackground(Color.GRAY);
 
         //JPanel containing color selection and color display
         JPanel colorPanel = new JPanel(new GridLayout(2, 2));
         foregroundColorPanel = new JPanel();
         backgroundColorPanel = new JPanel();
-        foregroundColorPanel.setBackground(Color.white);
+        foregroundColorPanel.setBackground(AsciiPanel.WHITE);
         backgroundColorPanel.setBackground(Color.black);
         foregroundColorPanel.setBorder(BorderFactory.createLineBorder(Color.white));
         backgroundColorPanel.setBorder(BorderFactory.createLoweredBevelBorder());
@@ -116,6 +117,9 @@ public class MainPanel extends JFrame {
         toolsPanel.add(characterPanel);
         toolsPanel.add(colorPanel);
         mainContainer.add(toolsPanel, BorderLayout.NORTH);
+
+        charPreviewPanel.write((char) selectedChar, 1, 1);
+        charPreviewPanel.repaint();
 
         //JPanel containing the AsciiPanel
         asciiPanel = new AsciiPanel(80, 60, AsciiFont.CP437_16x16);
@@ -151,6 +155,8 @@ public class MainPanel extends JFrame {
             setCurrentToolId(2);
             ToolsPanelController.updateSelectedToolButtonBackground();
         });
+
+
 
 
 
