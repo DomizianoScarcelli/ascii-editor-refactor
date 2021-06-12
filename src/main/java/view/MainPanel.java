@@ -3,7 +3,6 @@ package view;
 import controller.*;
 import controller.menubar.MenuBarActionImport;
 import controller.menubar.MenuBarActionLoad;
-import controller.menubar.ImageNewActionNew;
 import controller.menubar.MenuBarActionSave;
 import model.AsciiFont;
 import model.AsciiPanel;
@@ -81,6 +80,11 @@ public class MainPanel extends JFrame {
         buttonPanel.add(fill);
         buttonPanel.add(pick);
         paint.setBackground(Color.GRAY);
+//        fill.addActionListener(e -> {
+//            System.out.println("Murco");
+//            FillCommand fillCommand = new FillCommand(MainPanel.getInstance(), (e.getModifiers()));
+//            fillCommand.execute();
+//        });
 
         //JPanel containing color selection and color display
         JPanel colorPanel = new JPanel(new GridLayout(2, 2));
@@ -148,8 +152,8 @@ public class MainPanel extends JFrame {
         nextCharacter.addActionListener(new NextCharacterActionListener());
 
         //-------------------Color Panels Mouse Listeners-----------------
-        foregroundColorPanel.addMouseListener(new ForegroundColorPanelMouseListener(this));
-        backgroundColorPanel.addMouseListener(new BackgroundColorPanelMouseListener(this));
+        foregroundColorPanel.addMouseListener(new ColorPanelMouseListener(foregroundColorPanel, false));
+        backgroundColorPanel.addMouseListener(new ColorPanelMouseListener(backgroundColorPanel, true));
 
 
         // -------Change currentToolId on tool button click-------

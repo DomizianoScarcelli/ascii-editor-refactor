@@ -8,20 +8,23 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class BackgroundColorPanelMouseListener implements MouseListener {
-    private MainPanel mainPanel;
+public class ColorPanelMouseListener implements MouseListener {
+    private JPanel colorPanel;
+    private boolean isBackground;
 
-    public BackgroundColorPanelMouseListener(MainPanel mainPanel){
-        this.mainPanel = mainPanel;
+    public ColorPanelMouseListener(JPanel colorPanel, boolean isBackground){
+        this.colorPanel = colorPanel;
+        this.isBackground = isBackground;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        Color newColor = JColorChooser.showDialog(mainPanel.getBackgroundColorPanel(), "Choose Foreground Color", mainPanel.getBackgroundColorPanel().getBackground());
+        Color newColor = JColorChooser.showDialog(colorPanel, "Choose Foreground Color", colorPanel.getBackground());
 
         if (newColor != null) {
-            mainPanel.setDefaultBackgroundColor(newColor);
-            mainPanel.getBackgroundColorPanel().setBackground(newColor);
+            if (isBackground) MainPanel.getInstance().setDefaultBackgroundColor(newColor);
+            else MainPanel.getInstance().setDefaultForegroundColor(newColor);
+            colorPanel.setBackground(newColor);
         }
         ToolsPanelController.getInstance().updatePreview();
     }

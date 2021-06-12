@@ -58,7 +58,7 @@ public class ToolsPanelController {
         mainPanel.getAsciiPanel().setCursorX(0);
         mainPanel.getAsciiPanel().setCursorY(0);
         mainPanel.getAsciiPanel().write("Empty");
-        mainPanel.getAsciiPanel().addMouseListener(new AsciiPanelMouseListener(mainPanel));
+//        mainPanel.getAsciiPanel().addMouseListener(new AsciiPanelMouseListener(mainPanel));
         mainPanel.getAsciiPanel().addMouseMotionListener(new AsciiPanelMouseMotionListener(mainPanel));
         SwingUtilities.updateComponentTreeUI(mainPanel);
     }
