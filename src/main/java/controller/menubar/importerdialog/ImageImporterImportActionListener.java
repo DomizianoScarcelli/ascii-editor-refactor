@@ -17,7 +17,7 @@ import javax.swing.JFileChooser;
 /**
  * Models the action of importing an image from the local filesystem.
  */
-public class ImageImporterActionImport implements ActionListener {
+public class ImageImporterImportActionListener implements ActionListener {
 
 
     /**

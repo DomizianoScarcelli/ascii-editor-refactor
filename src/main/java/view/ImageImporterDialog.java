@@ -2,8 +2,8 @@ package view;
 
 
 
-import controller.menubar.importerdialog.ImageImporterActionConvert;
-import controller.menubar.importerdialog.ImageImporterActionImport;
+import controller.menubar.importerdialog.ImageImporterConvertActionListener;
+import controller.menubar.importerdialog.ImageImporterImportActionListener;
 
 
 import javax.swing.*;
@@ -36,8 +36,8 @@ public class ImageImporterDialog extends JDialog {
         convertColorOptions = new JCheckBox("all colors", true);
         convertButton = new JButton("Convert");
         importButton = new JButton("Import ...");
-        importButton.addActionListener(new ImageImporterActionImport());
-        convertButton.addActionListener(new ImageImporterActionConvert(MainPanel.getInstance().getAsciiPanel(), thresholdSetter, convertColorOptions));
+        importButton.addActionListener(new ImageImporterImportActionListener());
+        convertButton.addActionListener(new ImageImporterConvertActionListener(MainPanel.getInstance().getAsciiPanel(), thresholdSetter, convertColorOptions));
         this.add(importButton);
         this.add(thresholdLabel);
         this.add(thresholdSetter);

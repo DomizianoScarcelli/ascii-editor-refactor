@@ -23,7 +23,7 @@ import view.MainPanel;
 /**
  * Models the action of converting an image from pixels to ascii character.
  */
-public class ImageImporterActionConvert implements ActionListener {
+public class ImageImporterConvertActionListener implements ActionListener {
     /**
      * The panel where the ascii character are shown.
      */
@@ -44,7 +44,7 @@ public class ImageImporterActionConvert implements ActionListener {
      * @param threshold     the {@link JTextField} containing the threshold value.
      * @param convertColorOptions     the {@link JCheckBox} that indicates whether the the image has to be converted to 16-bit or 4-bit colors.
      */
-    public ImageImporterActionConvert(AsciiPanel asciiPanel, JTextField threshold, JCheckBox convertColorOptions) {
+    public ImageImporterConvertActionListener(AsciiPanel asciiPanel, JTextField threshold, JCheckBox convertColorOptions) {
         this.asciiPanel = asciiPanel;
         this.threshold = threshold;
         this.convertColorOptions = convertColorOptions;
