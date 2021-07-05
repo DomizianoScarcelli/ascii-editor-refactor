@@ -10,6 +10,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
+
 /**
  * Models the two dimension array where the ascii characters will appear.
  * The panel is represented as a character matrix.

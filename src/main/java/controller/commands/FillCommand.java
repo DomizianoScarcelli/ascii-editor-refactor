@@ -1,5 +1,6 @@
 package controller.commands;
 
+import controller.ToolsPanelController;
 import view.MainPanel;
 
 import java.awt.*;
@@ -37,6 +38,9 @@ public class FillCommand implements Command {
             mainPanel.getAsciiPanel().fill((char) (0), cursorX, cursorY, Color.black, Color.black);
         }
         mainPanel.getAsciiPanel().repaint();
+
+        mainPanel.commandStack.push(this);
+        ToolsPanelController.selectFillButton();
     }
 
     @Override

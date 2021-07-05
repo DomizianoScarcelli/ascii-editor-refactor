@@ -28,8 +28,12 @@ public class PickCommand implements Command{
         mainPanel.getForegroundColorPanel().repaint();
         mainPanel.getBackgroundColorPanel().repaint();
         ToolsPanelController toolsPanelController = ToolsPanelController.getInstance();
-        mainPanel.setCurrentToolId(0);
+        mainPanel.getContext().setCommand(new PaintCommand(mainPanel, 1));
+//        mainPanel.setCurrentToolId(0);
         toolsPanelController.updatePreview();
+
+        mainPanel.commandStack.push(this);
+        ToolsPanelController.selectPickButton();
     }
 
     @Override

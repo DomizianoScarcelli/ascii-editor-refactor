@@ -2,6 +2,9 @@ package view;
 
 import controller.*;
 import controller.commands.Command;
+import controller.commands.FillCommand;
+import controller.commands.PaintCommand;
+import controller.commands.PickCommand;
 import controller.menubar.MenuBarActionImport;
 import controller.menubar.MenuBarActionLoad;
 import controller.menubar.MenuBarActionSave;
@@ -16,7 +19,7 @@ import java.util.Stack;
 
 public class MainPanel extends JFrame {
     private AsciiPanel asciiPanel;
-    private int currentToolId = 0;
+//    private int currentToolId = 0;
     private int selectedChar = 1;
     private Color defaultForegroundColor;
     private Color defaultBackgroundColor;
@@ -30,6 +33,8 @@ public class MainPanel extends JFrame {
     private BufferedImage importedBufferedImage;
 
     private JPanel mainContainer;
+
+    private Context context = Context.getInstance();
 
     //TODO incapsula questo
     public Stack<Command> commandStack = new Stack<>();
@@ -47,6 +52,8 @@ public class MainPanel extends JFrame {
         this.setSize(800, 800);
         this.setMinimumSize(new Dimension(700, 700));
         this.setLayout(new BorderLayout());
+
+        context.setCommand(new PaintCommand(this, 1));
 
         //---------------------MenuBar items-------------------------
         //Creates the Menu Bar and puts it on the top of the window
@@ -134,13 +141,6 @@ public class MainPanel extends JFrame {
         toolsPanel.add(characterPanel);
         toolsPanel.add(colorPanel);
 
-        JButton undo = new JButton("Undo");
-        toolsPanel.add(undo);
-        undo.addActionListener((actionEvent) ->{
-            Command lastCommand = this.commandStack.pop();
-            lastCommand.undo();
-        });
-
         mainContainer.add(toolsPanel, BorderLayout.NORTH);
 
         charPreviewPanel.write((char) selectedChar, 1, 1);
@@ -172,16 +172,16 @@ public class MainPanel extends JFrame {
         // -------Change currentToolId on tool button click-------
         //TODO inserisci degli action listener ad hoc da mettere nel controller
         paint.addActionListener(e -> {
-            setCurrentToolId(0);
-            ToolsPanelController.updateSelectedToolButtonBackground();
+            ToolsPanelController.selectPaintButton();
+            context.setCommand(new PaintCommand(this, 1));
         });
         pick.addActionListener(e -> {
-            setCurrentToolId(1);
-            ToolsPanelController.updateSelectedToolButtonBackground();
+            ToolsPanelController.selectPickButton();
+            context.setCommand(new PickCommand(this, 1));
         });
         fill.addActionListener(e -> {
-            setCurrentToolId(2);
-            ToolsPanelController.updateSelectedToolButtonBackground();
+            ToolsPanelController.selectFillButton();
+            context.setCommand(new FillCommand(this, 1));
         });
 
 
@@ -198,16 +198,16 @@ public class MainPanel extends JFrame {
         this.asciiPanel = asciiPanel;
     }
 
-    /**
-     * An integer that identifies the current selected tool
-     */
-    public int getCurrentToolId() {
-        return currentToolId;
-    }
-
-    public void setCurrentToolId(int currentToolId) {
-        this.currentToolId = currentToolId;
-    }
+//    /**
+//     * An integer that identifies the current selected tool
+//     */
+//    public int getCurrentToolId() {
+//        return currentToolId;
+//    }
+//
+//    public void setCurrentToolId(int currentToolId) {
+//        this.currentToolId = currentToolId;
+//    }
 
     /**
      * The selected character is the character on which the focus is on.
@@ -280,4 +280,7 @@ public class MainPanel extends JFrame {
         MainPanel.getInstance().setVisible(true);
     }
 
+    public Context getContext() {
+        return context;
+    }
 }
