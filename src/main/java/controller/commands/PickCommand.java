@@ -31,4 +31,9 @@ public class PickCommand implements Command{
         mainPanel.setCurrentToolId(0);
         toolsPanelController.updatePreview();
     }
+
+    @Override
+    public void undo() {
+        System.out.println("undone");
+    }
 }

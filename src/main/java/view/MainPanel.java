@@ -1,6 +1,7 @@
 package view;
 
 import controller.*;
+import controller.commands.Command;
 import controller.menubar.MenuBarActionImport;
 import controller.menubar.MenuBarActionLoad;
 import controller.menubar.MenuBarActionSave;
@@ -10,6 +11,7 @@ import model.AsciiPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Stack;
 
 
 public class MainPanel extends JFrame {
@@ -28,6 +30,9 @@ public class MainPanel extends JFrame {
     private BufferedImage importedBufferedImage;
 
     private JPanel mainContainer;
+
+    //TODO incapsula questo
+    public Stack<Command> commandStack = new Stack<>();
 
     private static MainPanel instance;
 
@@ -128,6 +133,14 @@ public class MainPanel extends JFrame {
         toolsPanel.add(buttonPanel);
         toolsPanel.add(characterPanel);
         toolsPanel.add(colorPanel);
+
+        JButton undo = new JButton("Undo");
+        toolsPanel.add(undo);
+        undo.addActionListener((actionEvent) ->{
+            Command lastCommand = this.commandStack.pop();
+            lastCommand.undo();
+        });
+
         mainContainer.add(toolsPanel, BorderLayout.NORTH);
 
         charPreviewPanel.write((char) selectedChar, 1, 1);
@@ -266,4 +279,5 @@ public class MainPanel extends JFrame {
     public static void main(String[] args) {
         MainPanel.getInstance().setVisible(true);
     }
+
 }

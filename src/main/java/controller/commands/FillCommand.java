@@ -1,6 +1,5 @@
 package controller.commands;
 
-import com.sun.tools.javac.Main;
 import view.MainPanel;
 
 import java.awt.*;
@@ -38,6 +37,11 @@ public class FillCommand implements Command {
             mainPanel.getAsciiPanel().fill((char) (0), cursorX, cursorY, Color.black, Color.black);
         }
         mainPanel.getAsciiPanel().repaint();
+    }
+
+    @Override
+    public void undo() {
+        System.out.println("Undone");
     }
 
 }

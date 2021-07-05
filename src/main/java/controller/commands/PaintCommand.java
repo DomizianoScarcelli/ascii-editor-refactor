@@ -18,15 +18,24 @@ public class PaintCommand implements Command {
     MainPanel mainPanel;
     int button;
 
+    //Stores the cursor position so that it can undo the last command
+    int cursorX, cursorY;
+
+    //TODO store the old char on the cursor position
+
     public PaintCommand(MainPanel mainPanel, int button) {
         this.mainPanel = mainPanel;
         this.button = button;
     }
 
+
+    /**
+     * Execute the command
+     */
     @Override
     public void execute() {
-        int cursorX = mainPanel.getAsciiPanel().getMouseCursorX();
-        int cursorY = mainPanel.getAsciiPanel().getMouseCursorY();
+        cursorX = mainPanel.getAsciiPanel().getMouseCursorX();
+        cursorY = mainPanel.getAsciiPanel().getMouseCursorY();
 
         mainPanel.getAsciiPanel().setCursorX(cursorX);
         mainPanel.getAsciiPanel().setCursorY(cursorY);
@@ -36,6 +45,19 @@ public class PaintCommand implements Command {
             mainPanel.getAsciiPanel().write((char) 0);
         }
         mainPanel.getAsciiPanel().repaint();
-
     }
+
+    /**
+     * Undo the command
+     */
+    @Override
+    public void undo() {
+        mainPanel.getAsciiPanel().setCursorX(cursorX);
+        mainPanel.getAsciiPanel().setCursorY(cursorY);
+        mainPanel.getAsciiPanel().write((char) 0); //TODO write the old char instead of a blank char
+        mainPanel.getAsciiPanel().repaint();
+        System.out.println("Undone");
+    }
+
+
 }
