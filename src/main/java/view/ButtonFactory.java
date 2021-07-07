@@ -29,7 +29,6 @@ public class ButtonFactory {
         button.setBackground(Color.WHITE);
         addIconToButton(button, iconFileName, 20, 20);
         button.setFocusPainted(false);
-//        button.setBorderPainted(false);
         return button;
     }
 

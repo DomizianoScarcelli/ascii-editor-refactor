@@ -28,6 +28,8 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
 
     @Override
     public void mouseDragged(MouseEvent e) {
+        updateMousePosition(e);
+        mainPanel.getContext().executeCommand();
     }
 
     /**
@@ -36,6 +38,10 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
      */
     @Override
     public void mouseMoved(MouseEvent e) {
+        updateMousePosition(e);
+    }
+
+    public void updateMousePosition(MouseEvent e){
         mainPanel.getAsciiPanel().setMouseCursorX(e.getX() / 16);
         mainPanel.getAsciiPanel().setMouseCursorY(e.getY() / 16);
         mainPanel.getAsciiPanel().repaint();

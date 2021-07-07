@@ -18,8 +18,8 @@ import java.awt.*;
  */
 public class FillCommand implements Command {
 
-    MainPanel mainPanel;
-    int button;
+    private MainPanel mainPanel;
+    private int button;
 
 
     public FillCommand(MainPanel mainPanel, int button) {
@@ -43,9 +43,9 @@ public class FillCommand implements Command {
         ToolsPanelController.selectFillButton();
     }
 
-    @Override
-    public void undo() {
-        System.out.println("Undone");
-    }
+//    @Override
+//    public void undo() {
+//        System.out.println("Undone");
+//    }
 
 }

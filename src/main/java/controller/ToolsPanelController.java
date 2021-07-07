@@ -51,21 +51,31 @@ public class ToolsPanelController {
 //    }
 
     public static void selectPaintButton(){
+        mainPanel.getErase().setBackground(Color.WHITE);
         mainPanel.getPaint().setBackground(Color.GRAY);
         mainPanel.getPick().setBackground(Color.WHITE);
         mainPanel.getFill().setBackground(Color.WHITE);
     }
 
     public static void selectPickButton(){
+        mainPanel.getErase().setBackground(Color.WHITE);
         mainPanel.getPaint().setBackground(Color.WHITE);
         mainPanel.getPick().setBackground(Color.GRAY);
         mainPanel.getFill().setBackground(Color.WHITE);
     }
 
     public static void selectFillButton(){
+        mainPanel.getErase().setBackground(Color.WHITE);
         mainPanel.getPaint().setBackground(Color.WHITE);
         mainPanel.getPick().setBackground(Color.WHITE);
         mainPanel.getFill().setBackground(Color.GRAY);
+    }
+
+    public static void selectEraseButton(){
+        mainPanel.getErase().setBackground(Color.GRAY);
+        mainPanel.getPaint().setBackground(Color.WHITE);
+        mainPanel.getPick().setBackground(Color.WHITE);
+        mainPanel.getFill().setBackground(Color.WHITE);
     }
     
     public static void reset(int sx, int sy){

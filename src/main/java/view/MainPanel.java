@@ -1,10 +1,7 @@
 package view;
 
 import controller.*;
-import controller.commands.Command;
-import controller.commands.FillCommand;
-import controller.commands.PaintCommand;
-import controller.commands.PickCommand;
+import controller.commands.*;
 import controller.menubar.MenuBarActionImport;
 import controller.menubar.MenuBarActionLoad;
 import controller.menubar.MenuBarActionSave;
@@ -13,6 +10,10 @@ import model.AsciiPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.util.Stack;
 
@@ -28,7 +29,7 @@ public class MainPanel extends JFrame {
     private JPanel foregroundColorPanel;
     private JPanel backgroundColorPanel;
 
-    private JButton paint, fill, pick;
+    private JButton paint, fill, pick, erase;
 
     private BufferedImage importedBufferedImage;
 
@@ -88,15 +89,13 @@ public class MainPanel extends JFrame {
         paint = ButtonFactory.createToolButton("Paint", "src/main/resources/pencil.png");
         fill = ButtonFactory.createToolButton("Fill", "src/main/resources/bucket.png");
         pick = ButtonFactory.createToolButton("Pick", "src/main/resources/tap.png");
+        erase = ButtonFactory.createToolButton("Erase","src/main/resources/eraser.png" );
         buttonPanel.add(paint);
         buttonPanel.add(fill);
         buttonPanel.add(pick);
+        buttonPanel.add(erase);
         paint.setBackground(Color.GRAY);
-//        fill.addActionListener(e -> {
-//            System.out.println("Murco");
-//            FillCommand fillCommand = new FillCommand(MainPanel.getInstance(), (e.getModifiers()));
-//            fillCommand.execute();
-//        });
+
 
         //JPanel containing color selection and color display
         JPanel colorPanel = new JPanel(new GridLayout(2, 2));
@@ -183,6 +182,12 @@ public class MainPanel extends JFrame {
             ToolsPanelController.selectFillButton();
             context.setCommand(new FillCommand(this, 1));
         });
+        erase.addActionListener(e -> {
+            ToolsPanelController.selectEraseButton();
+            context.setCommand(new EraseCommand(this, 1));
+        });
+
+
 
 
 
@@ -261,6 +266,10 @@ public class MainPanel extends JFrame {
 
     public JButton getPick() {
         return pick;
+    }
+
+    public JButton getErase() {
+        return erase;
     }
 
     public BufferedImage getImportedBufferedImage() {

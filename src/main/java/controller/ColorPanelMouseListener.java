@@ -1,6 +1,5 @@
 package controller;
 
-import com.sun.tools.javac.Main;
 import view.MainPanel;
 
 import javax.swing.*;

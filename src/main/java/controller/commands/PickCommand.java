@@ -36,8 +36,8 @@ public class PickCommand implements Command{
         ToolsPanelController.selectPickButton();
     }
 
-    @Override
-    public void undo() {
-        System.out.println("undone");
-    }
+//    @Override
+//    public void undo() {
+//        System.out.println("undone");
+//    }
 }

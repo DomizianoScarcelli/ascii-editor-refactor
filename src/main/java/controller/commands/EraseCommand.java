@@ -18,7 +18,7 @@ import java.util.Observer;
  *               <li>right button.</li>
  *               </ol>
  */
-public class PaintCommand implements Command {
+public class EraseCommand implements Command {
     MainPanel mainPanel;
     int button;
 
@@ -27,7 +27,7 @@ public class PaintCommand implements Command {
 
     //TODO store the old char on the cursor position
 
-    public PaintCommand(MainPanel mainPanel, int button) {
+    public EraseCommand(MainPanel mainPanel, int button) {
         this.mainPanel = mainPanel;
         this.button = button;
     }
@@ -43,15 +43,11 @@ public class PaintCommand implements Command {
 
         mainPanel.getAsciiPanel().setCursorX(cursorX);
         mainPanel.getAsciiPanel().setCursorY(cursorY);
-        if (button == 1) {
-            mainPanel.getAsciiPanel().write((char) mainPanel.getSelectedChar(), mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
-        } else {
-            mainPanel.getAsciiPanel().write((char) 0);
-        }
+        mainPanel.getAsciiPanel().write((char) 0);
         mainPanel.getAsciiPanel().repaint();
 
         mainPanel.commandStack.push(this);
-        ToolsPanelController.selectPaintButton();
+        ToolsPanelController.selectEraseButton();
     }
 
 //    /**

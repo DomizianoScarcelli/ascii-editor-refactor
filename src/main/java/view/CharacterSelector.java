@@ -17,14 +17,14 @@ public class CharacterSelector extends JDialog {
      * The unique instance of the class.
      */
     private static CharacterSelector instance;
-    /**
-     * The {@link JLabel} component that describes the button to perform the action.
-     */
-    private JLabel thl;
-    /**
-     * The list of {@link JButton} that allows to select a character from a list of characters.
-     */
-    private List<JButton> palette;
+//    /**
+//     * The {@link JLabel} component that describes the button to perform the action.
+//     */
+//    private JLabel thl;
+//    /**
+//     * The list of {@link JButton} that allows to select a character from a list of characters.
+//     */
+//    private List<JButton> palette;
 
     /**
      * Class constructor.
