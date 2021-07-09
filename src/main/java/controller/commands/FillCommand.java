@@ -19,12 +19,10 @@ import java.awt.*;
 public class FillCommand implements Command {
 
     private MainPanel mainPanel;
-    private int button;
 
 
-    public FillCommand(MainPanel mainPanel, int button) {
+    public FillCommand(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
-        this.button = button;
     }
 
     @Override
@@ -32,14 +30,14 @@ public class FillCommand implements Command {
         int cursorX = mainPanel.getAsciiPanel().getMouseCursorX();
         int cursorY = mainPanel.getAsciiPanel().getMouseCursorY();
 
-        if (button == 1) {
+        if (mainPanel.getCurrentButtonPressed() == 1) {
             mainPanel.getAsciiPanel().fill((char) mainPanel.getSelectedChar(), cursorX, cursorY, mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
         } else {
             mainPanel.getAsciiPanel().fill((char) (0), cursorX, cursorY, Color.black, Color.black);
         }
         mainPanel.getAsciiPanel().repaint();
 
-        mainPanel.commandStack.push(this);
+        mainPanel.getCommandStack().push(this);
         ToolsPanelController.selectFillButton();
     }
 

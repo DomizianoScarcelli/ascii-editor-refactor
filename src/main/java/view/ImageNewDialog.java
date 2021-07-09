@@ -14,11 +14,7 @@ public class ImageNewDialog extends JDialog {
 
     private static final long serialVersionUID = -1844498949903148619L;
     private static ImageNewDialog instance;
-    private JTextField widthSetter;
-    private JTextField heightSetter;
-    private JButton proceedButton;
-    private JLabel widthLabel;
-    private JLabel heightLabel;
+
 
     /**
      * Private class constructor.
@@ -31,11 +27,11 @@ public class ImageNewDialog extends JDialog {
         this.setResizable(false);
         this.setLayout(null);
 
-        widthLabel = new JLabel("Width:");
-        widthSetter = new JTextField("80");
-        heightLabel = new JLabel("Height:");
-        heightSetter = new JTextField("60");
-        proceedButton = new JButton("Create New");
+        JLabel widthLabel = new JLabel("Width:");
+        JTextField widthSetter = new JTextField("80");
+        JLabel heightLabel = new JLabel("Height:");
+        JTextField  heightSetter = new JTextField("60");
+        JButton  proceedButton = new JButton("Create New");
         proceedButton.addActionListener(new ImageNewActionNew());
         this.add(widthLabel);
         this.add(widthSetter);
@@ -47,7 +43,6 @@ public class ImageNewDialog extends JDialog {
         heightLabel.setBounds(0, 80, 320, 40);
         heightSetter.setBounds(0, 120, 320, 40);
         proceedButton.setBounds(0, 160, 320, 40);
-
     }
 
     /**
@@ -61,63 +56,63 @@ public class ImageNewDialog extends JDialog {
         return instance;
     }
 
-    public static void setInstance(ImageNewDialog instance) {
-        ImageNewDialog.instance = instance;
-    }
-
-    /**
-     * The {@link JTextField} component inside the "new" GUI that allows to set the width of the new panel.
-     */
-    public JTextField getWidthSetter() {
-        return widthSetter;
-    }
-
-    public void setWidthSetter(JTextField widthSetter) {
-        this.widthSetter = widthSetter;
-    }
-
-    /**
-     * The {@link JTextField} component that allows to set the height of the new panel.
-     */
-    public JTextField getHeightSetter() {
-        return heightSetter;
-    }
-
-    public void setHeightSetter(JTextField heightSetter) {
-        this.heightSetter = heightSetter;
-    }
-
-    /**
-     * The {@link JButton} component that triggers the creation of the new panel.
-     */
-    public JButton getProceedButton() {
-        return proceedButton;
-    }
-
-    public void setProceedButton(JButton proceedButton) {
-        this.proceedButton = proceedButton;
-    }
-
-    /**
-     * The {@link JLabel} component that describes the width text field.
-     */
-    public JLabel getWidthLabel() {
-        return widthLabel;
-    }
-
-    public void setWidthLabel(JLabel widthLabel) {
-        this.widthLabel = widthLabel;
-    }
-
-    /**
-     * The {@link JLabel} component that describes the height text field.
-     */
-    public JLabel getHeightLabel() {
-        return heightLabel;
-    }
-
-    public void setHeightLabel(JLabel heightLabel) {
-        this.heightLabel = heightLabel;
-    }
+//    public static void setInstance(ImageNewDialog instance) {
+//        ImageNewDialog.instance = instance;
+//    }
+//
+//    /**
+//     * The {@link JTextField} component inside the "new" GUI that allows to set the width of the new panel.
+//     */
+//    public JTextField getWidthSetter() {
+//        return widthSetter;
+//    }
+//
+//    public void setWidthSetter(JTextField widthSetter) {
+//        this.widthSetter = widthSetter;
+//    }
+//
+//    /**
+//     * The {@link JTextField} component that allows to set the height of the new panel.
+//     */
+//    public JTextField getHeightSetter() {
+//        return heightSetter;
+//    }
+//
+//    public void setHeightSetter(JTextField heightSetter) {
+//        this.heightSetter = heightSetter;
+//    }
+//
+//    /**
+//     * The {@link JButton} component that triggers the creation of the new panel.
+//     */
+//    public JButton getProceedButton() {
+//        return proceedButton;
+//    }
+//
+//    public void setProceedButton(JButton proceedButton) {
+//        this.proceedButton = proceedButton;
+//    }
+//
+//    /**
+//     * The {@link JLabel} component that describes the width text field.
+//     */
+//    public JLabel getWidthLabel() {
+//        return widthLabel;
+//    }
+//
+//    public void setWidthLabel(JLabel widthLabel) {
+//        this.widthLabel = widthLabel;
+//    }
+//
+//    /**
+//     * The {@link JLabel} component that describes the height text field.
+//     */
+//    public JLabel getHeightLabel() {
+//        return heightLabel;
+//    }
+//
+//    public void setHeightLabel(JLabel heightLabel) {
+//        this.heightLabel = heightLabel;
+//    }
 }
 

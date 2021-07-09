@@ -4,7 +4,6 @@ import controller.CharacterSelectorActionListener;
 
 import javax.swing.*;
 import java.awt.image.BufferedImage;
-import java.util.List;
 
 /**
  * Models the GUI that allows to select a certain character.
@@ -17,14 +16,6 @@ public class CharacterSelector extends JDialog {
      * The unique instance of the class.
      */
     private static CharacterSelector instance;
-//    /**
-//     * The {@link JLabel} component that describes the button to perform the action.
-//     */
-//    private JLabel thl;
-//    /**
-//     * The list of {@link JButton} that allows to select a character from a list of characters.
-//     */
-//    private List<JButton> palette;
 
     /**
      * Class constructor.

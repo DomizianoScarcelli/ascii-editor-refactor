@@ -12,7 +12,7 @@ import view.MainPanel;
 public class PickCommand implements Command{
     MainPanel mainPanel;
 
-    public PickCommand(MainPanel mainPanel, int button) {
+    public PickCommand(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
     }
 
@@ -28,11 +28,11 @@ public class PickCommand implements Command{
         mainPanel.getForegroundColorPanel().repaint();
         mainPanel.getBackgroundColorPanel().repaint();
         ToolsPanelController toolsPanelController = ToolsPanelController.getInstance();
-        mainPanel.getContext().setCommand(new PaintCommand(mainPanel, 1));
+        mainPanel.setCommand(new PaintCommand(mainPanel));
 //        mainPanel.setCurrentToolId(0);
         toolsPanelController.updatePreview();
 
-        mainPanel.commandStack.push(this);
+        mainPanel.getCommandStack().push(this);
         ToolsPanelController.selectPickButton();
     }
 

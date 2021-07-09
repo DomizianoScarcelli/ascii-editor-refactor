@@ -29,7 +29,7 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
     @Override
     public void mouseDragged(MouseEvent e) {
         updateMousePosition(e);
-        mainPanel.getContext().executeCommand();
+        mainPanel.executeCommand();
     }
 
     /**

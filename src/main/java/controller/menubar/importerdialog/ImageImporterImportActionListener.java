@@ -46,7 +46,6 @@ public class ImageImporterImportActionListener implements ActionListener {
                 g.dispose();
                 MainPanel.getInstance().setImportedBufferedImage(resized);
             } catch (IOException e1) {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
 

@@ -10,17 +10,13 @@ import model.AsciiPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.util.Stack;
 
+//TODO documenta tutto
 
 public class MainPanel extends JFrame {
     private AsciiPanel asciiPanel;
-//    private int currentToolId = 0;
     private int selectedChar = 1;
     private Color defaultForegroundColor;
     private Color defaultBackgroundColor;
@@ -29,16 +25,17 @@ public class MainPanel extends JFrame {
     private JPanel foregroundColorPanel;
     private JPanel backgroundColorPanel;
 
-    private JButton paint, fill, pick, erase;
+    private JButton paint, fill, pick;
 
     private BufferedImage importedBufferedImage;
 
     private JPanel mainContainer;
 
-    private Context context = Context.getInstance();
+    private int currentButtonPressed = 1;
 
-    //TODO incapsula questo
-    public Stack<Command> commandStack = new Stack<>();
+    private Stack<Command> commandStack = new Stack<>();
+
+    private Command command;
 
     private static MainPanel instance;
 
@@ -54,7 +51,7 @@ public class MainPanel extends JFrame {
         this.setMinimumSize(new Dimension(700, 700));
         this.setLayout(new BorderLayout());
 
-        context.setCommand(new PaintCommand(this, 1));
+        this.command = new PaintCommand(this);
 
         //---------------------MenuBar items-------------------------
         //Creates the Menu Bar and puts it on the top of the window
@@ -77,8 +74,6 @@ public class MainPanel extends JFrame {
         menuBarFileSave.addActionListener(new MenuBarActionSave());
         menuBarFileImport.addActionListener(new MenuBarActionImport());
 
-
-
         //Creates the main container
         mainContainer = new JPanel();
         mainContainer.setLayout(new BorderLayout());
@@ -89,13 +84,10 @@ public class MainPanel extends JFrame {
         paint = ButtonFactory.createToolButton("Paint", "src/main/resources/pencil.png");
         fill = ButtonFactory.createToolButton("Fill", "src/main/resources/bucket.png");
         pick = ButtonFactory.createToolButton("Pick", "src/main/resources/tap.png");
-        erase = ButtonFactory.createToolButton("Erase","src/main/resources/eraser.png" );
         buttonPanel.add(paint);
         buttonPanel.add(fill);
         buttonPanel.add(pick);
-        buttonPanel.add(erase);
         paint.setBackground(Color.GRAY);
-
 
         //JPanel containing color selection and color display
         JPanel colorPanel = new JPanel(new GridLayout(2, 2));
@@ -112,7 +104,6 @@ public class MainPanel extends JFrame {
         colorPanel.add(new JPanel()); //aggiungo due pannelli vuoti per dare l'effetto scacchiera
         colorPanel.add(new JPanel());
         colorPanel.add((backgroundColorPanel));
-
 
         //JPanel containing the character preview and character selector
         JPanel characterPanel = new JPanel(new BorderLayout());
@@ -153,7 +144,6 @@ public class MainPanel extends JFrame {
         asciiPanel.setCursorX(0);
         asciiPanel.setCursorY(0);
 
-
         // -------------------------------------Add Listeners-------------------------------------------------
         asciiPanel.addMouseListener(new AsciiPanelMouseListener(this));
         asciiPanel.addMouseMotionListener(new AsciiPanelMouseMotionListener(this));
@@ -168,31 +158,20 @@ public class MainPanel extends JFrame {
         backgroundColorPanel.addMouseListener(new ColorPanelMouseListener(backgroundColorPanel, true));
 
 
-        // -------Change currentToolId on tool button click-------
-        //TODO inserisci degli action listener ad hoc da mettere nel controller
+        // -------Change current command on tool button click-------
+
         paint.addActionListener(e -> {
             ToolsPanelController.selectPaintButton();
-            context.setCommand(new PaintCommand(this, 1));
+            this.command = new PaintCommand(this);
         });
         pick.addActionListener(e -> {
             ToolsPanelController.selectPickButton();
-            context.setCommand(new PickCommand(this, 1));
+            this.command = new PickCommand(this);
         });
         fill.addActionListener(e -> {
             ToolsPanelController.selectFillButton();
-            context.setCommand(new FillCommand(this, 1));
+            this.command = new FillCommand(this);
         });
-        erase.addActionListener(e -> {
-            ToolsPanelController.selectEraseButton();
-            context.setCommand(new EraseCommand(this, 1));
-        });
-
-
-
-
-
-
-
     }
 
     public AsciiPanel getAsciiPanel() {
@@ -202,17 +181,6 @@ public class MainPanel extends JFrame {
     public void setAsciiPanel(AsciiPanel asciiPanel) {
         this.asciiPanel = asciiPanel;
     }
-
-//    /**
-//     * An integer that identifies the current selected tool
-//     */
-//    public int getCurrentToolId() {
-//        return currentToolId;
-//    }
-//
-//    public void setCurrentToolId(int currentToolId) {
-//        this.currentToolId = currentToolId;
-//    }
 
     /**
      * The selected character is the character on which the focus is on.
@@ -268,10 +236,6 @@ public class MainPanel extends JFrame {
         return pick;
     }
 
-    public JButton getErase() {
-        return erase;
-    }
-
     public BufferedImage getImportedBufferedImage() {
         return importedBufferedImage;
     }
@@ -284,12 +248,28 @@ public class MainPanel extends JFrame {
         return mainContainer;
     }
 
-
     public static void main(String[] args) {
         MainPanel.getInstance().setVisible(true);
     }
 
-    public Context getContext() {
-        return context;
+    public int getCurrentButtonPressed() {
+        return currentButtonPressed;
     }
+
+    public void setCurrentButtonPressed(int currentButtonPressed) {
+        this.currentButtonPressed = currentButtonPressed;
+    }
+
+    public void setCommand(Command strategy) {
+        this.command = strategy;
+
+    }
+    public void executeCommand(){
+        this.command.execute();
+    }
+
+    public Stack<Command> getCommandStack() {
+        return commandStack;
+    }
+
 }

@@ -33,8 +33,10 @@ public class AsciiPanelMouseListener implements MouseListener {
      */
     @Override
     public void mousePressed(MouseEvent e) {
-//        System.out.println(mainPanel.getCurrentToolId());
-        mainPanel.getContext().executeCommand();
+        mainPanel.setCurrentButtonPressed(e.getButton());
+        System.out.println(mainPanel.getCurrentButtonPressed());
+        mainPanel.executeCommand();
+
 //        switch (mainPanel.getCurrentToolId()) {
 //            case 0 -> { //current tool is paint
 //                PaintCommand PaintCommand = new PaintCommand(mainPanel, e.getButton());

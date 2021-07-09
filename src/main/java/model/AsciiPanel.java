@@ -477,7 +477,6 @@ public class AsciiPanel extends JPanel {
             }
             bw.close();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             System.out.println("Error saving:");
             System.exit(1);
         }
