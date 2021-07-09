@@ -29,15 +29,15 @@ public class PickCommand implements Command{
         mainPanel.getBackgroundColorPanel().repaint();
         ToolsPanelController toolsPanelController = ToolsPanelController.getInstance();
         mainPanel.setCommand(new PaintCommand(mainPanel));
-//        mainPanel.setCurrentToolId(0);
         toolsPanelController.updatePreview();
 
         mainPanel.getCommandStack().push(this);
         ToolsPanelController.selectPickButton();
     }
 
-//    @Override
-//    public void undo() {
-//        System.out.println("undone");
-//    }
+    //TODO implementa l'undo
+    @Override
+    public void undo() {
+        System.out.println("undone");
+    }
 }

@@ -1,6 +1,10 @@
 package controller;
 
 
+import controller.commands.Command;
+import controller.commands.FillCommand;
+import controller.commands.PaintCommand;
+import controller.commands.PickCommand;
 import view.MainPanel;
 
 import java.awt.event.MouseEvent;
@@ -22,43 +26,23 @@ public class AsciiPanelMouseListener implements MouseListener {
         this.mainPanel = mainPanel;
     }
 
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-    }
-
     /**
      * {@inheritDoc}
      * Triggers the specific action of the currently selected tool.
      */
     @Override
-    public void mousePressed(MouseEvent e) {
+    public void mouseClicked(MouseEvent e) {
         mainPanel.setCurrentButtonPressed(e.getButton());
-        System.out.println(mainPanel.getCurrentButtonPressed());
+        Command currentCommand = mainPanel.getCommand();
+        if (currentCommand instanceof FillCommand) mainPanel.setCommand(new FillCommand(mainPanel));
+        else if (currentCommand instanceof PickCommand) mainPanel.setCommand(new PickCommand(mainPanel));
+        else if (currentCommand instanceof PaintCommand) mainPanel.setCommand(new PaintCommand(mainPanel));
         mainPanel.executeCommand();
+    }
 
-//        switch (mainPanel.getCurrentToolId()) {
-//            case 0 -> { //current tool is paint
-//                PaintCommand PaintCommand = new PaintCommand(mainPanel, e.getButton());
-//                PaintCommand.execute();
-//                mainPanel.commandStack.push(PaintCommand);
-//                System.out.println(mainPanel.commandStack);
-//            }
-//            case 1 -> { //current tool is mainPanel.getPick()
-//                PickCommand pickCommand = new PickCommand(mainPanel, e.getButton());
-//                pickCommand.execute();
-//                mainPanel.commandStack.push(pickCommand);
-//                System.out.println(mainPanel.commandStack);
-//            }
-//            case 2 -> { //current tool is fill
-//                FillCommand fillCommand = new FillCommand(mainPanel, e.getButton());
-//                fillCommand.execute();
-//                mainPanel.commandStack.push(fillCommand);
-//                System.out.println(mainPanel.commandStack);
-//            }
-//        }
-//        ToolsPanelController.updateSelectedToolButtonBackground();
 
+    @Override
+    public void mousePressed(MouseEvent e) {
     }
 
 

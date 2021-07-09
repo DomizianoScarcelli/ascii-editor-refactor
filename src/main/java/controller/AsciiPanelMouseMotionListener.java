@@ -2,6 +2,10 @@ package controller;
 
 
 
+import controller.commands.Command;
+import controller.commands.FillCommand;
+import controller.commands.PaintCommand;
+import controller.commands.PickCommand;
 import view.MainPanel;
 
 import java.awt.event.MouseEvent;
@@ -28,7 +32,13 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
 
     @Override
     public void mouseDragged(MouseEvent e) {
+        //TODO modifica l'undo nel mouse dragged facendo in modo che l'azione sia il tratto tracciato e non il singolo carattere
         updateMousePosition(e);
+        Command currentCommand = mainPanel.getCommand();
+        if (currentCommand instanceof FillCommand) mainPanel.setCommand(new FillCommand(mainPanel));
+        else if (currentCommand instanceof PickCommand) mainPanel.setCommand(new PickCommand(mainPanel));
+        else if (currentCommand instanceof PaintCommand) mainPanel.setCommand(new PaintCommand(mainPanel));
+        mainPanel.getCommandStack().push(mainPanel.getCommand());
         mainPanel.executeCommand();
     }
 

@@ -41,9 +41,10 @@ public class FillCommand implements Command {
         ToolsPanelController.selectFillButton();
     }
 
-//    @Override
-//    public void undo() {
-//        System.out.println("Undone");
-//    }
+    //TODO implementa l'undo
+    @Override
+    public void undo() {
+        System.out.println("Undone");
+    }
 
 }

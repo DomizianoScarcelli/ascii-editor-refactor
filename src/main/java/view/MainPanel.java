@@ -131,6 +131,14 @@ public class MainPanel extends JFrame {
         toolsPanel.add(characterPanel);
         toolsPanel.add(colorPanel);
 
+        //Undo button and listener
+        JButton undo = new JButton("Undo");
+        toolsPanel.add(undo);
+        undo.addActionListener(e -> {
+            Command command = commandStack.pop();
+            command.undo();
+        });
+
         mainContainer.add(toolsPanel, BorderLayout.NORTH);
 
         charPreviewPanel.write((char) selectedChar, 1, 1);
@@ -266,6 +274,10 @@ public class MainPanel extends JFrame {
     }
     public void executeCommand(){
         this.command.execute();
+    }
+
+    public Command getCommand() {
+        return command;
     }
 
     public CommandStack getCommandStack() {
