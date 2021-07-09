@@ -1,6 +1,7 @@
 package controller.menubar;
 
 import controller.ToolsPanelController;
+import model.CommandStack;
 import view.ImageNewDialog;
 import view.MainPanel;
 
@@ -19,7 +20,6 @@ public class ImageNewActionNew implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-
         MainPanel mainPanel = MainPanel.getInstance();
         ImageNewDialog imageNew = ImageNewDialog.getInstance();
         try {
@@ -28,6 +28,7 @@ public class ImageNewActionNew implements ActionListener {
             ToolsPanelController.reset(width, height);
             mainPanel.repaint();
             imageNew.setVisible(false);
+            mainPanel.setCommandStack(new CommandStack());
         } catch (Exception exception) {
             exception.printStackTrace();
         }

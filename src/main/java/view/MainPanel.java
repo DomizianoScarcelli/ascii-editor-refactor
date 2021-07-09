@@ -18,8 +18,8 @@ import java.awt.image.BufferedImage;
 public class MainPanel extends JFrame {
     private AsciiPanel asciiPanel;
     private int selectedChar = 1;
-    private Color defaultForegroundColor;
-    private Color defaultBackgroundColor;
+    private Color defaultForegroundColor = Color.WHITE;
+    private Color defaultBackgroundColor = Color.BLACK;
 
     private AsciiPanel charPreviewPanel;
     private JPanel foregroundColorPanel;
@@ -284,4 +284,7 @@ public class MainPanel extends JFrame {
         return commandStack;
     }
 
+    public void setCommandStack(CommandStack commandStack) {
+        this.commandStack = commandStack;
+    }
 }

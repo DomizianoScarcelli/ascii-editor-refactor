@@ -26,23 +26,24 @@ public class AsciiPanelMouseListener implements MouseListener {
         this.mainPanel = mainPanel;
     }
 
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
     /**
      * {@inheritDoc}
      * Triggers the specific action of the currently selected tool.
      */
     @Override
-    public void mouseClicked(MouseEvent e) {
+    public void mousePressed(MouseEvent e) {
         mainPanel.setCurrentButtonPressed(e.getButton());
         Command currentCommand = mainPanel.getCommand();
         if (currentCommand instanceof FillCommand) mainPanel.setCommand(new FillCommand(mainPanel));
         else if (currentCommand instanceof PickCommand) mainPanel.setCommand(new PickCommand(mainPanel));
         else if (currentCommand instanceof PaintCommand) mainPanel.setCommand(new PaintCommand(mainPanel));
         mainPanel.executeCommand();
-    }
-
-
-    @Override
-    public void mousePressed(MouseEvent e) {
     }
 
 

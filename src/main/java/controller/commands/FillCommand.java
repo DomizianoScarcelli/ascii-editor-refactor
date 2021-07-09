@@ -3,6 +3,7 @@ package controller.commands;
 import controller.ToolsPanelController;
 import view.MainPanel;
 
+import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -20,6 +21,7 @@ public class FillCommand implements Command {
 
     private MainPanel mainPanel;
 
+    private int cursorX, cursorY;
 
     public FillCommand(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
@@ -27,24 +29,29 @@ public class FillCommand implements Command {
 
     @Override
     public void execute() {
-        int cursorX = mainPanel.getAsciiPanel().getMouseCursorX();
-        int cursorY = mainPanel.getAsciiPanel().getMouseCursorY();
+        cursorX = mainPanel.getAsciiPanel().getMouseCursorX();
+        cursorY = mainPanel.getAsciiPanel().getMouseCursorY();
+
+        System.out.println( mainPanel.getSelectedChar());
 
         if (mainPanel.getCurrentButtonPressed() == 1) {
-            mainPanel.getAsciiPanel().fill((char) mainPanel.getSelectedChar(), cursorX, cursorY, mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
-        } else {
+             mainPanel.getAsciiPanel().fill((char) mainPanel.getSelectedChar(), mainPanel.getAsciiPanel().getMouseCursorX(), mainPanel.getAsciiPanel().getMouseCursorY(), mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
+        }
+        else {
             mainPanel.getAsciiPanel().fill((char) (0), cursorX, cursorY, Color.black, Color.black);
         }
-        mainPanel.getAsciiPanel().repaint();
+//        mainPanel.getAsciiPanel().repaint();
 
         mainPanel.getCommandStack().push(this);
-        ToolsPanelController.selectFillButton();
+        System.out.println(mainPanel.getCurrentButtonPressed());
+        System.out.println(mainPanel.getCommandStack());
+
     }
 
     //TODO implementa l'undo
     @Override
     public void undo() {
-        System.out.println("Undone");
+        System.out.println(mainPanel.getCommandStack());
     }
 
 }

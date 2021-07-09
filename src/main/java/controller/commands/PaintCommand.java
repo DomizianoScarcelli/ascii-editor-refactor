@@ -16,12 +16,11 @@ import view.MainPanel;
  * </ol>
  */
 public class PaintCommand implements Command {
-    MainPanel mainPanel;
+    private MainPanel mainPanel;
 
     //Stores the cursor position so that it can undo the last command
-    int cursorX, cursorY;
-
-    int oldChar;
+    private int cursorX, cursorY;
+    private int oldChar;
 
     public PaintCommand(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
@@ -38,8 +37,6 @@ public class PaintCommand implements Command {
         mainPanel.getAsciiPanel().setCursorX(cursorX);
         mainPanel.getAsciiPanel().setCursorY(cursorY);
         oldChar = mainPanel.getAsciiPanel().pickChar(cursorX, cursorY);
-
-
         if (mainPanel.getCurrentButtonPressed() == 1) {
             //Prevents a char is not written twice on the same position, so the undo doesn't fully work.
             if (!(oldChar == mainPanel.getSelectedChar() && cursorX == mainPanel.getAsciiPanel().getMouseCursorX() && cursorY == mainPanel.getAsciiPanel().getMouseCursorY())) {
@@ -58,6 +55,7 @@ public class PaintCommand implements Command {
     /**
      * Undo the command
      */
+
     @Override
     public void undo() {
         mainPanel.getAsciiPanel().setCursorX(cursorX);
