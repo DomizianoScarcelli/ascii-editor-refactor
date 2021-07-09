@@ -7,11 +7,11 @@ import controller.menubar.MenuBarActionLoad;
 import controller.menubar.MenuBarActionSave;
 import model.AsciiFont;
 import model.AsciiPanel;
+import model.CommandStack;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Stack;
 
 //TODO documenta tutto
 
@@ -33,7 +33,7 @@ public class MainPanel extends JFrame {
 
     private int currentButtonPressed = 1;
 
-    private Stack<Command> commandStack = new Stack<>();
+    private CommandStack commandStack = new CommandStack();
 
     private Command command;
 
@@ -268,7 +268,7 @@ public class MainPanel extends JFrame {
         this.command.execute();
     }
 
-    public Stack<Command> getCommandStack() {
+    public CommandStack getCommandStack() {
         return commandStack;
     }
 
