@@ -1,6 +1,8 @@
 package model;
 
 import controller.commands.Command;
+import view.MainPanel;
+
 import java.util.ArrayList;
 
 
@@ -14,7 +16,24 @@ public class CommandStack {
     }
 
     public Command pop(){
-        return stack.remove(stack.size()-1);
+        try{
+            return stack.remove(stack.size()-1);
+        }
+        catch(IndexOutOfBoundsException e){
+            System.out.println("Pila vuota");
+            return new Command() {
+                @Override
+                public void execute() {
+
+                }
+
+                @Override
+                public void undo() {
+
+                }
+            };
+        }
+
     }
 
     @Override

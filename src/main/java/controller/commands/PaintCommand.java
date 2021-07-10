@@ -22,6 +22,8 @@ public class PaintCommand implements Command {
     private int cursorX, cursorY;
     private int oldChar;
 
+    private char[][] oldCharGrid;
+
     public PaintCommand(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
     }
@@ -32,6 +34,15 @@ public class PaintCommand implements Command {
      */
     @Override
     public void execute() {
+
+        char[][] currentChars = mainPanel.getAsciiPanel().getChars();
+        oldCharGrid = new char[currentChars.length][currentChars[0].length];
+        for (int y = 0; y < currentChars.length; y++){
+            for (int x = 0; x < currentChars[0].length; x++){
+                oldCharGrid[y][x] = currentChars[y][x];
+            }
+        }
+
         cursorX = mainPanel.getAsciiPanel().getMouseCursorX();
         cursorY = mainPanel.getAsciiPanel().getMouseCursorY();
         mainPanel.getAsciiPanel().setCursorX(cursorX);
@@ -55,12 +66,12 @@ public class PaintCommand implements Command {
     /**
      * Undo the command
      */
-
     @Override
     public void undo() {
-        mainPanel.getAsciiPanel().setCursorX(cursorX);
-        mainPanel.getAsciiPanel().setCursorY(cursorY);
-        mainPanel.getAsciiPanel().write((char) oldChar);
+        mainPanel.getAsciiPanel().setChars(oldCharGrid);
+//        mainPanel.getAsciiPanel().setCursorX(cursorX);
+//        mainPanel.getAsciiPanel().setCursorY(cursorY);
+//        mainPanel.getAsciiPanel().write((char) oldChar);
         mainPanel.getAsciiPanel().repaint();
     }
 

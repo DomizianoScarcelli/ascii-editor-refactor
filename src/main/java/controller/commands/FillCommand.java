@@ -1,10 +1,9 @@
 package controller.commands;
 
-import controller.ToolsPanelController;
 import view.MainPanel;
 
-import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
 /**
  * The action performed after the "Fill" button is clicked by the mouse.
@@ -23,16 +22,24 @@ public class FillCommand implements Command {
 
     private int cursorX, cursorY;
 
+    private char[][] oldCharGrid;
+
     public FillCommand(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
     }
 
     @Override
     public void execute() {
+        char[][] currentChars = mainPanel.getAsciiPanel().getChars();
+        oldCharGrid = new char[currentChars.length][currentChars[0].length];
+        //Matrix copy
+        for (int y = 0; y < currentChars.length; y++){
+            for (int x = 0; x < currentChars[0].length; x++){
+                oldCharGrid[y][x] = currentChars[y][x];
+            }
+        }
         cursorX = mainPanel.getAsciiPanel().getMouseCursorX();
         cursorY = mainPanel.getAsciiPanel().getMouseCursorY();
-
-        System.out.println( mainPanel.getSelectedChar());
 
         if (mainPanel.getCurrentButtonPressed() == 1) {
              mainPanel.getAsciiPanel().fill((char) mainPanel.getSelectedChar(), mainPanel.getAsciiPanel().getMouseCursorX(), mainPanel.getAsciiPanel().getMouseCursorY(), mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
@@ -40,18 +47,16 @@ public class FillCommand implements Command {
         else {
             mainPanel.getAsciiPanel().fill((char) (0), cursorX, cursorY, Color.black, Color.black);
         }
-//        mainPanel.getAsciiPanel().repaint();
+        mainPanel.getAsciiPanel().repaint();
 
         mainPanel.getCommandStack().push(this);
-        System.out.println(mainPanel.getCurrentButtonPressed());
-        System.out.println(mainPanel.getCommandStack());
 
     }
 
-    //TODO implementa l'undo
     @Override
     public void undo() {
-        System.out.println(mainPanel.getCommandStack());
+        mainPanel.getAsciiPanel().setChars(oldCharGrid);
+        mainPanel.getAsciiPanel().repaint();
     }
 
 }

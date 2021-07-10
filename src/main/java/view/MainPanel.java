@@ -57,6 +57,15 @@ public class MainPanel extends JFrame {
         //Creates the Menu Bar and puts it on the top of the window
         JMenuBar menuBar = new JMenuBar();
         JMenu menuBarFile = new JMenu("File");
+
+        //Undo button and listener
+        JButton undo = ButtonFactory.menuBarButton("src/main/resources/undo.png");
+        menuBar.add(undo);
+        undo.addActionListener(e -> {
+            Command command = commandStack.pop();
+            command.undo();
+        });
+
         menuBar.add(menuBarFile);
         this.add(menuBar, BorderLayout.NORTH);
         JMenuItem menuBarFileNew = new JMenuItem("New...");
@@ -121,7 +130,6 @@ public class MainPanel extends JFrame {
         characterNextPrevSelectorPanel.add(nextCharacter);
         characterPanel.add(characterNextPrevSelectorPanel, BorderLayout.SOUTH);
 
-
         //JPanel containing other JPanels that contains tools
         JPanel toolsPanel = new JPanel();
         toolsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 0));
@@ -131,13 +139,7 @@ public class MainPanel extends JFrame {
         toolsPanel.add(characterPanel);
         toolsPanel.add(colorPanel);
 
-        //Undo button and listener
-        JButton undo = new JButton("Undo");
-        toolsPanel.add(undo);
-        undo.addActionListener(e -> {
-            Command command = commandStack.pop();
-            command.undo();
-        });
+
 
         mainContainer.add(toolsPanel, BorderLayout.NORTH);
 

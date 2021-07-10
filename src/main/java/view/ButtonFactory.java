@@ -1,6 +1,7 @@
 package view;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 
 public class ButtonFactory {
@@ -29,6 +30,20 @@ public class ButtonFactory {
         button.setBackground(Color.WHITE);
         addIconToButton(button, iconFileName, 20, 20);
         button.setFocusPainted(false);
+
+        return button;
+    }
+
+    public static JButton menuBarButton(String iconFileName){
+        JButton button = new JButton();
+        button.setPreferredSize(new Dimension(15,15));
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+
+        button.setBorder(BorderFactory.createLineBorder(Color.white, 8));
+        button.setBorderPainted(false);
+//        button.setMargin(new );
+        addIconToButton(button, iconFileName, 15, 15);
         return button;
     }
 

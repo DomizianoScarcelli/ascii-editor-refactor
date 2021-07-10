@@ -817,7 +817,6 @@ public class AsciiPanel extends JPanel {
     public AsciiPanel fill(char character, int x, int y, Color fc, Color bc) {
         char oldchar = getChars()[x][y];
         if (oldchar != character) {
-            System.out.println((int) character);
             getChars()[x][y] = character;
             foregroundColors[x][y] = fc;
             backgroundColors[x][y] = bc;

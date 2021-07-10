@@ -3,6 +3,8 @@ package controller.commands;
 import controller.ToolsPanelController;
 import view.MainPanel;
 
+import java.awt.*;
+
 
 /**
  * The action performed after the "Pick" button is pressed by the mouse and a character on the panel is selected.
@@ -10,7 +12,10 @@ import view.MainPanel;
  * and the char preview panel is updated to show the selected character.
  */
 public class PickCommand implements Command{
-    MainPanel mainPanel;
+    private MainPanel mainPanel;
+
+    private int oldSelectedChar;
+    private Color oldBackground, oldForeground;
 
     public PickCommand(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
@@ -18,6 +23,9 @@ public class PickCommand implements Command{
 
     @Override
     public void execute() {
+        oldSelectedChar = mainPanel.getSelectedChar();
+        oldBackground = mainPanel.getAsciiPanel().getDefaultBackgroundColor();
+        oldForeground = mainPanel.getAsciiPanel().getDefaultForegroundColor();
         int cursorX = mainPanel.getAsciiPanel().getMouseCursorX();
         int cursorY = mainPanel.getAsciiPanel().getMouseCursorY();
         mainPanel.setSelectedChar(mainPanel.getAsciiPanel().pickChar(cursorX, cursorY));
@@ -35,9 +43,12 @@ public class PickCommand implements Command{
         ToolsPanelController.selectPickButton();
     }
 
-    //TODO implementa l'undo
     @Override
     public void undo() {
-        System.out.println("undone");
+        mainPanel.setSelectedChar(oldSelectedChar);
+        mainPanel.setDefaultForegroundColor(oldForeground);
+        mainPanel.setDefaultBackgroundColor(oldBackground);
+        ToolsPanelController toolsPanelController = ToolsPanelController.getInstance();
+        toolsPanelController.updatePreview();
     }
 }
