@@ -59,12 +59,24 @@ public class MainPanel extends JFrame {
         JMenu menuBarFile = new JMenu("File");
 
         //Undo button and listener
+        //TODO per implementare l'undo potresti creare una classe UndoCommand e RedoCommand. In questo modo il redo può essere implementato facendo l'undo dell'UndoCommand.
         JButton undo = ButtonFactory.menuBarButton("src/main/resources/undo.png");
         menuBar.add(undo);
         undo.addActionListener(e -> {
-            Command command = commandStack.pop();
-            command.undo();
+//            Command command = commandStack.pop();
+//            command.undo();
+            UndoCommand undoCommand = new UndoCommand();
+            undoCommand.execute();
         });
+
+        JButton redo = ButtonFactory.menuBarButton("src/main/resources/redo.png");
+        menuBar.add(redo);
+//        redo.addActionListener(e -> {
+//            Command command = commandStack.pop();
+//            command.undo();
+//        });
+
+
 
         menuBar.add(menuBarFile);
         this.add(menuBar, BorderLayout.NORTH);
@@ -138,6 +150,13 @@ public class MainPanel extends JFrame {
         toolsPanel.add(buttonPanel);
         toolsPanel.add(characterPanel);
         toolsPanel.add(colorPanel);
+
+
+        JButton squareButton = new JButton("Quadrato");
+        toolsPanel.add(squareButton);
+        squareButton.addActionListener( e -> {
+            this.command = new SquareCommand();
+        });
 
 
 

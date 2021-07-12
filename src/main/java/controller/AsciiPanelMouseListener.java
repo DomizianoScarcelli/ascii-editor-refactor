@@ -7,6 +7,7 @@ import controller.commands.PaintCommand;
 import controller.commands.PickCommand;
 import view.MainPanel;
 
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -29,7 +30,19 @@ public class AsciiPanelMouseListener implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+//        mainPanel.setCurrentButtonPressed(e.getButton());
+//        Command currentCommand = mainPanel.getCommand();
+//        if (currentCommand instanceof FillCommand) mainPanel.setCommand(new FillCommand(mainPanel));
+//        else if (currentCommand instanceof PickCommand) mainPanel.setCommand(new PickCommand(mainPanel));
+//        else if (currentCommand instanceof PaintCommand) {
+////            ((PaintCommand) currentCommand).setPreviousCommand(null);
+//            PaintCommand newPaintCommand = new PaintCommand(mainPanel);
+//            newPaintCommand.setPreviousCommand(currentCommand);
+//            mainPanel.setCommand(newPaintCommand);
+//        }
+//
+//
+//        mainPanel.executeCommand();
     }
 
     /**
@@ -42,7 +55,14 @@ public class AsciiPanelMouseListener implements MouseListener {
         Command currentCommand = mainPanel.getCommand();
         if (currentCommand instanceof FillCommand) mainPanel.setCommand(new FillCommand(mainPanel));
         else if (currentCommand instanceof PickCommand) mainPanel.setCommand(new PickCommand(mainPanel));
-        else if (currentCommand instanceof PaintCommand) mainPanel.setCommand(new PaintCommand(mainPanel));
+        else if (currentCommand instanceof PaintCommand) {
+//            ((PaintCommand) currentCommand).setPreviousCommand(null);
+            PaintCommand newPaintCommand = new PaintCommand(mainPanel);
+            newPaintCommand.setPreviousCommand(currentCommand);
+            mainPanel.setCommand(newPaintCommand);
+        }
+
+
         mainPanel.executeCommand();
     }
 

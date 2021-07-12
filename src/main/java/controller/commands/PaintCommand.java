@@ -3,6 +3,8 @@ package controller.commands;
 import controller.ToolsPanelController;
 import view.MainPanel;
 
+import java.util.Stack;
+
 /**
  * Writes the selected char on the panel when the left mouse button is pressed.
  * the character is written on the mouse current position.
@@ -21,6 +23,9 @@ public class PaintCommand implements Command {
     //Stores the cursor position so that it can undo the last command
     private int cursorX, cursorY;
     private int oldChar;
+
+    private Command previousCommand = null;
+
 
     private char[][] oldCharGrid;
 
@@ -59,7 +64,6 @@ public class PaintCommand implements Command {
         }
         mainPanel.getAsciiPanel().repaint();
         ToolsPanelController.selectPaintButton();
-        System.out.println(mainPanel.getCommandStack());
     }
 
 
@@ -73,6 +77,17 @@ public class PaintCommand implements Command {
 //        mainPanel.getAsciiPanel().setCursorY(cursorY);
 //        mainPanel.getAsciiPanel().write((char) oldChar);
         mainPanel.getAsciiPanel().repaint();
+//        if (this.previousCommand != null) {
+//            System.out.println("daje");
+//            this.previousCommand.undo();
+//        }
     }
 
+    public void setPreviousCommand(Command previousCommand) {
+        this.previousCommand = previousCommand;
+    }
+
+    public Command getPreviousCommand() {
+        return previousCommand;
+    }
 }

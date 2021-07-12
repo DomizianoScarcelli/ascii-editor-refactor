@@ -51,6 +51,8 @@ public class FillCommand implements Command {
 
         mainPanel.getCommandStack().push(this);
 
+        System.out.println(mainPanel.getCommandStack());
+
     }
 
     @Override

@@ -6,10 +6,12 @@ import controller.commands.Command;
 import controller.commands.FillCommand;
 import controller.commands.PaintCommand;
 import controller.commands.PickCommand;
+import model.CommandStack;
 import view.MainPanel;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.util.Stack;
 
 /**
  * Models the actions performed on the panel by the mouse when moving.
