@@ -1,10 +1,7 @@
 package controller;
 
 
-import controller.commands.Command;
-import controller.commands.FillCommand;
-import controller.commands.PaintCommand;
-import controller.commands.PickCommand;
+import controller.commands.*;
 import view.MainPanel;
 
 import java.awt.*;
@@ -61,9 +58,11 @@ public class AsciiPanelMouseListener implements MouseListener {
             newPaintCommand.setPreviousCommand(currentCommand);
             mainPanel.setCommand(newPaintCommand);
         }
+        else if (currentCommand instanceof SquareCommand) mainPanel.setCommand(new SquareCommand(mainPanel.getShapeDimension().getValue()));
 
 
         mainPanel.executeCommand();
+        mainPanel.getAsciiPanel().repaint();
     }
 
 

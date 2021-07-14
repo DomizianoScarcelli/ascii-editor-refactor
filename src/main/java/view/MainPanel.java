@@ -10,6 +10,8 @@ import model.AsciiPanel;
 import model.CommandStack;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -26,6 +28,8 @@ public class MainPanel extends JFrame {
     private JPanel backgroundColorPanel;
 
     private JButton paint, fill, pick;
+
+    private JSlider shapeDimension;
 
     private BufferedImage importedBufferedImage;
 
@@ -154,8 +158,16 @@ public class MainPanel extends JFrame {
 
         JButton squareButton = new JButton("Quadrato");
         toolsPanel.add(squareButton);
+
+        shapeDimension = new JSlider(JSlider.HORIZONTAL, 1, 30, 10);
+        shapeDimension.setMajorTickSpacing(1);
+        shapeDimension.setPaintTicks(true);
+        toolsPanel.add(shapeDimension);
+        shapeDimension.addChangeListener(new ShapeSliderChangeListener(this));
+
+
         squareButton.addActionListener( e -> {
-            this.command = new SquareCommand();
+            this.command = new SquareCommand(shapeDimension.getValue()); //empty char matrix
         });
 
 
@@ -307,5 +319,9 @@ public class MainPanel extends JFrame {
 
     public void setCommandStack(CommandStack commandStack) {
         this.commandStack = commandStack;
+    }
+
+    public JSlider getShapeDimension() {
+        return shapeDimension;
     }
 }

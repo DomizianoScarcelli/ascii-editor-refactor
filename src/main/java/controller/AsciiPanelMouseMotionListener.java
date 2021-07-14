@@ -2,10 +2,7 @@ package controller;
 
 
 
-import controller.commands.Command;
-import controller.commands.FillCommand;
-import controller.commands.PaintCommand;
-import controller.commands.PickCommand;
+import controller.commands.*;
 import model.CommandStack;
 import view.MainPanel;
 
@@ -40,6 +37,7 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
         if (currentCommand instanceof FillCommand) mainPanel.setCommand(new FillCommand(mainPanel));
         else if (currentCommand instanceof PickCommand) mainPanel.setCommand(new PickCommand(mainPanel));
         else if (currentCommand instanceof PaintCommand) mainPanel.setCommand(new PaintCommand(mainPanel));
+        else if (currentCommand instanceof SquareCommand) mainPanel.setCommand(new SquareCommand(mainPanel.getShapeDimension().getValue()));
         mainPanel.executeCommand();
     }
 
