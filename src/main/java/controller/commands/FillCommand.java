@@ -3,7 +3,6 @@ package controller.commands;
 import view.MainPanel;
 
 import java.awt.*;
-import java.util.Arrays;
 
 /**
  * The action performed after the "Fill" button is clicked by the mouse.

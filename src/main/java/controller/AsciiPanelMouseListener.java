@@ -2,9 +2,10 @@ package controller;
 
 
 import controller.commands.*;
+import controller.commands.shapes.CircleCommand;
+import controller.commands.shapes.SquareCommand;
 import view.MainPanel;
 
-import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -59,6 +60,7 @@ public class AsciiPanelMouseListener implements MouseListener {
             mainPanel.setCommand(newPaintCommand);
         }
         else if (currentCommand instanceof SquareCommand) mainPanel.setCommand(new SquareCommand(mainPanel.getShapeDimension().getValue()));
+        else if (currentCommand instanceof CircleCommand) mainPanel.setCommand(new CircleCommand(mainPanel.getShapeDimension().getValue()));
 
 
         mainPanel.executeCommand();

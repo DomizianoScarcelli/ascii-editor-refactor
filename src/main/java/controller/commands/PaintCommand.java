@@ -3,7 +3,6 @@ package controller.commands;
 import controller.ToolsPanelController;
 import view.MainPanel;
 
-import java.util.Stack;
 
 /**
  * Writes the selected char on the panel when the left mouse button is pressed.

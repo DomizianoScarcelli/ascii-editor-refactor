@@ -1,6 +1,6 @@
 package controller;
 
-import controller.commands.SquareCommand;
+import controller.commands.shapes.SquareCommand;
 import view.MainPanel;
 
 import javax.swing.*;

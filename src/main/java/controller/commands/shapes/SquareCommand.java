@@ -1,9 +1,10 @@
-package controller.commands;
+package controller.commands.shapes;
 
+import controller.commands.Command;
 import view.MainPanel;
 
 
-public class SquareCommand implements Command{
+public class SquareCommand implements Command {
 
     private int cursorX;
     private int cursorY;
@@ -35,7 +36,7 @@ public class SquareCommand implements Command{
 
     @Override
     public void undo() {
-
+        //TODO implementa undo
     }
 
 }

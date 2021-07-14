@@ -3,12 +3,12 @@ package controller;
 
 
 import controller.commands.*;
-import model.CommandStack;
+import controller.commands.shapes.CircleCommand;
+import controller.commands.shapes.SquareCommand;
 import view.MainPanel;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import java.util.Stack;
 
 /**
  * Models the actions performed on the panel by the mouse when moving.
@@ -38,6 +38,7 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
         else if (currentCommand instanceof PickCommand) mainPanel.setCommand(new PickCommand(mainPanel));
         else if (currentCommand instanceof PaintCommand) mainPanel.setCommand(new PaintCommand(mainPanel));
         else if (currentCommand instanceof SquareCommand) mainPanel.setCommand(new SquareCommand(mainPanel.getShapeDimension().getValue()));
+        else if (currentCommand instanceof CircleCommand) mainPanel.setCommand(new CircleCommand(mainPanel.getShapeDimension().getValue()));
         mainPanel.executeCommand();
     }
 

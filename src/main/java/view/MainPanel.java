@@ -2,6 +2,8 @@ package view;
 
 import controller.*;
 import controller.commands.*;
+import controller.commands.shapes.CircleCommand;
+import controller.commands.shapes.SquareCommand;
 import controller.menubar.MenuBarActionImport;
 import controller.menubar.MenuBarActionLoad;
 import controller.menubar.MenuBarActionSave;
@@ -10,8 +12,6 @@ import model.AsciiPanel;
 import model.CommandStack;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -158,6 +158,8 @@ public class MainPanel extends JFrame {
 
         JButton squareButton = new JButton("Quadrato");
         toolsPanel.add(squareButton);
+        JButton circleButton = new JButton("Cerchio");
+        toolsPanel.add(circleButton);
 
         shapeDimension = new JSlider(JSlider.HORIZONTAL, 1, 30, 10);
         shapeDimension.setMajorTickSpacing(1);
@@ -167,7 +169,10 @@ public class MainPanel extends JFrame {
 
 
         squareButton.addActionListener( e -> {
-            this.command = new SquareCommand(shapeDimension.getValue()); //empty char matrix
+            this.command = new SquareCommand(shapeDimension.getValue());
+        });
+        circleButton.addActionListener(e -> {
+            this.command = new CircleCommand(shapeDimension.getValue());
         });
 
 
