@@ -29,7 +29,6 @@ public class MainPanel extends JFrame {
 
     private JButton paint, fill, pick;
 
-    private JSlider shapeDimension;
 
     private BufferedImage importedBufferedImage;
 
@@ -40,6 +39,9 @@ public class MainPanel extends JFrame {
     private CommandStack commandStack = new CommandStack();
 
     private Command command;
+
+    private AsciiPanelMouseListener asciiPanelMouseListener;
+    private AsciiPanelMouseMotionListener asciiPanelMouseMotionListener;
 
     private static MainPanel instance;
 
@@ -161,18 +163,13 @@ public class MainPanel extends JFrame {
         JButton circleButton = new JButton("Cerchio");
         toolsPanel.add(circleButton);
 
-        shapeDimension = new JSlider(JSlider.HORIZONTAL, 1, 30, 10);
-        shapeDimension.setMajorTickSpacing(1);
-        shapeDimension.setPaintTicks(true);
-        toolsPanel.add(shapeDimension);
-        shapeDimension.addChangeListener(new ShapeSliderChangeListener(this));
 
 
         squareButton.addActionListener( e -> {
-            this.command = new SquareCommand(shapeDimension.getValue());
+            this.command = new SquareCommand(1);
         });
         circleButton.addActionListener(e -> {
-            this.command = new CircleCommand(shapeDimension.getValue());
+            this.command = new CircleCommand(1);
         });
 
 
@@ -190,9 +187,12 @@ public class MainPanel extends JFrame {
         asciiPanel.setCursorX(0);
         asciiPanel.setCursorY(0);
 
+        asciiPanelMouseListener = new AsciiPanelMouseListener(this);
+        asciiPanelMouseMotionListener = new AsciiPanelMouseMotionListener(this);
+
         // -------------------------------------Add Listeners-------------------------------------------------
-        asciiPanel.addMouseListener(new AsciiPanelMouseListener(this));
-        asciiPanel.addMouseMotionListener(new AsciiPanelMouseMotionListener(this));
+        asciiPanel.addMouseListener(asciiPanelMouseListener);
+        asciiPanel.addMouseMotionListener(asciiPanelMouseMotionListener);
 
         // Adds character selector event listeners
         characterPanel.addMouseListener(new CharacterPanelMouseListener());
@@ -326,7 +326,12 @@ public class MainPanel extends JFrame {
         this.commandStack = commandStack;
     }
 
-    public JSlider getShapeDimension() {
-        return shapeDimension;
+
+    public AsciiPanelMouseListener getAsciiPanelMouseListener() {
+        return asciiPanelMouseListener;
+    }
+
+    public AsciiPanelMouseMotionListener getAsciiPanelMouseMotionListener() {
+        return asciiPanelMouseMotionListener;
     }
 }

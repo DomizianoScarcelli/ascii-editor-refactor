@@ -3,6 +3,8 @@ package controller.commands.shapes;
 import controller.commands.Command;
 import view.MainPanel;
 
+import java.util.Arrays;
+
 
 public class CircleCommand implements Command {
 
@@ -10,6 +12,7 @@ public class CircleCommand implements Command {
     private int cursorY;
     private MainPanel mainPanel = MainPanel.getInstance();
     private int radius;
+    private char[][] oldCharGrid;
 
     public CircleCommand(int radius){
         this.radius = radius;
@@ -17,23 +20,36 @@ public class CircleCommand implements Command {
 
     @Override
     public void execute() {
-        cursorX = mainPanel.getAsciiPanel().getMouseCursorX();
-        cursorY = mainPanel.getAsciiPanel().getMouseCursorY();
+        char[][] currentChars = mainPanel.getAsciiPanel().getChars();
+        oldCharGrid = new char[currentChars.length][currentChars[0].length];
+        //Matrix copy
+        for (int y = 0; y < currentChars.length; y++){
+            for (int x = 0; x < currentChars[0].length; x++){
+                oldCharGrid[y][x] = currentChars[y][x];
+            }
+        }
+
+        cursorX = mainPanel.getAsciiPanel().getCursorX();
+        cursorY = mainPanel.getAsciiPanel().getCursorY();
+
+        mainPanel.getCommandStack().push(this);
         midPointCircleDraw(cursorX, cursorY, radius);
     }
 
-    //TODO aggiusta sta cosa, non so perchè ma due punti non vengono disegnati
+    //TODO aggiusta sta cosa, non so perchè ma due punti non vengono disegnati (mi sa che devi proprio cambiare implementazione dell'algoritmo)
     //Source: https://www.geeksforgeeks.org/mid-point-circle-drawing-algorithm/
     public void midPointCircleDraw(int x_centre, int y_centre, int r)
     {
         int x = r, y = 0;
+
+
 
         // Printing the initial point on the axes after translation
         drawPoint(x + x_centre, y + y_centre);
 
         // When radius is zero only a single point will be printed
         if (r > 0) {
-            drawPoint(x + x_centre, -y + y_centre);
+            drawPoint(x + x_centre, -y + y_centre );
             drawPoint(y + x_centre, x + y_centre);
             drawPoint(-y + x_centre, x + y_centre);
         }
@@ -42,8 +58,7 @@ public class CircleCommand implements Command {
         while (x > y) {
             y++;
             // Mid-point is inside or on the perimeter
-            if (P <= 0)
-                P = P + 2 * y + 1;
+            if (P <= 0) P = P + 2 * y + 1;
                 // Mid-point is outside the perimeter
             else {
                 x--;
@@ -51,8 +66,7 @@ public class CircleCommand implements Command {
             }
 
             // All the perimeter points have already been printed
-            if (x < y)
-                break;
+            if (x < y) break;
 
             // Printing the generated point and its reflection in the other octants after translation
             drawPoint(x + x_centre, y + y_centre);
@@ -79,7 +93,10 @@ public class CircleCommand implements Command {
 
     @Override
     public void undo() {
-        //TODO implementa undo
+        mainPanel.getAsciiPanel().setCursorX(mainPanel.getAsciiPanelMouseListener().getInitialCursorX());
+        mainPanel.getAsciiPanel().setCursorY(mainPanel.getAsciiPanelMouseListener().getInitialCursorY());
+        mainPanel.getAsciiPanel().setChars(oldCharGrid);
+        mainPanel.getAsciiPanel().repaint();
     }
 
 }
