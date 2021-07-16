@@ -19,6 +19,7 @@ public class SquareCommand implements Command {
     @Override
     public void execute() {
 
+
         char[][] currentChars = mainPanel.getAsciiPanel().getChars();
         oldCharGrid = new char[currentChars.length][currentChars[0].length];
         //Matrix copy
@@ -42,7 +43,6 @@ public class SquareCommand implements Command {
         }
         mainPanel.getCommandStack().push(this);
     }
-
 
 
 

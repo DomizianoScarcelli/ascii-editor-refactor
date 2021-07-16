@@ -3,6 +3,7 @@ package view;
 import controller.*;
 import controller.commands.*;
 import controller.commands.shapes.CircleCommand;
+import controller.commands.shapes.RectCommand;
 import controller.commands.shapes.SquareCommand;
 import controller.menubar.MenuBarActionImport;
 import controller.menubar.MenuBarActionLoad;
@@ -13,6 +14,8 @@ import model.CommandStack;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
 //TODO documenta tutto
@@ -162,6 +165,8 @@ public class MainPanel extends JFrame {
         toolsPanel.add(squareButton);
         JButton circleButton = new JButton("Cerchio");
         toolsPanel.add(circleButton);
+        JButton rectButton = new JButton("Rettangolo");
+        toolsPanel.add(rectButton);
 
 
 
@@ -170,6 +175,9 @@ public class MainPanel extends JFrame {
         });
         circleButton.addActionListener(e -> {
             this.command = new CircleCommand(1);
+        });
+        rectButton.addActionListener(e -> {
+            this.command = new RectCommand(asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY(), asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY());
         });
 
 
@@ -218,6 +226,9 @@ public class MainPanel extends JFrame {
             ToolsPanelController.selectFillButton();
             this.command = new FillCommand(this);
         });
+
+        this.addKeyListener(new MainPanelKeyListener());
+        this.setFocusable(true);
     }
 
     public AsciiPanel getAsciiPanel() {

@@ -4,6 +4,7 @@ package controller;
 
 import controller.commands.*;
 import controller.commands.shapes.CircleCommand;
+import controller.commands.shapes.RectCommand;
 import controller.commands.shapes.SquareCommand;
 import view.MainPanel;
 
@@ -54,14 +55,16 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
         else if (currentCommand instanceof PaintCommand) mainPanel.setCommand(new PaintCommand(mainPanel));
 
 
-        if (!(currentCommand instanceof  SquareCommand || currentCommand instanceof CircleCommand)){
+        if (!(currentCommand instanceof  SquareCommand || currentCommand instanceof CircleCommand || currentCommand instanceof RectCommand)){
             mainPanel.executeCommand();
         } else{
             Command previousCommand = mainPanel.getCommandStack().pop();
             previousCommand.undo();
 
-            if (currentCommand instanceof SquareCommand) mainPanel.setCommand(new SquareCommand(pointDistance));
+            if (currentCommand instanceof SquareCommand) mainPanel.setCommand(new SquareCommand((int) Math.round(pointDistance / Math.sqrt(2)) + 1));
             else if (currentCommand instanceof CircleCommand) mainPanel.setCommand(new CircleCommand(pointDistance));
+            else if (currentCommand instanceof RectCommand) mainPanel.setCommand(new RectCommand(x1,y1,middleCursorX,middleCursorY));
+
 
             mainPanel.getCommand().execute();
 

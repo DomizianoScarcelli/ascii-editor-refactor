@@ -3,6 +3,7 @@ package controller;
 
 import controller.commands.*;
 import controller.commands.shapes.CircleCommand;
+import controller.commands.shapes.RectCommand;
 import controller.commands.shapes.SquareCommand;
 import view.MainPanel;
 
@@ -33,19 +34,6 @@ public class AsciiPanelMouseListener implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-//        mainPanel.setCurrentButtonPressed(e.getButton());
-//        Command currentCommand = mainPanel.getCommand();
-//        if (currentCommand instanceof FillCommand) mainPanel.setCommand(new FillCommand(mainPanel));
-//        else if (currentCommand instanceof PickCommand) mainPanel.setCommand(new PickCommand(mainPanel));
-//        else if (currentCommand instanceof PaintCommand) {
-////            ((PaintCommand) currentCommand).setPreviousCommand(null);
-//            PaintCommand newPaintCommand = new PaintCommand(mainPanel);
-//            newPaintCommand.setPreviousCommand(currentCommand);
-//            mainPanel.setCommand(newPaintCommand);
-//        }
-//
-//
-//        mainPanel.executeCommand();
     }
 
     /**
@@ -104,7 +92,14 @@ public class AsciiPanelMouseListener implements MouseListener {
         else if (currentCommand instanceof SquareCommand){
             mainPanel.getAsciiPanel().setCursorX(initialCursorX);
             mainPanel.getAsciiPanel().setCursorY(initialCursorY);
-            mainPanel.setCommand(new SquareCommand(pointDistance));
+            mainPanel.setCommand(new SquareCommand((int) Math.round(pointDistance / Math.sqrt(2)) + 1));
+            mainPanel.getCommand().execute();
+            mainPanel.getAsciiPanel().repaint();
+        }
+        else if (currentCommand instanceof RectCommand){
+            mainPanel.getAsciiPanel().setCursorX(initialCursorX);
+            mainPanel.getAsciiPanel().setCursorY(initialCursorY);
+            mainPanel.setCommand(new RectCommand(initialCursorX, initialCursorY, finalCursorX, finalCursorY));
             mainPanel.getCommand().execute();
             mainPanel.getAsciiPanel().repaint();
         }
@@ -127,31 +122,19 @@ public class AsciiPanelMouseListener implements MouseListener {
         return initialCursorX;
     }
 
-    public void setInitialCursorX(int initialCursorX) {
-        this.initialCursorX = initialCursorX;
-    }
 
     public int getInitialCursorY() {
         return initialCursorY;
     }
 
-    public void setInitialCursorY(int initialCursorY) {
-        this.initialCursorY = initialCursorY;
-    }
 
     public int getFinalCursorX() {
         return finalCursorX;
     }
 
-    public void setFinalCursorX(int finalCursorX) {
-        this.finalCursorX = finalCursorX;
-    }
 
     public int getFinalCursorY() {
         return finalCursorY;
     }
 
-    public void setFinalCursorY(int finalCursorY) {
-        this.finalCursorY = finalCursorY;
-    }
 }
