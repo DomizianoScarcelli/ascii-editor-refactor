@@ -62,6 +62,7 @@ public class PaintCommand implements Command {
             mainPanel.getAsciiPanel().write((char) 0);
         }
         mainPanel.getAsciiPanel().repaint();
+        System.out.println(mainPanel.getSelectedChar());
         ToolsPanelController.selectPaintButton();
     }
 

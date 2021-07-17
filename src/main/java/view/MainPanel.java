@@ -41,6 +41,8 @@ public class MainPanel extends JFrame {
 
     private CommandStack commandStack = new CommandStack();
 
+    public SelectCommand currentSelection;
+
     private Command command;
 
     private AsciiPanelMouseListener asciiPanelMouseListener;
@@ -167,6 +169,8 @@ public class MainPanel extends JFrame {
         toolsPanel.add(circleButton);
         JButton rectButton = new JButton("Rettangolo");
         toolsPanel.add(rectButton);
+        JButton selectButton = new JButton("Seleziona");
+        toolsPanel.add(selectButton);
 
 
 
@@ -178,6 +182,9 @@ public class MainPanel extends JFrame {
         });
         rectButton.addActionListener(e -> {
             this.command = new RectCommand(asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY(), asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY());
+        });
+        selectButton.addActionListener(e -> {
+            this.command = new SelectCommand(asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY(), asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY());
         });
 
 

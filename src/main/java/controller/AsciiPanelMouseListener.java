@@ -81,28 +81,23 @@ public class AsciiPanelMouseListener implements MouseListener {
         int y2 = finalCursorY;
 
         int pointDistance = (int) Math.round(Math.sqrt( Math.pow((x2-x1), 2) + Math.pow((y2-y1), 2)));
-
+        mainPanel.getAsciiPanel().setCursorX(initialCursorX);
+        mainPanel.getAsciiPanel().setCursorY(initialCursorY);
         if (currentCommand instanceof CircleCommand) {
-            mainPanel.getAsciiPanel().setCursorX(initialCursorX);
-            mainPanel.getAsciiPanel().setCursorY(initialCursorY);
             mainPanel.setCommand(new CircleCommand(pointDistance));
-            mainPanel.getCommand().execute();
-            mainPanel.getAsciiPanel().repaint();
         }
         else if (currentCommand instanceof SquareCommand){
-            mainPanel.getAsciiPanel().setCursorX(initialCursorX);
-            mainPanel.getAsciiPanel().setCursorY(initialCursorY);
             mainPanel.setCommand(new SquareCommand((int) Math.round(pointDistance / Math.sqrt(2)) + 1));
-            mainPanel.getCommand().execute();
-            mainPanel.getAsciiPanel().repaint();
+        }
+        else if (currentCommand instanceof SelectCommand){
+            mainPanel.setCommand(new SelectCommand(initialCursorX, initialCursorY, finalCursorX, finalCursorY));
         }
         else if (currentCommand instanceof RectCommand){
-            mainPanel.getAsciiPanel().setCursorX(initialCursorX);
-            mainPanel.getAsciiPanel().setCursorY(initialCursorY);
             mainPanel.setCommand(new RectCommand(initialCursorX, initialCursorY, finalCursorX, finalCursorY));
-            mainPanel.getCommand().execute();
-            mainPanel.getAsciiPanel().repaint();
         }
+        mainPanel.getCommand().execute();
+        mainPanel.getAsciiPanel().repaint();
+
 
     }
 

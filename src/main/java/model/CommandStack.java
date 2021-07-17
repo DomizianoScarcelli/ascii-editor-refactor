@@ -1,12 +1,13 @@
 package model;
 
 import controller.commands.Command;
-import view.MainPanel;
+import controller.commands.PaintCommand;
 
 import java.util.ArrayList;
 
 
 public class CommandStack {
+
 
     private ArrayList<Command> stack = new ArrayList<>();
 
@@ -33,7 +34,6 @@ public class CommandStack {
                 }
             };
         }
-
     }
 
     @Override
