@@ -7,13 +7,13 @@ import java.awt.*;
 /**
  * The action performed after the "Fill" button is clicked by the mouse.
  * It fills the closed area in the current mouse position with the selected character.
- *
+ * <p>
  * button is the button pressed by the mouse encoded with an integer:
- *               <ol>
- *               <li>left button;</li>
- *               <li>center button;</li>
- *               <li>right button.</li>
- *               </ol>
+ * <ol>
+ * <li>left button;</li>
+ * <li>center button;</li>
+ * <li>right button.</li>
+ * </ol>
  */
 public class FillCommand implements Command {
 
@@ -32,8 +32,8 @@ public class FillCommand implements Command {
         char[][] currentChars = mainPanel.getAsciiPanel().getChars();
         oldCharGrid = new char[currentChars.length][currentChars[0].length];
         //Matrix copy
-        for (int y = 0; y < currentChars.length; y++){
-            for (int x = 0; x < currentChars[0].length; x++){
+        for (int y = 0; y < currentChars.length; y++) {
+            for (int x = 0; x < currentChars[0].length; x++) {
                 oldCharGrid[y][x] = currentChars[y][x];
             }
         }
@@ -41,9 +41,8 @@ public class FillCommand implements Command {
         cursorY = mainPanel.getAsciiPanel().getMouseCursorY();
 
         if (mainPanel.getCurrentButtonPressed() == 1) {
-             mainPanel.getAsciiPanel().fill((char) mainPanel.getSelectedChar(), mainPanel.getAsciiPanel().getMouseCursorX(), mainPanel.getAsciiPanel().getMouseCursorY(), mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
-        }
-        else {
+            mainPanel.getAsciiPanel().fill((char) mainPanel.getSelectedChar(), mainPanel.getAsciiPanel().getMouseCursorX(), mainPanel.getAsciiPanel().getMouseCursorY(), mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
+        } else {
             mainPanel.getAsciiPanel().fill((char) (0), cursorX, cursorY, Color.black, Color.black);
         }
         mainPanel.getAsciiPanel().repaint();

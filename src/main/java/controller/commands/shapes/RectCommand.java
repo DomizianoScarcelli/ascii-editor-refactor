@@ -23,36 +23,36 @@ public class RectCommand implements Command {
         char[][] currentChars = mainPanel.getAsciiPanel().getChars();
         oldCharGrid = new char[currentChars.length][currentChars[0].length];
         //Matrix copy
-        for (int y = 0; y < currentChars.length; y++){
-            for (int x = 0; x < currentChars[0].length; x++){
+        for (int y = 0; y < currentChars.length; y++) {
+            for (int x = 0; x < currentChars[0].length; x++) {
                 oldCharGrid[y][x] = currentChars[y][x];
             }
         }
 
         mainPanel.getCommandStack().push(this);
 
-        if (x2 > x1){
+        if (x2 > x1) {
             for (int x = x1; x <= x2; x++) {
                 rectPoints.add(new int[]{x, y1});
                 rectPoints.add(new int[]{x, y2});
             }
         }
 
-        if (x1 >= x2){
+        if (x1 >= x2) {
             for (int x = x2; x <= x1; x++) {
                 rectPoints.add(new int[]{x, y1});
                 rectPoints.add(new int[]{x, y2});
             }
         }
 
-        if (y2 > y1){
+        if (y2 > y1) {
             for (int y = y1; y <= y2; y++) {
                 rectPoints.add(new int[]{x1, y});
                 rectPoints.add(new int[]{x2, y});
             }
         }
 
-        if (y1 > y2){
+        if (y1 > y2) {
             for (int y = y2; y <= y1; y++) {
                 rectPoints.add(new int[]{x1, y});
                 rectPoints.add(new int[]{x2, y});
@@ -60,9 +60,7 @@ public class RectCommand implements Command {
         }
 
 
-
-
-        for (int[] point : rectPoints){
+        for (int[] point : rectPoints) {
             mainPanel.getAsciiPanel().setCursorX(point[0]);
             mainPanel.getAsciiPanel().setCursorY(point[1]);
             mainPanel.getAsciiPanel().write((char) mainPanel.getSelectedChar(), mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());

@@ -23,8 +23,6 @@ public class PaintCommand implements Command {
     private int cursorX, cursorY;
     private int oldChar;
 
-    private Command previousCommand = null;
-
 
     private char[][] oldCharGrid;
 
@@ -41,8 +39,8 @@ public class PaintCommand implements Command {
 
         char[][] currentChars = mainPanel.getAsciiPanel().getChars();
         oldCharGrid = new char[currentChars.length][currentChars[0].length];
-        for (int y = 0; y < currentChars.length; y++){
-            for (int x = 0; x < currentChars[0].length; x++){
+        for (int y = 0; y < currentChars.length; y++) {
+            for (int x = 0; x < currentChars[0].length; x++) {
                 oldCharGrid[y][x] = currentChars[y][x];
             }
         }
@@ -83,11 +81,4 @@ public class PaintCommand implements Command {
 //        }
     }
 
-    public void setPreviousCommand(Command previousCommand) {
-        this.previousCommand = previousCommand;
-    }
-
-    public Command getPreviousCommand() {
-        return previousCommand;
-    }
 }

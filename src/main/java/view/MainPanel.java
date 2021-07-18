@@ -17,6 +17,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 //TODO documenta tutto
 
@@ -42,6 +43,8 @@ public class MainPanel extends JFrame {
     private CommandStack commandStack = new CommandStack();
 
     public SelectCommand currentSelection;
+    public char[][] beforeSelectionGrid;
+    public ArrayList<int[]> selectedPoints;
 
     private Command command;
 
@@ -86,7 +89,6 @@ public class MainPanel extends JFrame {
 //            Command command = commandStack.pop();
 //            command.undo();
 //        });
-
 
 
         menuBar.add(menuBarFile);
@@ -140,9 +142,9 @@ public class MainPanel extends JFrame {
         //JPanel containing the character preview and character selector
         JPanel characterPanel = new JPanel(new BorderLayout());
 
-        charPreviewPanel = new AsciiPanel(3,3, AsciiFont.CP437_16x16);
+        charPreviewPanel = new AsciiPanel(3, 3, AsciiFont.CP437_16x16);
         charPreviewPanel.setBackground(Color.BLACK);
-        charPreviewPanel.setPreferredSize(new Dimension(40,50));
+        charPreviewPanel.setPreferredSize(new Dimension(40, 50));
         characterPanel.add(charPreviewPanel, BorderLayout.CENTER);
         characterPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         JButton previousCharacter = ButtonFactory.createCharacterSelectorButton("src/main/resources/previous.png");
@@ -171,10 +173,11 @@ public class MainPanel extends JFrame {
         toolsPanel.add(rectButton);
         JButton selectButton = new JButton("Seleziona");
         toolsPanel.add(selectButton);
+        JButton moveButton = new JButton("Muovi");
+        toolsPanel.add(moveButton);
 
 
-
-        squareButton.addActionListener( e -> {
+        squareButton.addActionListener(e -> {
             this.command = new SquareCommand(1);
         });
         circleButton.addActionListener(e -> {
@@ -186,7 +189,9 @@ public class MainPanel extends JFrame {
         selectButton.addActionListener(e -> {
             this.command = new SelectCommand(asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY(), asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY());
         });
-
+        moveButton.addActionListener(e -> {
+            this.command = new MoveCommand(asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY(), asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY());
+        });
 
 
         mainContainer.add(toolsPanel, BorderLayout.NORTH);
@@ -328,7 +333,8 @@ public class MainPanel extends JFrame {
         this.command = strategy;
 
     }
-    public void executeCommand(){
+
+    public void executeCommand() {
         this.command.execute();
     }
 

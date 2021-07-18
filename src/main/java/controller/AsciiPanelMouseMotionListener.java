@@ -1,7 +1,6 @@
 package controller;
 
 
-
 import controller.commands.*;
 import controller.commands.shapes.CircleCommand;
 import controller.commands.shapes.RectCommand;
@@ -19,7 +18,8 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
      * The {@link MainPanel} object that allows to edit the image on the ascii panel when an action is performed.
      */
     private MainPanel mainPanel;
-    private int middleCursorX, middleCursorY;;
+    private int middleCursorX, middleCursorY;
+    ;
 
 
     /**
@@ -47,7 +47,7 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
         middleCursorY = mainPanel.getAsciiPanel().getMouseCursorY();
         int x1 = mainPanel.getAsciiPanelMouseListener().getInitialCursorX();
         int y1 = mainPanel.getAsciiPanelMouseListener().getInitialCursorY();
-        int pointDistance = (int) Math.round(Math.sqrt( Math.pow((middleCursorX-x1), 2) + Math.pow((middleCursorY-y1), 2)));
+        int pointDistance = (int) Math.round(Math.sqrt(Math.pow((middleCursorX - x1), 2) + Math.pow((middleCursorY - y1), 2)));
 
         Command currentCommand = mainPanel.getCommand();
         if (currentCommand instanceof FillCommand) mainPanel.setCommand(new FillCommand(mainPanel));
@@ -55,20 +55,24 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
         else if (currentCommand instanceof PaintCommand) mainPanel.setCommand(new PaintCommand(mainPanel));
 
 
-        if (!(currentCommand instanceof  SquareCommand || currentCommand instanceof CircleCommand || currentCommand instanceof RectCommand)){
+        if (!(currentCommand instanceof SquareCommand || currentCommand instanceof CircleCommand || currentCommand instanceof RectCommand || currentCommand instanceof MoveCommand)) {
             mainPanel.executeCommand();
-        } else{
+        } else {
             Command previousCommand = mainPanel.getCommandStack().pop();
             previousCommand.undo();
 
-            if (currentCommand instanceof SquareCommand) mainPanel.setCommand(new SquareCommand((int) Math.round(pointDistance / Math.sqrt(2)) + 1));
+            if (currentCommand instanceof SquareCommand)
+                mainPanel.setCommand(new SquareCommand((int) Math.round(pointDistance / Math.sqrt(2)) + 1));
             else if (currentCommand instanceof CircleCommand) mainPanel.setCommand(new CircleCommand(pointDistance));
-            else if (currentCommand instanceof SelectCommand) mainPanel.setCommand(new SelectCommand(x1,y1,middleCursorX,middleCursorY));
-            else if (currentCommand instanceof RectCommand) mainPanel.setCommand(new RectCommand(x1,y1,middleCursorX,middleCursorY));
+            else if (currentCommand instanceof SelectCommand)
+                mainPanel.setCommand(new SelectCommand(x1, y1, middleCursorX, middleCursorY));
+            else if (currentCommand instanceof RectCommand)
+                mainPanel.setCommand(new RectCommand(x1, y1, middleCursorX, middleCursorY));
+            else if (currentCommand instanceof MoveCommand)
+                mainPanel.setCommand(new MoveCommand(x1, y1, middleCursorX, middleCursorY));
 
 
             mainPanel.getCommand().execute();
-
 
 
         }
@@ -84,7 +88,7 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
         updateMousePosition(e);
     }
 
-    public void updateMousePosition(MouseEvent e){
+    public void updateMousePosition(MouseEvent e) {
         mainPanel.getAsciiPanel().setMouseCursorX(e.getX() / 16);
         mainPanel.getAsciiPanel().setMouseCursorY(e.getY() / 16);
         mainPanel.getAsciiPanel().repaint();

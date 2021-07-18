@@ -12,7 +12,7 @@ public class SquareCommand implements Command {
     private int sideDimension;
     private char[][] oldCharGrid;
 
-    public SquareCommand(int sideDimension){
+    public SquareCommand(int sideDimension) {
         this.sideDimension = sideDimension;
     }
 
@@ -23,8 +23,8 @@ public class SquareCommand implements Command {
         char[][] currentChars = mainPanel.getAsciiPanel().getChars();
         oldCharGrid = new char[currentChars.length][currentChars[0].length];
         //Matrix copy
-        for (int y = 0; y < currentChars.length; y++){
-            for (int x = 0; x < currentChars[0].length; x++){
+        for (int y = 0; y < currentChars.length; y++) {
+            for (int x = 0; x < currentChars[0].length; x++) {
                 oldCharGrid[y][x] = currentChars[y][x];
             }
         }
@@ -32,9 +32,9 @@ public class SquareCommand implements Command {
         cursorX = mainPanel.getAsciiPanel().getCursorX();
         cursorY = mainPanel.getAsciiPanel().getCursorY();
 
-        for (int y = cursorY; y < cursorY + sideDimension; y++){
-            for (int x = cursorX; x < cursorX + sideDimension; x++){
-                if(x == cursorX || y == cursorY || x == cursorX + sideDimension -1 || y == cursorY + sideDimension -1){
+        for (int y = cursorY; y < cursorY + sideDimension; y++) {
+            for (int x = cursorX; x < cursorX + sideDimension; x++) {
+                if (x == cursorX || y == cursorY || x == cursorX + sideDimension - 1 || y == cursorY + sideDimension - 1) {
                     mainPanel.getAsciiPanel().setCursorX(x);
                     mainPanel.getAsciiPanel().setCursorY(y);
                     mainPanel.getAsciiPanel().write((char) mainPanel.getSelectedChar(), mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
@@ -43,7 +43,6 @@ public class SquareCommand implements Command {
         }
         mainPanel.getCommandStack().push(this);
     }
-
 
 
     @Override

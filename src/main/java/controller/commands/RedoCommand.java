@@ -1,6 +1,6 @@
 package controller.commands;
 
-public class RedoCommand implements Command{
+public class RedoCommand implements Command {
     @Override
     public void execute() {
 

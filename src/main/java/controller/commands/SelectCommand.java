@@ -15,8 +15,9 @@ public class SelectCommand extends RectCommand {
     }
 
     @Override
-    public void execute(){
-        if (mainPanel.currentSelection != null) mainPanel.currentSelection.undo();
+    public void execute() {
+        if (mainPanel.currentSelection != null)
+            mainPanel.currentSelection.undo(); //vedi pure sta cosa minchia non funziona niente ahah
         mainPanel.currentSelection = this;
         super.execute();
         ArrayList<int[]> points = super.getRectPoints();
@@ -29,14 +30,18 @@ public class SelectCommand extends RectCommand {
         });
 
         mainPanel.getAsciiPanel().repaint();
-        for (int x = super.getX1(); x <= super.getX2() ; x++){
-            for (int y = super.getY1(); y <= super.getY2(); y++){
-               int[] point = new int[]{x,y};
-               selectedPoints.add(point); //anche qui ci sta la cosa del verificare se x è maggiore di y eccetera.
+        for (int x = super.getX1(); x <= super.getX2(); x++) {
+            for (int y = super.getY1(); y <= super.getY2(); y++) {
+                int[] point = new int[]{x, y};
+                selectedPoints.add(point); //anche qui ci sta la cosa del verificare se x è maggiore di y eccetera.
             }
         }
+        mainPanel.selectedPoints = selectedPoints;
+        mainPanel.getCommandStack().push(this);
+    }
 
-
-
+    @Override
+    public void undo() {
+        super.undo(); //cambia perchè c`è un bug quando viene selezionato qualcosa e viene disegnato qualcos'altro.
     }
 }

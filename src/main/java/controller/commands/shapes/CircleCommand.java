@@ -14,7 +14,7 @@ public class CircleCommand implements Command {
     private int radius;
     private char[][] oldCharGrid;
 
-    public CircleCommand(int radius){
+    public CircleCommand(int radius) {
         this.radius = radius;
     }
 
@@ -23,8 +23,8 @@ public class CircleCommand implements Command {
         char[][] currentChars = mainPanel.getAsciiPanel().getChars();
         oldCharGrid = new char[currentChars.length][currentChars[0].length];
         //Matrix copy
-        for (int y = 0; y < currentChars.length; y++){
-            for (int x = 0; x < currentChars[0].length; x++){
+        for (int y = 0; y < currentChars.length; y++) {
+            for (int x = 0; x < currentChars[0].length; x++) {
                 oldCharGrid[y][x] = currentChars[y][x];
             }
         }
@@ -38,10 +38,8 @@ public class CircleCommand implements Command {
 
     //TODO aggiusta sta cosa, non so perchè ma due punti non vengono disegnati (mi sa che devi proprio cambiare implementazione dell'algoritmo)
     //Source: https://www.geeksforgeeks.org/mid-point-circle-drawing-algorithm/
-    public void midPointCircleDraw(int x_centre, int y_centre, int r)
-    {
+    public void midPointCircleDraw(int x_centre, int y_centre, int r) {
         int x = r, y = 0;
-
 
 
         // Printing the initial point on the axes after translation
@@ -49,7 +47,7 @@ public class CircleCommand implements Command {
 
         // When radius is zero only a single point will be printed
         if (r > 0) {
-            drawPoint(x + x_centre, -y + y_centre );
+            drawPoint(x + x_centre, -y + y_centre);
             drawPoint(y + x_centre, x + y_centre);
             drawPoint(-y + x_centre, x + y_centre);
         }
@@ -84,7 +82,7 @@ public class CircleCommand implements Command {
         }
     }
 
-    public void drawPoint(int x, int y){
+    public void drawPoint(int x, int y) {
         mainPanel.getAsciiPanel().setCursorX(x);
         mainPanel.getAsciiPanel().setCursorY(y);
         mainPanel.getAsciiPanel().write((char) mainPanel.getSelectedChar(), mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
