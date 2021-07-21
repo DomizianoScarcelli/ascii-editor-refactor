@@ -1,4 +1,4 @@
-package controller.commands;
+package controller.commands.copycutpaste;
 
 import controller.commands.shapes.RectCommand;
 import view.MainPanel;
@@ -17,7 +17,7 @@ public class SelectCommand extends RectCommand {
     @Override
     public void execute() {
         if (mainPanel.currentSelection != null)
-            mainPanel.currentSelection.undo(); //vedi pure sta cosa minchia non funziona niente ahah
+            mainPanel.currentSelection.undo(); //TODO vedi pure sta cosa minchia non funziona niente ahah
         mainPanel.currentSelection = this;
         super.execute();
         ArrayList<int[]> points = super.getRectPoints();
@@ -33,7 +33,7 @@ public class SelectCommand extends RectCommand {
         for (int x = super.getX1(); x <= super.getX2(); x++) {
             for (int y = super.getY1(); y <= super.getY2(); y++) {
                 int[] point = new int[]{x, y};
-                selectedPoints.add(point); //anche qui ci sta la cosa del verificare se x è maggiore di y eccetera.
+                selectedPoints.add(point); //TODO anche qui ci sta la cosa del verificare se x è maggiore di y eccetera.
             }
         }
         mainPanel.selectedPoints = selectedPoints;
@@ -42,6 +42,6 @@ public class SelectCommand extends RectCommand {
 
     @Override
     public void undo() {
-        super.undo(); //cambia perchè c`è un bug quando viene selezionato qualcosa e viene disegnato qualcos'altro.
+        super.undo(); //TODO cambia perchè c`è un bug quando viene selezionato qualcosa e viene disegnato qualcos'altro.
     }
 }

@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 //TODO risolvi bug altezza massima nuovo pannello
+//TODO risolvi strani bug nel disegno di figure dopo la creazione di un nuovo pannello
 
 /**
  * Models the action of creating a new empty ascii panel.

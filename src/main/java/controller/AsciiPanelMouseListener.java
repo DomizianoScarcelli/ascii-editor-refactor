@@ -2,11 +2,13 @@ package controller;
 
 
 import controller.commands.*;
+import controller.commands.copycutpaste.MoveCommand;
+import controller.commands.copycutpaste.SelectCommand;
 import view.MainPanel;
+import view.RightClickMenu;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Arrays;
 
 /**
  * Models the actions performed on the panel by the mouse when it's not moving.
@@ -30,6 +32,7 @@ public class AsciiPanelMouseListener implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+
     }
 
     /**
@@ -38,14 +41,14 @@ public class AsciiPanelMouseListener implements MouseListener {
      */
     @Override
     public void mousePressed(MouseEvent e) {
-
+        if (e.isPopupTrigger())
+            doPop(e);
         //Update initial mouse cursor position
         initialCursorX = mainPanel.getAsciiPanel().getMouseCursorX();
         initialCursorY = mainPanel.getAsciiPanel().getMouseCursorY();
-//        System.out.println(Arrays.deepToString(mainPanel.getAsciiPanel().getChars()));
-
 
         mainPanel.setCurrentButtonPressed(e.getButton());
+
         Command currentCommand = mainPanel.getCommand();
         if (currentCommand instanceof FillCommand) mainPanel.setCommand(new FillCommand(mainPanel));
         else if (currentCommand instanceof PickCommand) mainPanel.setCommand(new PickCommand(mainPanel));
@@ -55,15 +58,19 @@ public class AsciiPanelMouseListener implements MouseListener {
             mainPanel.executeCommand();
             mainPanel.getAsciiPanel().repaint();
         }
-        if (!(currentCommand instanceof MoveCommand))
+        if (!(currentCommand instanceof MoveCommand || currentCommand instanceof SelectCommand)) //TODO guarda quale classi togliere da sta cosa, recentemente ho aggiunto anche SelectCommand ma non so se è giusto
             mainPanel.beforeSelectionGrid = mainPanel.getAsciiPanel().getChars(); //TODO
 
 
     }
 
 
+
+
     @Override
     public void mouseReleased(MouseEvent e) {
+        if (e.isPopupTrigger())
+            doPop(e);
 //        Command currentCommand = mainPanel.getCommand();
 //        //Update final mouse cursor position
 //        finalCursorX = mainPanel.getAsciiPanel().getMouseCursorX();
@@ -90,8 +97,6 @@ public class AsciiPanelMouseListener implements MouseListener {
 //
 //        mainPanel.getCommand().execute();
 //        mainPanel.getAsciiPanel().repaint();
-
-
     }
 
 
@@ -104,6 +109,11 @@ public class AsciiPanelMouseListener implements MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    private void doPop(MouseEvent e) {
+        RightClickMenu menu = RightClickMenu.getInstance();
+        menu.show(e.getComponent(), e.getX(), e.getY());
     }
 
     public int getInitialCursorX() {

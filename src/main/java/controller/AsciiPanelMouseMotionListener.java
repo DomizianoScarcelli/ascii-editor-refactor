@@ -2,6 +2,8 @@ package controller;
 
 
 import controller.commands.*;
+import controller.commands.copycutpaste.MoveCommand;
+import controller.commands.copycutpaste.SelectCommand;
 import controller.commands.shapes.CircleCommand;
 import controller.commands.shapes.RectCommand;
 import controller.commands.shapes.SquareCommand;
@@ -55,24 +57,20 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
         else if (currentCommand instanceof PaintCommand) mainPanel.setCommand(new PaintCommand(mainPanel));
 
 
-        if (!(currentCommand instanceof SquareCommand || currentCommand instanceof CircleCommand || currentCommand instanceof RectCommand || currentCommand instanceof MoveCommand)) {
+        if ((currentCommand instanceof FillCommand || currentCommand instanceof PickCommand || currentCommand instanceof PaintCommand)) {
             mainPanel.executeCommand();
         } else {
+
             Command previousCommand = mainPanel.getCommandStack().pop();
             previousCommand.undo();
 
-            if (currentCommand instanceof SquareCommand)
-                mainPanel.setCommand(new SquareCommand((int) Math.round(pointDistance / Math.sqrt(2)) + 1));
+            if (currentCommand instanceof SquareCommand) mainPanel.setCommand(new SquareCommand((int) Math.round(pointDistance / Math.sqrt(2)) + 1));
             else if (currentCommand instanceof CircleCommand) mainPanel.setCommand(new CircleCommand(pointDistance));
-            else if (currentCommand instanceof SelectCommand)
-                mainPanel.setCommand(new SelectCommand(x1, y1, middleCursorX, middleCursorY));
-            else if (currentCommand instanceof RectCommand)
-                mainPanel.setCommand(new RectCommand(x1, y1, middleCursorX, middleCursorY));
-            else if (currentCommand instanceof MoveCommand)
-                mainPanel.setCommand(new MoveCommand(x1, y1, middleCursorX, middleCursorY));
+            else if (currentCommand instanceof SelectCommand) mainPanel.setCommand(new SelectCommand(x1, y1, middleCursorX, middleCursorY));
+            else if (currentCommand instanceof RectCommand) mainPanel.setCommand(new RectCommand(x1, y1, middleCursorX, middleCursorY));
+            else if (currentCommand instanceof MoveCommand) mainPanel.setCommand(new MoveCommand(x1, y1, middleCursorX, middleCursorY));
 
-
-            mainPanel.getCommand().execute();
+             mainPanel.getCommand().execute();
 
 
         }

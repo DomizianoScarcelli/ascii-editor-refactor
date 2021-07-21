@@ -1,5 +1,6 @@
-package controller.commands;
+package controller.commands.copycutpaste;
 
+import controller.commands.Command;
 import view.MainPanel;
 
 
@@ -8,7 +9,6 @@ public class MoveCommand implements Command {
     private int x1, y1, x2, y2;
     private MainPanel mainPanel = MainPanel.getInstance();
     private char[][] oldCharGrid;
-
 
     public MoveCommand(int x1, int y1, int x2, int y2) {
         this.x1 = x1;
@@ -29,40 +29,37 @@ public class MoveCommand implements Command {
             }
         }
 
-        int diffX = x2 - x1;
-        int diffY = y2 - y1;
-
+        int offsetX = x2 - x1;
+        int offsetY = y2 - y1;
 
         for (int[] point : mainPanel.selectedPoints) {
             int x = point[0];
             int y = point[1];
             try {
-                mainPanel.getAsciiPanel().setCursorX(x + diffX);
-                mainPanel.getAsciiPanel().setCursorY(y + diffY);
-
+                mainPanel.getAsciiPanel().setCursorX(x + offsetX);
+                mainPanel.getAsciiPanel().setCursorY(y + offsetY);
                 mainPanel.getAsciiPanel().write((char) (int) mainPanel.getAsciiPanel().pickChar(x, y), mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
+
+
+                //TODO sta cosa crea un bug ma ci siamo quasi
+                mainPanel.getAsciiPanel().setCursorX(x);
+                mainPanel.getAsciiPanel().setCursorY(y);
+                mainPanel.getAsciiPanel().write(mainPanel.beforeSelectionGrid[x][y], mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
+
 
             } catch (ArrayIndexOutOfBoundsException ignored) {
             }
-
-            //TODO sta cosa crea un bug ma ci siamo quasi
-            mainPanel.getAsciiPanel().setCursorX(x);
-            mainPanel.getAsciiPanel().setCursorY(y);
-            mainPanel.getAsciiPanel().write(mainPanel.beforeSelectionGrid[x][y], mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
-
-
         }
+
         mainPanel.getAsciiPanel().repaint();
         mainPanel.getCommandStack().push(this);
 
-        System.out.println(diffX);
-        System.out.println(diffY);
+//        System.out.println(offsetX);
+//        System.out.println(offsetY);
         mainPanel.selectedPoints.forEach(point -> {
-            point[0] = point[0] + diffX;
-            point[1] = point[1] + diffY;
+            point[0] = point[0] + offsetX;
+            point[1] = point[1] + offsetY;
         });
-
-
     }
 
 
@@ -72,11 +69,11 @@ public class MoveCommand implements Command {
         mainPanel.getAsciiPanel().setCursorY(mainPanel.getAsciiPanelMouseListener().getInitialCursorY());
         mainPanel.getAsciiPanel().setChars(oldCharGrid);
         mainPanel.getAsciiPanel().repaint();
-        int diffX = x2 - x1;
-        int diffY = y2 - y1;
+        int offsetX = x2 - x1;
+        int offsetY = y2 - y1;
         mainPanel.selectedPoints.forEach(point -> {
-            point[0] -= diffX;
-            point[1] -= diffY;
+            point[0] -= offsetX;
+            point[1] -= offsetY;
         });
     }
 }

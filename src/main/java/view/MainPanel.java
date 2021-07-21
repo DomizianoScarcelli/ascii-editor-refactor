@@ -2,6 +2,8 @@ package view;
 
 import controller.*;
 import controller.commands.*;
+import controller.commands.copycutpaste.MoveCommand;
+import controller.commands.copycutpaste.SelectCommand;
 import controller.commands.shapes.CircleCommand;
 import controller.commands.shapes.RectCommand;
 import controller.commands.shapes.SquareCommand;
@@ -14,8 +16,6 @@ import model.CommandStack;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -73,7 +73,6 @@ public class MainPanel extends JFrame {
         JMenu menuBarFile = new JMenu("File");
 
         //Undo button and listener
-        //TODO per implementare l'undo potresti creare una classe UndoCommand e RedoCommand. In questo modo il redo può essere implementato facendo l'undo dell'UndoCommand.
         JButton undo = ButtonFactory.menuBarButton("src/main/resources/undo.png");
         menuBar.add(undo);
         undo.addActionListener(e -> {
@@ -163,6 +162,7 @@ public class MainPanel extends JFrame {
         toolsPanel.add(buttonPanel);
         toolsPanel.add(characterPanel);
         toolsPanel.add(colorPanel);
+
 
 
         JButton squareButton = new JButton("Quadrato");
