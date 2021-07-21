@@ -98,4 +98,7 @@ public class RectCommand implements Command {
         return y2;
     }
 
+    public char[][] getOldCharGrid() {
+        return oldCharGrid;
+    }
 }

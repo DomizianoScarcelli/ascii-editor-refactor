@@ -16,12 +16,13 @@ public class SelectCommand extends RectCommand {
 
     @Override
     public void execute() {
-        if (mainPanel.currentSelection != null)
-            mainPanel.currentSelection.undo(); //TODO vedi pure sta cosa minchia non funziona niente ahah
+//        if (mainPanel.currentSelection != null)
+//            mainPanel.currentSelection.undo(); //TODO vedi pure sta cosa minchia non funziona niente ahah
         mainPanel.currentSelection = this;
         super.execute();
         ArrayList<int[]> points = super.getRectPoints();
         selectedPoints.addAll(points);
+        mainPanel.selectionChars.addAll(points);
 
         selectedPoints.forEach(point -> {
             mainPanel.getAsciiPanel().setCursorX(point[0]);
@@ -37,11 +38,18 @@ public class SelectCommand extends RectCommand {
             }
         }
         mainPanel.selectedPoints = selectedPoints;
+
+
         mainPanel.getCommandStack().push(this);
     }
 
     @Override
     public void undo() {
-        super.undo(); //TODO cambia perchè c`è un bug quando viene selezionato qualcosa e viene disegnato qualcos'altro. BUG INCREDIBILE
+       for (int[] point : super.getRectPoints()){
+           mainPanel.getAsciiPanel().setCursorX(point[0]);
+           mainPanel.getAsciiPanel().setCursorY(point[1]);
+           mainPanel.getAsciiPanel().write(getOldCharGrid()[point[0]][point[1]], mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
+       }
+       mainPanel.selectedPoints = new ArrayList<>();
     }
 }

@@ -4,6 +4,7 @@ package controller;
 import controller.commands.*;
 import controller.commands.copycutpaste.MoveCommand;
 import controller.commands.copycutpaste.SelectCommand;
+import controller.commands.shapes.SquareCommand;
 import view.MainPanel;
 import view.RightClickMenu;
 
@@ -58,8 +59,8 @@ public class AsciiPanelMouseListener implements MouseListener {
             mainPanel.executeCommand();
             mainPanel.getAsciiPanel().repaint();
         }
-        if (!(currentCommand instanceof MoveCommand || currentCommand instanceof SelectCommand)) //TODO guarda quale classi togliere da sta cosa, recentemente ho aggiunto anche SelectCommand ma non so se è giusto
-            mainPanel.beforeSelectionGrid = mainPanel.getAsciiPanel().getChars(); //TODO
+//        if (!(currentCommand instanceof MoveCommand)) //TODO guarda quale classi togliere da sta cosa, recentemente ho aggiunto anche SelectCommand ma non so se è giusto
+//            mainPanel.beforeSelectionGrid = mainPanel.getAsciiPanel().getChars(); //TODO
 
 
     }
@@ -71,6 +72,14 @@ public class AsciiPanelMouseListener implements MouseListener {
     public void mouseReleased(MouseEvent e) {
         if (e.isPopupTrigger())
             doPop(e);
+
+        //Solves a bug TODO find a better solution
+        if (!(mainPanel.getCommand() instanceof SelectCommand)){
+            SquareCommand emptyCommand = new SquareCommand(0);
+            emptyCommand.execute();
+        }
+
+
 //        Command currentCommand = mainPanel.getCommand();
 //        //Update final mouse cursor position
 //        finalCursorX = mainPanel.getAsciiPanel().getMouseCursorX();

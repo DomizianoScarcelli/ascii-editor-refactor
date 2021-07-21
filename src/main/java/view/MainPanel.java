@@ -45,6 +45,7 @@ public class MainPanel extends JFrame {
     public SelectCommand currentSelection;
     public char[][] beforeSelectionGrid;
     public ArrayList<int[]> selectedPoints;
+    public ArrayList<int[]> selectionChars = new ArrayList<>();
 
     private Command command;
 

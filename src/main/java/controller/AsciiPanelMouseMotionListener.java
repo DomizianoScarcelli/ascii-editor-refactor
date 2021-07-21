@@ -61,16 +61,20 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
             mainPanel.executeCommand();
         } else {
 
-            Command previousCommand = mainPanel.getCommandStack().pop();
+            Command previousCommand = mainPanel.getCommandStack().pop(); //TODO questo crea un bug, ovvero nessuna figura può essere disegnata due volte
             previousCommand.undo();
 
-            if (currentCommand instanceof SquareCommand) mainPanel.setCommand(new SquareCommand((int) Math.round(pointDistance / Math.sqrt(2)) + 1));
+            if (currentCommand instanceof SquareCommand)
+                mainPanel.setCommand(new SquareCommand((int) Math.round(pointDistance / Math.sqrt(2)) + 1));
             else if (currentCommand instanceof CircleCommand) mainPanel.setCommand(new CircleCommand(pointDistance));
-            else if (currentCommand instanceof SelectCommand) mainPanel.setCommand(new SelectCommand(x1, y1, middleCursorX, middleCursorY));
-            else if (currentCommand instanceof RectCommand) mainPanel.setCommand(new RectCommand(x1, y1, middleCursorX, middleCursorY));
-            else if (currentCommand instanceof MoveCommand) mainPanel.setCommand(new MoveCommand(x1, y1, middleCursorX, middleCursorY));
+            else if (currentCommand instanceof SelectCommand)
+                mainPanel.setCommand(new SelectCommand(x1, y1, middleCursorX, middleCursorY));
+            else if (currentCommand instanceof RectCommand)
+                mainPanel.setCommand(new RectCommand(x1, y1, middleCursorX, middleCursorY));
+            else if (currentCommand instanceof MoveCommand)
+                mainPanel.setCommand(new MoveCommand(x1, y1, middleCursorX, middleCursorY));
 
-             mainPanel.getCommand().execute();
+            mainPanel.getCommand().execute();
 
 
         }

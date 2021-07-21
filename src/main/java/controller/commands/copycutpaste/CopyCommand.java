@@ -11,12 +11,11 @@ public class CopyCommand implements Command {
 
     @Override
     public void execute() {
-        System.out.println("Copiato");
         RightClickMenu.getInstance().setCopiedChars(mainPanel.selectedPoints);
     }
 
     @Override
     public void undo() {
-
+        //TODO implementa undo
     }
 }

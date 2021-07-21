@@ -13,8 +13,10 @@ public class PasteCommand implements Command {
 
     @Override
     public void execute() {
-        System.out.println("Incollato");
-        Optional<int[]> min = RightClickMenu.getInstance().getCopiedChars().stream().min(Comparator.comparingInt(point -> point[0] + point[1])); //Ritorna le coordinate dell'angolo in alto a sx della selezione
+        //Avoid to paste the selection characters
+        mainPanel.currentSelection.undo();
+        //Gets the top left corner of the selection
+        Optional<int[]> min = RightClickMenu.getInstance().getCopiedChars().stream().min(Comparator.comparingInt(point -> point[0] + point[1]));
         int x1 = min.get()[0];
         int y1 = min.get()[1];
         int x2 = RightClickMenu.getInstance().getRightClickMouseCursorX();
@@ -29,8 +31,9 @@ public class PasteCommand implements Command {
                 mainPanel.getAsciiPanel().setCursorX(x + offsetX);
                 mainPanel.getAsciiPanel().setCursorY(y + offsetY);
                 mainPanel.getAsciiPanel().write((char) (int) mainPanel.getAsciiPanel().pickChar(x, y), mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
-
             } catch (ArrayIndexOutOfBoundsException ignored) {
+
+
             }
         }
 
@@ -38,6 +41,6 @@ public class PasteCommand implements Command {
 
     @Override
     public void undo() {
-
+        //TODO implementa undo
     }
 }
