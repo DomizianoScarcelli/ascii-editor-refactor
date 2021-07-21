@@ -114,6 +114,8 @@ public class AsciiPanelMouseListener implements MouseListener {
     private void doPop(MouseEvent e) {
         RightClickMenu menu = RightClickMenu.getInstance();
         menu.show(e.getComponent(), e.getX(), e.getY());
+        menu.setRightClickMouseCursorX(mainPanel.getAsciiPanel().getMouseCursorX());
+        menu.setRightClickMouseCursorY(mainPanel.getAsciiPanel().getMouseCursorY());
     }
 
     public int getInitialCursorX() {

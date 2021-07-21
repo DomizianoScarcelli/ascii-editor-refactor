@@ -5,10 +5,13 @@ import controller.commands.copycutpaste.CutCommand;
 import controller.commands.copycutpaste.PasteCommand;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 
 public class RightClickMenu extends JPopupMenu {
-    private char[][] copiedChars;
+    private ArrayList<int[]> copiedChars;
+    private int rightClickMouseCursorX;
+    private int rightClickMouseCursorY;
 
     private static RightClickMenu instance;
 
@@ -42,11 +45,28 @@ public class RightClickMenu extends JPopupMenu {
         });
     }
 
-    public char[][] getCopiedChars() {
+
+    public ArrayList<int[]> getCopiedChars() {
         return copiedChars;
     }
 
-    public void setCopiedChars(char[][] copiedChars) {
+    public void setCopiedChars(ArrayList<int[]> copiedChars) {
         this.copiedChars = copiedChars;
+    }
+
+    public int getRightClickMouseCursorX() {
+        return rightClickMouseCursorX;
+    }
+
+    public void setRightClickMouseCursorX(int rightClickMouseCursorX) {
+        this.rightClickMouseCursorX = rightClickMouseCursorX;
+    }
+
+    public int getRightClickMouseCursorY() {
+        return rightClickMouseCursorY;
+    }
+
+    public void setRightClickMouseCursorY(int rightClickMouseCursorY) {
+        this.rightClickMouseCursorY = rightClickMouseCursorY;
     }
 }

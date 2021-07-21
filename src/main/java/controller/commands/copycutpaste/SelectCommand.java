@@ -42,6 +42,6 @@ public class SelectCommand extends RectCommand {
 
     @Override
     public void undo() {
-        super.undo(); //TODO cambia perchè c`è un bug quando viene selezionato qualcosa e viene disegnato qualcos'altro.
+        super.undo(); //TODO cambia perchè c`è un bug quando viene selezionato qualcosa e viene disegnato qualcos'altro. BUG INCREDIBILE
     }
 }
