@@ -88,7 +88,6 @@ public class MainPanel extends JFrame {
         JButton redo = ButtonFactory.menuBarButton("src/main/resources/redo.png");
         menuBar.add(redo);
         redo.addActionListener(e -> {
-            System.out.println("sium");
             Command command = redoCommandStack.pop();
             command.execute();
         });
@@ -124,6 +123,7 @@ public class MainPanel extends JFrame {
         buttonPanel.add(paint);
         buttonPanel.add(fill);
         buttonPanel.add(pick);
+
         paint.setBackground(Color.GRAY);
 
         //JPanel containing color selection and color display
@@ -168,15 +168,19 @@ public class MainPanel extends JFrame {
         toolsPanel.add(colorPanel);
 
 
-        JButton squareButton = new JButton("Quadrato");
-        toolsPanel.add(squareButton);
-        JButton circleButton = new JButton("Cerchio");
-        toolsPanel.add(circleButton);
-        JButton rectButton = new JButton("Rettangolo");
-        toolsPanel.add(rectButton);
-        JButton selectButton = new JButton("Seleziona");
+        JPanel otherTools = new JPanel();
+        toolsPanel.add(otherTools);
+        otherTools.setLayout(new GridLayout(2,2));
+
+        JButton squareButton = ButtonFactory.createSmallToolButton("src/main/resources/square.png");
+        otherTools.add(squareButton);
+        JButton circleButton = ButtonFactory.createSmallToolButton("src/main/resources/dry-clean.png");
+        otherTools.add(circleButton);
+        JButton rectButton = ButtonFactory.createSmallToolButton("src/main/resources/rectangle.png");
+        otherTools.add(rectButton);
+        JButton selectButton = ButtonFactory.createSmallToolButton("src/main/resources/selection.png");
         toolsPanel.add(selectButton);
-        JButton moveButton = new JButton("Muovi");
+        JButton moveButton = ButtonFactory.createSmallToolButton("src/main/resources/move.png");
         toolsPanel.add(moveButton);
 
 
@@ -289,7 +293,7 @@ public class MainPanel extends JFrame {
         return defaultForegroundColor;
     }
 
-    public Color getInverseDefaultBackgroundColor(){
+    public Color getInverseDefaultBackgroundColor() {
         int red = getDefaultBackgroundColor().getRed();
         int green = getDefaultBackgroundColor().getGreen();
         int blue = getDefaultBackgroundColor().getBlue();
@@ -299,7 +303,7 @@ public class MainPanel extends JFrame {
         return new Color(newRed, newGreen, newBlue);
     }
 
-    public Color getInverseDefaultForegroundColor(){
+    public Color getInverseDefaultForegroundColor() {
         int red = getDefaultForegroundColor().getRed();
         int green = getDefaultForegroundColor().getGreen();
         int blue = getDefaultForegroundColor().getBlue();

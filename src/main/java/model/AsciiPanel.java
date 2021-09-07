@@ -1179,6 +1179,14 @@ public class AsciiPanel extends JPanel {
         return backgroundColors[px][py];
     }
 
+
+//    public Color pickInverseFC(int px, int py){
+//        int red = foregroundColors[px][py].getRed();
+//        int green = foregroundColors[px][py].getGreen();
+//        int blue = foregroundColors[px][py].getBlue();
+//        return new Color(255-red, 255-green, 255-blue);
+//    }
+
     /**
      * Fills up the current {@link AsciiPanel} with the {@link AsciiRaster} in input, starting from a certain position (x,y).
      * The starting point correspond to the top left corner of the image.
@@ -1240,5 +1248,13 @@ public class AsciiPanel extends JPanel {
      */
     public void setChars(char[][] chars) {
         this.chars = chars;
+    }
+
+    public Color[][] getOldBackgroundColors() {
+        return oldBackgroundColors;
+    }
+
+    public Color[][] getOldForegroundColors() {
+        return oldForegroundColors;
     }
 }

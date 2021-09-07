@@ -24,6 +24,18 @@ public class ButtonFactory {
         return button;
     }
 
+    public static JButton createSmallToolButton(String iconFileName){
+        JButton button = new JButton();
+        button.setPreferredSize(new Dimension(50,50));
+        addIconToButton(button, iconFileName, 25, 25);
+        button.setFocusPainted(false);
+        button.setHorizontalTextPosition(AbstractButton.CENTER);
+        button.setVerticalTextPosition(AbstractButton.BOTTOM);
+        button.setBackground(Color.WHITE);
+        button.setBorderPainted(false);
+        return button;
+    }
+
     public static JButton createCharacterSelectorButton(String iconFileName){
         JButton button = new JButton();
         button.setPreferredSize(new Dimension(20,20));
