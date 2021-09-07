@@ -53,6 +53,8 @@ public class MainPanel extends JFrame {
     private AsciiPanelMouseListener asciiPanelMouseListener;
     private AsciiPanelMouseMotionListener asciiPanelMouseMotionListener;
 
+    public ArrayList<JButton> toolButtonList = new ArrayList<>();
+
     private static MainPanel instance;
 
     public static MainPanel getInstance() {
@@ -185,21 +187,35 @@ public class MainPanel extends JFrame {
 
 
         squareButton.addActionListener(e -> {
+            ToolsPanelController.selectButton(squareButton);
             this.command = new SquareCommand(1);
         });
         circleButton.addActionListener(e -> {
+            ToolsPanelController.selectButton(circleButton);
             this.command = new CircleCommand(1);
         });
         rectButton.addActionListener(e -> {
+            ToolsPanelController.selectButton(rectButton);
             this.command = new RectCommand(asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY(), asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY());
         });
         selectButton.addActionListener(e -> {
+            ToolsPanelController.selectButton(selectButton);
             this.command = new SelectCommand(asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY(), asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY());
         });
         moveButton.addActionListener(e -> {
+            ToolsPanelController.selectButton(moveButton);
             this.command = new MoveCommand(asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY(), asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY());
         });
 
+        //-----------------Adds the tool buttons to the list-------------------
+        toolButtonList.add(paint);
+        toolButtonList.add(fill);
+        toolButtonList.add(pick);
+        toolButtonList.add(squareButton);
+        toolButtonList.add(circleButton);
+        toolButtonList.add(rectButton);
+        toolButtonList.add(selectButton);
+        toolButtonList.add(moveButton);
 
         mainContainer.add(toolsPanel, BorderLayout.NORTH);
 
@@ -237,15 +253,15 @@ public class MainPanel extends JFrame {
         // -------Change current command on tool button click-------
 
         paint.addActionListener(e -> {
-            ToolsPanelController.selectPaintButton();
+            ToolsPanelController.selectButton(paint);
             this.command = new PaintCommand(this);
         });
         pick.addActionListener(e -> {
-            ToolsPanelController.selectPickButton();
+            ToolsPanelController.selectButton(pick);
             this.command = new PickCommand(this);
         });
         fill.addActionListener(e -> {
-            ToolsPanelController.selectFillButton();
+            ToolsPanelController.selectButton(fill);
             this.command = new FillCommand(this);
         });
 

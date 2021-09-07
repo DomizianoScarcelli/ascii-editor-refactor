@@ -40,7 +40,7 @@ public class PickCommand implements Command {
         toolsPanelController.updatePreview();
 
         mainPanel.getCommandStack().push(this);
-        ToolsPanelController.selectPickButton();
+        ToolsPanelController.selectButton(mainPanel.getPick());
     }
 
     @Override

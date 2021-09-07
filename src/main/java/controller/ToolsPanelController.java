@@ -26,22 +26,10 @@ public class ToolsPanelController {
         SwingUtilities.updateComponentTreeUI(mainPanel); //Prevents a weird bug when a character was selected
     }
 
-    public static void selectPaintButton(){
-        mainPanel.getPaint().setBackground(Color.GRAY);
-        mainPanel.getPick().setBackground(Color.WHITE);
-        mainPanel.getFill().setBackground(Color.WHITE);
-    }
 
-    public static void selectPickButton(){
-        mainPanel.getPaint().setBackground(Color.WHITE);
-        mainPanel.getPick().setBackground(Color.GRAY);
-        mainPanel.getFill().setBackground(Color.WHITE);
-    }
-
-    public static void selectFillButton(){
-        mainPanel.getPaint().setBackground(Color.WHITE);
-        mainPanel.getPick().setBackground(Color.WHITE);
-        mainPanel.getFill().setBackground(Color.GRAY);
+    public static void selectButton(JButton button){
+        mainPanel.toolButtonList.forEach(b -> b.setBackground(Color.WHITE));
+        button.setBackground(Color.GRAY);
     }
     
     public static void reset(int sx, int sy){
