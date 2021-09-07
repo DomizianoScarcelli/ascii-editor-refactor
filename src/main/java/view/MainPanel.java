@@ -41,6 +41,7 @@ public class MainPanel extends JFrame {
     private int currentButtonPressed = 1;
 
     private CommandStack commandStack = new CommandStack();
+    private CommandStack redoCommandStack = new CommandStack();
 
     public SelectCommand currentSelection;
     public char[][] beforeSelectionGrid;
@@ -81,14 +82,16 @@ public class MainPanel extends JFrame {
 //            command.undo();
             UndoCommand undoCommand = new UndoCommand();
             undoCommand.execute();
+
         });
 
         JButton redo = ButtonFactory.menuBarButton("src/main/resources/redo.png");
         menuBar.add(redo);
-//        redo.addActionListener(e -> {
-//            Command command = commandStack.pop();
-//            command.undo();
-//        });
+        redo.addActionListener(e -> {
+            System.out.println("sium");
+            Command command = redoCommandStack.pop();
+            command.execute();
+        });
 
 
         menuBar.add(menuBarFile);
@@ -165,7 +168,6 @@ public class MainPanel extends JFrame {
         toolsPanel.add(colorPanel);
 
 
-
         JButton squareButton = new JButton("Quadrato");
         toolsPanel.add(squareButton);
         JButton circleButton = new JButton("Cerchio");
@@ -211,6 +213,9 @@ public class MainPanel extends JFrame {
         asciiPanelMouseListener = new AsciiPanelMouseListener(this);
         asciiPanelMouseMotionListener = new AsciiPanelMouseMotionListener(this);
 
+        //Initialize beforeSelectionGrid
+        beforeSelectionGrid = new char[asciiPanel.getChars().length][asciiPanel.getChars()[0].length];
+
         // -------------------------------------Add Listeners-------------------------------------------------
         asciiPanel.addMouseListener(asciiPanelMouseListener);
         asciiPanel.addMouseMotionListener(asciiPanelMouseMotionListener);
@@ -242,6 +247,12 @@ public class MainPanel extends JFrame {
 
         this.addKeyListener(new MainPanelKeyListener());
         this.setFocusable(true);
+
+        //Change cursor
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Image image = toolkit.getImage("src/main/resources/whiteIcons/pencil22.png");
+        Cursor c = toolkit.createCustomCursor(image, new Point(asciiPanel.getX(), asciiPanel.getY()), "img");
+        asciiPanel.setCursor(c);
     }
 
     public AsciiPanel getAsciiPanel() {
@@ -276,6 +287,26 @@ public class MainPanel extends JFrame {
 
     public Color getDefaultForegroundColor() {
         return defaultForegroundColor;
+    }
+
+    public Color getInverseDefaultBackgroundColor(){
+        int red = getDefaultBackgroundColor().getRed();
+        int green = getDefaultBackgroundColor().getGreen();
+        int blue = getDefaultBackgroundColor().getBlue();
+        int newRed = Math.abs(red - 255);
+        int newGreen = Math.abs(green - 255);
+        int newBlue = Math.abs(blue - 255);
+        return new Color(newRed, newGreen, newBlue);
+    }
+
+    public Color getInverseDefaultForegroundColor(){
+        int red = getDefaultForegroundColor().getRed();
+        int green = getDefaultForegroundColor().getGreen();
+        int blue = getDefaultForegroundColor().getBlue();
+        int newRed = Math.abs(255 - red);
+        int newGreen = Math.abs(255 - green);
+        int newBlue = Math.abs(255 - blue);
+        return new Color(newRed, newGreen, newBlue);
     }
 
     public void setDefaultForegroundColor(Color defaultForegroundColor) {
@@ -358,5 +389,9 @@ public class MainPanel extends JFrame {
 
     public AsciiPanelMouseMotionListener getAsciiPanelMouseMotionListener() {
         return asciiPanelMouseMotionListener;
+    }
+
+    public CommandStack getRedoCommandStack() {
+        return redoCommandStack;
     }
 }

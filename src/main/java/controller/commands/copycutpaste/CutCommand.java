@@ -10,14 +10,18 @@ import java.util.ArrayList;
 public class CutCommand implements Command {
     private MainPanel mainPanel = MainPanel.getInstance();
 
-    //TODO bugged af
     @Override
     public void execute() {
         RightClickMenu.getInstance().setCopiedChars(mainPanel.selectedPoints);
+
+
         mainPanel.selectedPoints = new ArrayList<>();
         for (int[] point : RightClickMenu.getInstance().getCopiedChars()) {
-            mainPanel.getAsciiPanel().setCursorX(point[0]);
-            mainPanel.getAsciiPanel().setCursorY(point[1]);
+            int x = point[0];
+            int y = point[1];
+            mainPanel.beforeSelectionGrid[y][x] = (char) (int) mainPanel.getAsciiPanel().pickChar(x,y);
+            mainPanel.getAsciiPanel().setCursorX(x);
+            mainPanel.getAsciiPanel().setCursorY(y);
             mainPanel.getAsciiPanel().write((char) 0, Color.BLACK, Color.BLACK);
         }
         mainPanel.getAsciiPanel().repaint();

@@ -21,7 +21,7 @@ public class MainPanelKeyListener implements KeyListener {
             Command command = MainPanel.getInstance().getCommandStack().pop();
             command.undo();
         }
-        //TODO detect CTRL+SHIFT+Z and redoes the last command
+        //TODO detect CTRL+SHIFT+Z and redo the last command
 
     }
 

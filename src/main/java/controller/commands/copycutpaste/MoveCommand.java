@@ -41,10 +41,10 @@ public class MoveCommand implements Command {
                 mainPanel.getAsciiPanel().write((char) (int) mainPanel.getAsciiPanel().pickChar(x, y), mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
 
 
-                //TODO sta cosa crea un bug ma ci siamo quasi
-                mainPanel.getAsciiPanel().setCursorX(x);
-                mainPanel.getAsciiPanel().setCursorY(y);
-                mainPanel.getAsciiPanel().write(mainPanel.beforeSelectionGrid[x][y], mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
+//                //TODO sta cosa crea un bug ma ci siamo quasi
+//                mainPanel.getAsciiPanel().setCursorX(x);
+//                mainPanel.getAsciiPanel().setCursorY(y);
+//                mainPanel.getAsciiPanel().write(mainPanel.beforeSelectionGrid[x][y], mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
 
 
             } catch (ArrayIndexOutOfBoundsException ignored) {

@@ -9,6 +9,7 @@ public class UndoCommand implements Command {
 
     @Override
     public void execute() {
+
         char[][] currentChars = MainPanel.getInstance().getAsciiPanel().getChars();
         oldCharGrid = new char[currentChars.length][currentChars[0].length];
         for (int y = 0; y < currentChars.length; y++) {
@@ -18,6 +19,9 @@ public class UndoCommand implements Command {
         }
         command = MainPanel.getInstance().getCommandStack().pop();
         command.undo();
+//        MainPanel.getInstance().getRedoCommandStack().push(command);
+
+
     }
 
     @Override
