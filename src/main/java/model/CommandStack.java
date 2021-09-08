@@ -11,16 +11,15 @@ public class CommandStack {
 
     private ArrayList<Command> stack = new ArrayList<>();
 
-    public void push(Command command){
+    public void push(Command command) {
         if (stack.size() >= 20) stack.remove(0);
         stack.add(command);
     }
 
-    public Command pop(){
-        try{
-            return stack.remove(stack.size()-1);
-        }
-        catch(IndexOutOfBoundsException e){
+    public Command pop() {
+        try {
+            return stack.remove(stack.size() - 1);
+        } catch (IndexOutOfBoundsException e) {
             System.out.println("Pila vuota");
             return new Command() {
                 @Override
@@ -34,6 +33,10 @@ public class CommandStack {
                 }
             };
         }
+    }
+
+    public int length() {
+        return this.stack.size();
     }
 
     @Override

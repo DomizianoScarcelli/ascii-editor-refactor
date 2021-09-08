@@ -4,17 +4,17 @@ import controller.commands.Command;
 import view.MainPanel;
 import view.RightClickMenu;
 
+import java.awt.*;
 import java.util.Comparator;
 import java.util.Optional;
 
 public class PasteCommand implements Command {
-
     private MainPanel mainPanel = MainPanel.getInstance();
 
     @Override
     public void execute() {
         //Removes the selection
-        mainPanel.currentSelection.undo();
+        mainPanel.currentSelection.undo(); //TODO vedi di risolvere sti undo random che ti buggano tutto
         //Gets the top left corner of the selection
         Optional<int[]> min = RightClickMenu.getInstance().getCopiedChars().stream().min(Comparator.comparingInt(point -> point[0] + point[1]));
         int x1 = min.get()[0];
@@ -30,10 +30,15 @@ public class PasteCommand implements Command {
             try {
                 mainPanel.getAsciiPanel().setCursorX(x + offsetX);
                 mainPanel.getAsciiPanel().setCursorY(y + offsetY);
-                //TODO il pickchar qui bugga il cut and paste (non più ma c'è sempre un piccolo bug)
-                mainPanel.getAsciiPanel().write(mainPanel.beforeSelectionGrid[y][x], mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
+                //TODO recupera qua i colori invece di usare quelli di default altrimetni si bugga se si cambia colore tra il copy e il paste
+                mainPanel.getAsciiPanel().write(
+                        mainPanel.beforeSelectionGrid[y][x],
+                        mainPanel.currentSelection.getForegroundColorGrid()[mainPanel.getAsciiPanel().getCursorX()][mainPanel.getAsciiPanel().getCursorY()],
+                        mainPanel.currentSelection.getBackgroundColorGrid()[mainPanel.getAsciiPanel().getCursorX()][mainPanel.getAsciiPanel().getCursorY()]
+                );
 
-            } catch (ArrayIndexOutOfBoundsException ignored) {}
+            } catch (ArrayIndexOutOfBoundsException ignored) {
+            }
         }
 
     }

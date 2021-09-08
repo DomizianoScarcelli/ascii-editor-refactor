@@ -57,18 +57,17 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
         else if (currentCommand instanceof PaintCommand) mainPanel.setCommand(new PaintCommand(mainPanel));
 
 
-        if ((currentCommand instanceof FillCommand || currentCommand instanceof PickCommand || currentCommand instanceof PaintCommand )) {
+        if ((currentCommand instanceof FillCommand || currentCommand instanceof PickCommand || currentCommand instanceof PaintCommand)) {
             mainPanel.executeCommand();
-        } else if (currentCommand instanceof MoveCommand){
+        } else if (currentCommand instanceof MoveCommand) {
             mainPanel.setCommand(new MoveCommand(x1, y1, middleCursorX, middleCursorY));
             mainPanel.getCommand().execute();
 
 
-        }
-        else {
-
-            Command previousCommand = mainPanel.getCommandStack().pop(); //TODO questo crea un bug, ovvero nessuna figura può essere disegnata due volte
-            previousCommand.undo(); //TODO questo crea anche un bug per cui la selezione non può essere mossa
+        } else {
+            //Solves a bug where the shape couldn't be drawn twice
+            Command previousCommand = mainPanel.getCommandStack().pop();
+            if (mainPanel.isDrag) previousCommand.undo();
 
             if (currentCommand instanceof SquareCommand)
                 mainPanel.setCommand(new SquareCommand((int) Math.round(pointDistance / Math.sqrt(2)) + 1));
@@ -80,7 +79,9 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
 //            else if (currentCommand instanceof MoveCommand)
 //                mainPanel.setCommand(new MoveCommand(x1, y1, middleCursorX, middleCursorY));
 
+
             mainPanel.getCommand().execute();
+            mainPanel.isDrag = true;
 
 
         }

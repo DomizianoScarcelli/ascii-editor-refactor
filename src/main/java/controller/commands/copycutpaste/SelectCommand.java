@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class SelectCommand extends RectCommand {
     private ArrayList<int[]> selectedPoints = new ArrayList<>();
     private MainPanel mainPanel = MainPanel.getInstance();
+    private Color[][] foregroundColorGrid, backgroundColorGrid;
 
     public SelectCommand(int x1, int y1, int x2, int y2) {
         super(x1, y1, x2, y2);
@@ -16,6 +17,17 @@ public class SelectCommand extends RectCommand {
 
     @Override
     public void execute() {
+        System.out.println("Sto eseguendo");
+        char[][] currentChars = mainPanel.getAsciiPanel().getChars();
+        foregroundColorGrid = new Color[currentChars.length][currentChars[0].length];
+        backgroundColorGrid = new Color[currentChars.length][currentChars[0].length];
+        //Matrix copy
+        for (int y = 0; y < currentChars.length; y++) {
+            for (int x = 0; x < currentChars[0].length; x++) {
+                foregroundColorGrid[y][x] = mainPanel.getAsciiPanel().pickFC(y, x);
+                backgroundColorGrid[y][x] = mainPanel.getAsciiPanel().pickBC(y, x);
+            }
+        }
 //        if (mainPanel.currentSelection != null)
 //            mainPanel.currentSelection.undo(); //TODO vedi pure sta cosa minchia non funziona niente ahah
         mainPanel.currentSelection = this;
@@ -60,4 +72,11 @@ public class SelectCommand extends RectCommand {
         mainPanel.selectedPoints = new ArrayList<>();
     }
 
+    public Color[][] getBackgroundColorGrid() {
+        return backgroundColorGrid;
+    }
+
+    public Color[][] getForegroundColorGrid() {
+        return foregroundColorGrid;
+    }
 }

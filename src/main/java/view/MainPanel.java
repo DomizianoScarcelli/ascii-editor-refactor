@@ -33,6 +33,8 @@ public class MainPanel extends JFrame {
 
     private JButton paint, fill, pick;
 
+    public boolean isDrag = false;
+
 
     private BufferedImage importedBufferedImage;
 
@@ -80,10 +82,12 @@ public class MainPanel extends JFrame {
         JButton undo = ButtonFactory.menuBarButton("src/main/resources/undo.png");
         menuBar.add(undo);
         undo.addActionListener(e -> {
-//            Command command = commandStack.pop();
-//            command.undo();
-            UndoCommand undoCommand = new UndoCommand();
-            undoCommand.execute();
+            System.out.println(commandStack.length());
+            Command command = commandStack.pop();
+            command.undo();
+            System.out.println(commandStack.length());
+//            UndoCommand undoCommand = new UndoCommand();
+//            undoCommand.execute();
 
         });
 
@@ -172,7 +176,7 @@ public class MainPanel extends JFrame {
 
         JPanel otherTools = new JPanel();
         toolsPanel.add(otherTools);
-        otherTools.setLayout(new GridLayout(2,2));
+        otherTools.setLayout(new GridLayout(2, 2));
 
         JButton squareButton = ButtonFactory.createSmallToolButton("src/main/resources/square.png");
         otherTools.add(squareButton);

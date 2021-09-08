@@ -66,18 +66,11 @@ public class AsciiPanelMouseListener implements MouseListener {
     }
 
 
-
-
     @Override
     public void mouseReleased(MouseEvent e) {
+        mainPanel.isDrag = false;
         if (e.isPopupTrigger())
             doPop(e);
-
-        //Solves a bug TODO find a better solution
-        if (!(mainPanel.getCommand() instanceof SelectCommand)){
-            SquareCommand emptyCommand = new SquareCommand(0);
-            emptyCommand.execute();
-        }
 
 
 //        Command currentCommand = mainPanel.getCommand();
