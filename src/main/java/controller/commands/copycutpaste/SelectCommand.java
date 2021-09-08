@@ -7,8 +7,6 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class SelectCommand extends RectCommand {
-    //TODO Togli l'extends a RectCommand altrimenti si sbaglia e colora tutto in maniera sbagliata
-
     private ArrayList<int[]> selectedPoints = new ArrayList<>();
     private MainPanel mainPanel = MainPanel.getInstance();
 
@@ -31,7 +29,7 @@ public class SelectCommand extends RectCommand {
             mainPanel.getAsciiPanel().setCursorX(point[0]);
             mainPanel.getAsciiPanel().setCursorY(point[1]);
             System.out.println(mainPanel.getAsciiPanel().pickFC(point[0], point[1]));
-            mainPanel.getAsciiPanel().write((char) 219, Color.white, Color.black); //TODO vedi se sta cosa cambia dopo aver tolto l'extend
+            mainPanel.getAsciiPanel().write((char) 219, Color.white, Color.black);
         });
 
         selectedPoints.removeIf(point -> mainPanel.getAsciiPanel().pickChar(point[0], point[1]) == 219); //delete the selection char in order to not paste it on the ascii panel
@@ -53,9 +51,11 @@ public class SelectCommand extends RectCommand {
     @Override
     public void undo() {
         for (int[] point : super.getRectPoints()) {
-            mainPanel.getAsciiPanel().setCursorX(point[0]);
-            mainPanel.getAsciiPanel().setCursorY(point[1]);
-            mainPanel.getAsciiPanel().write(getOldCharGrid()[point[0]][point[1]], mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
+            int x = point[0];
+            int y = point[1];
+            mainPanel.getAsciiPanel().setCursorX(x);
+            mainPanel.getAsciiPanel().setCursorY(y);
+            mainPanel.getAsciiPanel().write(getOldCharGrid()[x][y], mainPanel.getAsciiPanel().getOldForegroundColors()[x][y], mainPanel.getAsciiPanel().getOldBackgroundColors()[x][y]);
         }
         mainPanel.selectedPoints = new ArrayList<>();
     }
