@@ -1,5 +1,6 @@
 package controller;
 
+import com.sun.tools.javac.Main;
 import model.AsciiFont;
 import model.AsciiPanel;
 import view.MainPanel;
@@ -18,7 +19,8 @@ public class ToolsPanelController {
         return instance;
     }
 
-    private ToolsPanelController(){}
+    private ToolsPanelController() {
+    }
 
     public void updatePreview() {
         mainPanel.getCharPreviewPanel().clear();
@@ -27,12 +29,12 @@ public class ToolsPanelController {
     }
 
 
-    public static void selectButton(JButton button){
+    public static void selectButton(JButton button) {
         mainPanel.toolButtonList.forEach(b -> b.setBackground(Color.WHITE));
         button.setBackground(Color.GRAY);
     }
-    
-    public static void reset(int sx, int sy){
+
+    public static void reset(int sx, int sy) {
         mainPanel.getMainContainer().remove(mainPanel.getAsciiPanel());
         mainPanel.setAsciiPanel(new AsciiPanel(sx, sy, AsciiFont.CP437_16x16));
         mainPanel.getMainContainer().add((mainPanel.getAsciiPanel()), BorderLayout.CENTER);
@@ -43,6 +45,19 @@ public class ToolsPanelController {
         mainPanel.getAsciiPanel().addMouseMotionListener(new AsciiPanelMouseMotionListener(mainPanel));
         //TODO add all other things
         SwingUtilities.updateComponentTreeUI(mainPanel); //Prevents a weird bug when a character was selected
+    }
+
+
+    public static char[][] copyCharGrid() {
+        char[][] oldCharGrid;
+        char[][] currentChars = mainPanel.getAsciiPanel().getChars();
+        oldCharGrid = new char[currentChars.length][currentChars[0].length];
+        for (int y = 0; y < currentChars.length; y++) {
+            for (int x = 0; x < currentChars[0].length; x++) {
+                oldCharGrid[y][x] = currentChars[y][x];
+            }
+        }
+        return oldCharGrid;
     }
 
 

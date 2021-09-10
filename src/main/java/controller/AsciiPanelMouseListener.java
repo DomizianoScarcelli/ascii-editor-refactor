@@ -66,9 +66,6 @@ public class AsciiPanelMouseListener implements MouseListener {
             mainPanel.getAsciiPanel().repaint();
         }
 
-//        if (!(currentCommand instanceof MoveCommand)) //TODO guarda quale classi togliere da sta cosa, recentemente ho aggiunto anche SelectCommand ma non so se è giusto
-//            mainPanel.beforeSelectionGrid = mainPanel.getAsciiPanel().getChars(); //TODO
-
 
     }
 
@@ -79,33 +76,6 @@ public class AsciiPanelMouseListener implements MouseListener {
         if (e.isPopupTrigger())
             doPop(e);
 
-
-//        Command currentCommand = mainPanel.getCommand();
-//        //Update final mouse cursor position
-//        finalCursorX = mainPanel.getAsciiPanel().getMouseCursorX();
-//        finalCursorY = mainPanel.getAsciiPanel().getMouseCursorY();
-//
-//        int x1 = initialCursorX;
-//        int x2 = finalCursorX;
-//        int y1 = initialCursorY;
-//        int y2 = finalCursorY;
-//
-//        int pointDistance = (int) Math.round(Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2)));
-//        mainPanel.getAsciiPanel().setCursorX(initialCursorX);
-//        mainPanel.getAsciiPanel().setCursorY(initialCursorY);
-//        if (currentCommand instanceof CircleCommand)
-//            mainPanel.setCommand(new CircleCommand(pointDistance));
-//        else if (currentCommand instanceof SquareCommand)
-//            mainPanel.setCommand(new SquareCommand((int) Math.round(pointDistance / Math.sqrt(2)) + 1));
-//        else if (currentCommand instanceof SelectCommand)
-//            mainPanel.setCommand(new SelectCommand(initialCursorX, initialCursorY, finalCursorX, finalCursorY));
-//        else if (currentCommand instanceof RectCommand)
-//            mainPanel.setCommand(new RectCommand(initialCursorX, initialCursorY, finalCursorX, finalCursorY));
-//        else if (currentCommand instanceof MoveCommand)
-//            mainPanel.setCommand(new MoveCommand(initialCursorX, initialCursorY, finalCursorX, finalCursorY));
-//
-//        mainPanel.getCommand().execute();
-//        mainPanel.getAsciiPanel().repaint();
     }
 
 

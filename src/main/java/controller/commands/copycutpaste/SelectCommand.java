@@ -17,10 +17,14 @@ public class SelectCommand extends RectCommand {
 
     @Override
     public void execute() {
+        if (mainPanel.currentSelection != null) {
+            mainPanel.currentSelection.undo();
+            mainPanel.currentSelection = null;
+        }
+
         char[][] currentChars = mainPanel.getAsciiPanel().getChars();
         foregroundColorGrid = new Color[currentChars.length][currentChars[0].length];
         backgroundColorGrid = new Color[currentChars.length][currentChars[0].length];
-        //Matrix copy
         for (int y = 0; y < currentChars.length; y++) {
             for (int x = 0; x < currentChars[0].length; x++) {
                 foregroundColorGrid[y][x] = mainPanel.getAsciiPanel().pickFC(y, x);

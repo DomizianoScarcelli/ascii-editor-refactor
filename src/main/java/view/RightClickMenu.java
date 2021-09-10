@@ -1,5 +1,6 @@
 package view;
 
+import controller.commands.copycutpaste.ClearCommand;
 import controller.commands.copycutpaste.CopyCommand;
 import controller.commands.copycutpaste.CutCommand;
 import controller.commands.copycutpaste.PasteCommand;
@@ -24,21 +25,22 @@ public class RightClickMenu extends JPopupMenu {
         JMenuItem copyButton = new JMenuItem("Copy");
         JMenuItem cutButton = new JMenuItem("Cut");
         JMenuItem pasteButton = new JMenuItem("Paste");
+        JMenuItem clearButton = new JMenuItem("Clear");
+        add(clearButton);
         add(copyButton);
         add(cutButton);
         add(pasteButton);
 
+
         copyButton.addActionListener(e -> {
-            CopyCommand copyCommand = new CopyCommand();
-            copyCommand.execute();
+            new CopyCommand().execute();
             //Removes the selection
             MainPanel.getInstance().currentSelection.undo();
 
         });
 
         cutButton.addActionListener(e -> {
-            CutCommand cutCommand = new CutCommand();
-            cutCommand.execute();
+            new CutCommand().execute();
             //Removes the selection
             MainPanel.getInstance().currentSelection.undo();
         });
@@ -46,8 +48,12 @@ public class RightClickMenu extends JPopupMenu {
         pasteButton.addActionListener(e -> {
             int x = RightClickMenu.getInstance().getRightClickMouseCursorX();
             int y = RightClickMenu.getInstance().getRightClickMouseCursorY();
-            PasteCommand pasteCommand = new PasteCommand(x, y);
-            pasteCommand.execute();
+            new PasteCommand(x, y).execute();
+        });
+
+        clearButton.addActionListener(e -> {
+            new ClearCommand().execute();
+            MainPanel.getInstance().currentSelection.undo();
         });
     }
 

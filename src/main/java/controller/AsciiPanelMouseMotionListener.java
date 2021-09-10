@@ -2,7 +2,7 @@ package controller;
 
 
 import controller.commands.*;
-import controller.commands.copycutpaste.MoveCommand;
+import controller.commands.copycutpaste.MoveCommandAlt;
 import controller.commands.copycutpaste.PasteCommand;
 import controller.commands.copycutpaste.SelectCommand;
 import controller.commands.shapes.CircleCommand;
@@ -60,15 +60,15 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
 
         if ((currentCommand instanceof FillCommand || currentCommand instanceof PickCommand || currentCommand instanceof PaintCommand) || currentCommand instanceof EraseCommand) {
             mainPanel.executeCommand();
-        } else if (currentCommand instanceof MoveCommand) {
-            mainPanel.setCommand(new MoveCommand(x1, y1, middleCursorX, middleCursorY));
-            mainPanel.getCommand().execute();
-
-
         } else {
             //Solves a bug where the shape couldn't be drawn twice
-            Command previousCommand = mainPanel.getCommandStack().pop();
-            if (mainPanel.isDrag) previousCommand.undo();
+            //TODO sta cosa però non risolve niente per quanto riguarda il Paste e il Move
+            Command previousCommand = mainPanel.getCommandStack().peek();
+            if (mainPanel.isDrag && !(currentCommand instanceof PasteCommand)) {
+                System.out.println("sono qui");
+                mainPanel.getCommandStack().pop();
+                previousCommand.undo();
+            }
 
             if (currentCommand instanceof SquareCommand)
                 mainPanel.setCommand(new SquareCommand((int) Math.round(pointDistance / Math.sqrt(2)) + 1));
@@ -77,10 +77,10 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
                 mainPanel.setCommand(new SelectCommand(x1, y1, middleCursorX, middleCursorY));
             else if (currentCommand instanceof RectCommand)
                 mainPanel.setCommand(new RectCommand(x1, y1, middleCursorX, middleCursorY));
+            else if (currentCommand instanceof MoveCommandAlt)
+                mainPanel.setCommand(new MoveCommandAlt(middleCursorX, middleCursorY));
             else if (currentCommand instanceof PasteCommand)
                 mainPanel.setCommand(new PasteCommand(middleCursorX, middleCursorY));
-//            else if (currentCommand instanceof MoveCommand)
-//                mainPanel.setCommand(new MoveCommand(x1, y1, middleCursorX, middleCursorY));
 
 
             mainPanel.getCommand().execute();

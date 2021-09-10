@@ -2,7 +2,7 @@ package view;
 
 import controller.*;
 import controller.commands.*;
-import controller.commands.copycutpaste.MoveCommand;
+import controller.commands.copycutpaste.MoveCommandAlt;
 import controller.commands.copycutpaste.PasteCommand;
 import controller.commands.copycutpaste.SelectCommand;
 import controller.commands.shapes.CircleCommand;
@@ -50,6 +50,7 @@ public class MainPanel extends JFrame {
     public ArrayList<int[]> selectedPoints;
     public ArrayList<int[]> selectionChars = new ArrayList<>();
 
+    public MoveCommandAlt currentMove = null;
     private Command command;
 
     private AsciiPanelMouseListener asciiPanelMouseListener;
@@ -65,6 +66,7 @@ public class MainPanel extends JFrame {
     }
 
     private MainPanel() {
+        //TODO per fare il reset inizializza qua tutte le variabili al loro stato iniziale e inizializza una nuova istanza chiamando su di essa il metodo main
         super("Pannello principale");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(800, 800);
@@ -86,8 +88,6 @@ public class MainPanel extends JFrame {
             Command command = commandStack.pop();
             command.undo();
             System.out.println(commandStack.length());
-//            UndoCommand undoCommand = new UndoCommand();
-//            undoCommand.execute();
 
         });
 
@@ -210,17 +210,17 @@ public class MainPanel extends JFrame {
             this.command = new RectCommand(asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY(), asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY());
         });
         selectButton.addActionListener(e -> {
-//            changeCursor("src/main/resources/whiteIcons/select.png");
+            changeCursor("src/main/resources/whiteIcons/select.png");
             ToolsPanelController.selectButton(selectButton);
             this.command = new SelectCommand(asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY(), asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY());
         });
         moveButton.addActionListener(e -> {
             changeCursor("src/main/resources/whiteIcons/move.png");
             ToolsPanelController.selectButton(moveButton);
-            this.command = new MoveCommand(asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY(), asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY());
+            this.command = new MoveCommandAlt(0, 0);
         });
         cloneButton.addActionListener(e -> {
-//            changeCursor("src/main/resources/whiteIcons/move.png");
+            changeCursor("src/main/resources/whiteIcons/stamp.png");
             ToolsPanelController.selectButton(cloneButton);
             this.command = new PasteCommand(0, 0);
         });

@@ -1,5 +1,6 @@
 package controller.commands.shapes;
 
+import controller.ToolsPanelController;
 import controller.commands.Command;
 import view.MainPanel;
 
@@ -20,14 +21,7 @@ public class RectCommand implements Command {
 
     @Override
     public void execute() {
-        char[][] currentChars = mainPanel.getAsciiPanel().getChars();
-        oldCharGrid = new char[currentChars.length][currentChars[0].length];
-        //Matrix copy
-        for (int y = 0; y < currentChars.length; y++) {
-            for (int x = 0; x < currentChars[0].length; x++) {
-                oldCharGrid[y][x] = currentChars[y][x];
-            }
-        }
+        oldCharGrid = ToolsPanelController.copyCharGrid();
 
         mainPanel.getCommandStack().push(this);
 

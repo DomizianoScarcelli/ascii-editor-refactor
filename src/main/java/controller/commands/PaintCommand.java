@@ -38,13 +38,7 @@ public class PaintCommand implements Command {
      */
     @Override
     public void execute() {
-        char[][] currentChars = mainPanel.getAsciiPanel().getChars();
-        oldCharGrid = new char[currentChars.length][currentChars[0].length];
-        for (int y = 0; y < currentChars.length; y++) {
-            for (int x = 0; x < currentChars[0].length; x++) {
-                oldCharGrid[y][x] = currentChars[y][x];
-            }
-        }
+        oldCharGrid = ToolsPanelController.copyCharGrid();
 
         cursorX = mainPanel.getAsciiPanel().getMouseCursorX();
         cursorY = mainPanel.getAsciiPanel().getMouseCursorY();
