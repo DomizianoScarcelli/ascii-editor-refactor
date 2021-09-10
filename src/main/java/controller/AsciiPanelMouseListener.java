@@ -3,6 +3,7 @@ package controller;
 
 import controller.commands.*;
 import controller.commands.copycutpaste.MoveCommand;
+import controller.commands.copycutpaste.PasteCommand;
 import controller.commands.copycutpaste.SelectCommand;
 import controller.commands.shapes.SquareCommand;
 import view.MainPanel;
@@ -54,11 +55,17 @@ public class AsciiPanelMouseListener implements MouseListener {
         if (currentCommand instanceof FillCommand) mainPanel.setCommand(new FillCommand(mainPanel));
         else if (currentCommand instanceof PickCommand) mainPanel.setCommand(new PickCommand(mainPanel));
         else if (currentCommand instanceof PaintCommand) mainPanel.setCommand(new PaintCommand(mainPanel));
+        else if (currentCommand instanceof PasteCommand) {
+            int x = mainPanel.getAsciiPanel().getMouseCursorX();
+            int y = mainPanel.getAsciiPanel().getMouseCursorY();
+            mainPanel.setCommand(new PasteCommand(x, y));
+        }
 
-        if ((currentCommand instanceof FillCommand || currentCommand instanceof PickCommand || currentCommand instanceof PaintCommand || currentCommand instanceof EraseCommand)) {
+        if ((currentCommand instanceof FillCommand || currentCommand instanceof PickCommand || currentCommand instanceof PaintCommand || currentCommand instanceof EraseCommand || currentCommand instanceof PasteCommand)) {
             mainPanel.executeCommand();
             mainPanel.getAsciiPanel().repaint();
         }
+
 //        if (!(currentCommand instanceof MoveCommand)) //TODO guarda quale classi togliere da sta cosa, recentemente ho aggiunto anche SelectCommand ma non so se è giusto
 //            mainPanel.beforeSelectionGrid = mainPanel.getAsciiPanel().getChars(); //TODO
 

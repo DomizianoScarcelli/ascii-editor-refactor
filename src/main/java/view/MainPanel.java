@@ -2,8 +2,8 @@ package view;
 
 import controller.*;
 import controller.commands.*;
-import controller.commands.copycutpaste.CloneCommand;
 import controller.commands.copycutpaste.MoveCommand;
+import controller.commands.copycutpaste.PasteCommand;
 import controller.commands.copycutpaste.SelectCommand;
 import controller.commands.shapes.CircleCommand;
 import controller.commands.shapes.RectCommand;
@@ -222,7 +222,7 @@ public class MainPanel extends JFrame {
         cloneButton.addActionListener(e -> {
 //            changeCursor("src/main/resources/whiteIcons/move.png");
             ToolsPanelController.selectButton(cloneButton);
-            this.command = new CloneCommand();
+            this.command = new PasteCommand(0, 0);
         });
 
         //-----------------Adds the tool buttons to the list-------------------

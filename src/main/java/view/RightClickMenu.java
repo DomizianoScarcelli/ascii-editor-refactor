@@ -44,7 +44,9 @@ public class RightClickMenu extends JPopupMenu {
         });
 
         pasteButton.addActionListener(e -> {
-            PasteCommand pasteCommand = new PasteCommand();
+            int x = RightClickMenu.getInstance().getRightClickMouseCursorX();
+            int y = RightClickMenu.getInstance().getRightClickMouseCursorY();
+            PasteCommand pasteCommand = new PasteCommand(x, y);
             pasteCommand.execute();
         });
     }

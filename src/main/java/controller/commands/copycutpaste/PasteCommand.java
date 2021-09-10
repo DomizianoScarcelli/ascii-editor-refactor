@@ -4,12 +4,18 @@ import controller.commands.Command;
 import view.MainPanel;
 import view.RightClickMenu;
 
-import java.awt.*;
 import java.util.Comparator;
 import java.util.Optional;
 
 public class PasteCommand implements Command {
     private MainPanel mainPanel = MainPanel.getInstance();
+
+    private int x2, y2;
+
+    public PasteCommand(int x2, int y2) {
+        this.x2 = x2;
+        this.y2 = y2;
+    }
 
     @Override
     public void execute() {
@@ -17,8 +23,8 @@ public class PasteCommand implements Command {
         Optional<int[]> min = RightClickMenu.getInstance().getCopiedChars().stream().min(Comparator.comparingInt(point -> point[0] + point[1]));
         int x1 = min.get()[0];
         int y1 = min.get()[1];
-        int x2 = RightClickMenu.getInstance().getRightClickMouseCursorX();
-        int y2 = RightClickMenu.getInstance().getRightClickMouseCursorY();
+//        int x2 = RightClickMenu.getInstance().getRightClickMouseCursorX();
+//        int y2 = RightClickMenu.getInstance().getRightClickMouseCursorY();
 
         int offsetX = x2 - x1;
         int offsetY = y2 - y1;
