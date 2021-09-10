@@ -31,12 +31,16 @@ public class RightClickMenu extends JPopupMenu {
         copyButton.addActionListener(e -> {
             CopyCommand copyCommand = new CopyCommand();
             copyCommand.execute();
+            //Removes the selection
+            MainPanel.getInstance().currentSelection.undo();
 
         });
 
         cutButton.addActionListener(e -> {
             CutCommand cutCommand = new CutCommand();
             cutCommand.execute();
+            //Removes the selection
+            MainPanel.getInstance().currentSelection.undo();
         });
 
         pasteButton.addActionListener(e -> {

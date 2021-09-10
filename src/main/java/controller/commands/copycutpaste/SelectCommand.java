@@ -17,7 +17,6 @@ public class SelectCommand extends RectCommand {
 
     @Override
     public void execute() {
-        System.out.println("Sto eseguendo");
         char[][] currentChars = mainPanel.getAsciiPanel().getChars();
         foregroundColorGrid = new Color[currentChars.length][currentChars[0].length];
         backgroundColorGrid = new Color[currentChars.length][currentChars[0].length];

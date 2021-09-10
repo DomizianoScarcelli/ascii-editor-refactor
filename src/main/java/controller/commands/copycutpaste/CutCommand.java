@@ -19,7 +19,7 @@ public class CutCommand implements Command {
         for (int[] point : RightClickMenu.getInstance().getCopiedChars()) {
             int x = point[0];
             int y = point[1];
-            mainPanel.beforeSelectionGrid[y][x] = (char) (int) mainPanel.getAsciiPanel().pickChar(x,y);
+            mainPanel.beforeSelectionGrid[y][x] = (char) (int) mainPanel.getAsciiPanel().pickChar(x, y);
             mainPanel.getAsciiPanel().setCursorX(x);
             mainPanel.getAsciiPanel().setCursorY(y);
             mainPanel.getAsciiPanel().write((char) 0, Color.BLACK, Color.BLACK);

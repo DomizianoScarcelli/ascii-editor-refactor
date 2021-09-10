@@ -3,6 +3,8 @@ package controller.commands;
 import controller.ToolsPanelController;
 import view.MainPanel;
 
+import java.awt.*;
+
 
 /**
  * Writes the selected char on the panel when the left mouse button is pressed.
@@ -36,7 +38,6 @@ public class PaintCommand implements Command {
      */
     @Override
     public void execute() {
-
         char[][] currentChars = mainPanel.getAsciiPanel().getChars();
         oldCharGrid = new char[currentChars.length][currentChars[0].length];
         for (int y = 0; y < currentChars.length; y++) {
@@ -62,8 +63,8 @@ public class PaintCommand implements Command {
         mainPanel.getAsciiPanel().repaint();
 //        System.out.println(mainPanel.getSelectedChar());
         ToolsPanelController.selectButton(mainPanel.getPaint());
-        System.out.println(mainPanel.getCommandStack().length());
-        System.out.println(mainPanel.getCommandStack());
+//        System.out.println(mainPanel.getCommandStack().length());
+//        System.out.println(mainPanel.getCommandStack());
     }
 
 

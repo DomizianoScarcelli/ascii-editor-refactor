@@ -11,12 +11,14 @@ public class CopyCommand implements Command {
 
     @Override
     public void execute() {
+
         RightClickMenu.getInstance().setCopiedChars(mainPanel.selectedPoints);
-        mainPanel.selectedPoints.forEach(point ->{
+        mainPanel.selectedPoints.forEach(point -> {
             int x = point[0];
             int y = point[1];
-            mainPanel.beforeSelectionGrid[y][x] = (char) (int) mainPanel.getAsciiPanel().pickChar(x,y);
+            mainPanel.beforeSelectionGrid[y][x] = (char) (int) mainPanel.getAsciiPanel().pickChar(x, y);
         });
+
     }
 
     @Override

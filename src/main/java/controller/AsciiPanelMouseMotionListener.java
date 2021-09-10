@@ -57,7 +57,7 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
         else if (currentCommand instanceof PaintCommand) mainPanel.setCommand(new PaintCommand(mainPanel));
 
 
-        if ((currentCommand instanceof FillCommand || currentCommand instanceof PickCommand || currentCommand instanceof PaintCommand)) {
+        if ((currentCommand instanceof FillCommand || currentCommand instanceof PickCommand || currentCommand instanceof PaintCommand) || currentCommand instanceof EraseCommand) {
             mainPanel.executeCommand();
         } else if (currentCommand instanceof MoveCommand) {
             mainPanel.setCommand(new MoveCommand(x1, y1, middleCursorX, middleCursorY));

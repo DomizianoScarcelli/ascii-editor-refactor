@@ -2,6 +2,7 @@ package view;
 
 import controller.*;
 import controller.commands.*;
+import controller.commands.copycutpaste.CloneCommand;
 import controller.commands.copycutpaste.MoveCommand;
 import controller.commands.copycutpaste.SelectCommand;
 import controller.commands.shapes.CircleCommand;
@@ -31,10 +32,9 @@ public class MainPanel extends JFrame {
     private JPanel foregroundColorPanel;
     private JPanel backgroundColorPanel;
 
-    private JButton paint, fill, pick;
+    private JButton paint, fill, pick, eraser;
 
     public boolean isDrag = false;
-
 
     private BufferedImage importedBufferedImage;
 
@@ -126,9 +126,11 @@ public class MainPanel extends JFrame {
         paint = ButtonFactory.createToolButton("Paint", "src/main/resources/pencil.png");
         fill = ButtonFactory.createToolButton("Fill", "src/main/resources/bucket.png");
         pick = ButtonFactory.createToolButton("Pick", "src/main/resources/tap.png");
+        eraser = ButtonFactory.createToolButton("Erase", "src/main/resources/eraser.png");
         buttonPanel.add(paint);
         buttonPanel.add(fill);
         buttonPanel.add(pick);
+        buttonPanel.add(eraser);
 
         paint.setBackground(Color.GRAY);
 
@@ -188,38 +190,52 @@ public class MainPanel extends JFrame {
         toolsPanel.add(selectButton);
         JButton moveButton = ButtonFactory.createSmallToolButton("src/main/resources/move.png");
         toolsPanel.add(moveButton);
+        JButton cloneButton = ButtonFactory.createSmallToolButton("src/main/resources/stamp.png");
+        toolsPanel.add(cloneButton);
 
 
         squareButton.addActionListener(e -> {
+            changeCursor("src/main/resources/whiteIcons/square.png");
             ToolsPanelController.selectButton(squareButton);
             this.command = new SquareCommand(1);
         });
         circleButton.addActionListener(e -> {
+            changeCursor("src/main/resources/whiteIcons/circle.png");
             ToolsPanelController.selectButton(circleButton);
             this.command = new CircleCommand(1);
         });
         rectButton.addActionListener(e -> {
+            changeCursor("src/main/resources/whiteIcons/rect.png");
             ToolsPanelController.selectButton(rectButton);
             this.command = new RectCommand(asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY(), asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY());
         });
         selectButton.addActionListener(e -> {
+//            changeCursor("src/main/resources/whiteIcons/select.png");
             ToolsPanelController.selectButton(selectButton);
             this.command = new SelectCommand(asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY(), asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY());
         });
         moveButton.addActionListener(e -> {
+            changeCursor("src/main/resources/whiteIcons/move.png");
             ToolsPanelController.selectButton(moveButton);
             this.command = new MoveCommand(asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY(), asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY());
+        });
+        cloneButton.addActionListener(e -> {
+//            changeCursor("src/main/resources/whiteIcons/move.png");
+            ToolsPanelController.selectButton(cloneButton);
+            this.command = new CloneCommand();
         });
 
         //-----------------Adds the tool buttons to the list-------------------
         toolButtonList.add(paint);
         toolButtonList.add(fill);
         toolButtonList.add(pick);
+        toolButtonList.add(eraser);
         toolButtonList.add(squareButton);
         toolButtonList.add(circleButton);
         toolButtonList.add(rectButton);
         toolButtonList.add(selectButton);
         toolButtonList.add(moveButton);
+        toolButtonList.add(cloneButton);
 
         mainContainer.add(toolsPanel, BorderLayout.NORTH);
 
@@ -255,28 +271,33 @@ public class MainPanel extends JFrame {
 
 
         // -------Change current command on tool button click-------
+        changeCursor("src/main/resources/whiteIcons/pencil2.png");
 
         paint.addActionListener(e -> {
+            changeCursor("src/main/resources/whiteIcons/pencil2.png");
             ToolsPanelController.selectButton(paint);
             this.command = new PaintCommand(this);
         });
         pick.addActionListener(e -> {
+            changeCursor("src/main/resources/whiteIcons/tap.png");
             ToolsPanelController.selectButton(pick);
             this.command = new PickCommand(this);
         });
         fill.addActionListener(e -> {
+            changeCursor("src/main/resources/whiteIcons/bucket.png");
             ToolsPanelController.selectButton(fill);
             this.command = new FillCommand(this);
         });
+        eraser.addActionListener((e -> {
+            changeCursor("src/main/resources/whiteIcons/eraser.png");
+            ToolsPanelController.selectButton(eraser);
+            this.command = new EraseCommand(this);
+        }));
 
         this.addKeyListener(new MainPanelKeyListener());
         this.setFocusable(true);
 
-        //Change cursor
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Image image = toolkit.getImage("src/main/resources/whiteIcons/pencil22.png");
-        Cursor c = toolkit.createCustomCursor(image, new Point(asciiPanel.getX(), asciiPanel.getY()), "img");
-        asciiPanel.setCursor(c);
+
     }
 
     public AsciiPanel getAsciiPanel() {
@@ -418,4 +439,13 @@ public class MainPanel extends JFrame {
     public CommandStack getRedoCommandStack() {
         return redoCommandStack;
     }
+
+    private void changeCursor(String imagePath) {
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Image image = toolkit.getImage(imagePath);
+        Cursor c = toolkit.createCustomCursor(image, new Point(0, 0), "Cursor");
+        asciiPanel.setCursor(c);
+    }
+
+
 }

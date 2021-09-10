@@ -13,8 +13,6 @@ public class PasteCommand implements Command {
 
     @Override
     public void execute() {
-        //Removes the selection
-        mainPanel.currentSelection.undo(); //TODO vedi di risolvere sti undo random che ti buggano tutto
         //Gets the top left corner of the selection
         Optional<int[]> min = RightClickMenu.getInstance().getCopiedChars().stream().min(Comparator.comparingInt(point -> point[0] + point[1]));
         int x1 = min.get()[0];
