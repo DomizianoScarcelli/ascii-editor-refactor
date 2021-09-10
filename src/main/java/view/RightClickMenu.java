@@ -1,5 +1,6 @@
 package view;
 
+import controller.commands.ColorCommand;
 import controller.commands.copycutpaste.ClearCommand;
 import controller.commands.copycutpaste.CopyCommand;
 import controller.commands.copycutpaste.CutCommand;
@@ -22,26 +23,41 @@ public class RightClickMenu extends JPopupMenu {
     }
 
     private RightClickMenu() {
+        JMenuItem colorForegroundButton = new JMenuItem("Color Foreground");
+        JMenuItem colorBackgroundButton = new JMenuItem("Color Background");
+        JMenuItem clearButton = new JMenuItem("Clear");
         JMenuItem copyButton = new JMenuItem("Copy");
         JMenuItem cutButton = new JMenuItem("Cut");
         JMenuItem pasteButton = new JMenuItem("Paste");
-        JMenuItem clearButton = new JMenuItem("Clear");
+
+        add(colorForegroundButton);
+        add(colorBackgroundButton);
         add(clearButton);
         add(copyButton);
         add(cutButton);
         add(pasteButton);
 
+        colorForegroundButton.addActionListener(e -> {
+            new ColorCommand(true).execute();
+            MainPanel.getInstance().currentSelection.undo();
+        });
 
+        colorBackgroundButton.addActionListener(e -> {
+            new ColorCommand(false).execute();
+            MainPanel.getInstance().currentSelection.undo();
+        });
+
+        clearButton.addActionListener(e -> {
+            new ClearCommand().execute();
+            MainPanel.getInstance().currentSelection.undo();
+        });
         copyButton.addActionListener(e -> {
             new CopyCommand().execute();
-            //Removes the selection
             MainPanel.getInstance().currentSelection.undo();
-
         });
 
         cutButton.addActionListener(e -> {
             new CutCommand().execute();
-            //Removes the selection
             MainPanel.getInstance().currentSelection.undo();
         });
 
@@ -51,10 +67,7 @@ public class RightClickMenu extends JPopupMenu {
             new PasteCommand(x, y).execute();
         });
 
-        clearButton.addActionListener(e -> {
-            new ClearCommand().execute();
-            MainPanel.getInstance().currentSelection.undo();
-        });
+
     }
 
 

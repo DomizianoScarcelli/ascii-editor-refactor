@@ -293,9 +293,8 @@ public class MainPanel extends JFrame {
             ToolsPanelController.selectButton(eraser);
             this.command = new EraseCommand(this);
         }));
-
-        this.addKeyListener(new MainPanelKeyListener());
         this.setFocusable(true);
+        this.addKeyListener(new MainPanelKeyListener());
 
 
     }
