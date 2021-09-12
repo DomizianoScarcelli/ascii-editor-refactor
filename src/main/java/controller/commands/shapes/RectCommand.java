@@ -4,6 +4,7 @@ import controller.ToolsPanelController;
 import controller.commands.Command;
 import view.MainPanel;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class RectCommand implements Command {
@@ -11,6 +12,8 @@ public class RectCommand implements Command {
     private char[][] oldCharGrid;
     private int x1, y1, x2, y2;
     private ArrayList<int[]> rectPoints = new ArrayList<>();
+    private Color[][] oldForegroundColorGrid;
+    private Color[][] oldBackgroundColorGrid;
 
     public RectCommand(int x1, int y1, int x2, int y2) {
         this.x1 = x1;
@@ -22,6 +25,8 @@ public class RectCommand implements Command {
     @Override
     public void execute() {
         oldCharGrid = ToolsPanelController.copyCharGrid();
+        oldForegroundColorGrid = ToolsPanelController.copyFCGrid();
+        oldBackgroundColorGrid = ToolsPanelController.copyBCGrid();
 
         mainPanel.getCommandStack().push(this);
 
@@ -66,6 +71,17 @@ public class RectCommand implements Command {
 
     @Override
     public void undo() {
+
+////        //TODO vedi come gestire sta cosa del rettangolo poi
+////        for (int[] point : rectPoints) {
+////            int x = point[0];
+////            int y = point[1];
+////            mainPanel.getAsciiPanel().setCursorX(x);
+////            mainPanel.getAsciiPanel().setCursorY(y);
+////            mainPanel.getAsciiPanel().write(oldCharGrid[y][x], mainPanel.getAsciiPanel().getOldForegroundColors()[y][x], mainPanel.getAsciiPanel().getOldBackgroundColors()[y][x]);
+////        }
+////
+//        //TODO risolvi bug colori di background quando viene disegnata una figura
         mainPanel.getAsciiPanel().setCursorX(mainPanel.getAsciiPanelMouseListener().getInitialCursorX());
         mainPanel.getAsciiPanel().setCursorY(mainPanel.getAsciiPanelMouseListener().getInitialCursorY());
         mainPanel.getAsciiPanel().setChars(oldCharGrid);

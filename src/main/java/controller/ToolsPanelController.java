@@ -51,13 +51,43 @@ public class ToolsPanelController {
     public static char[][] copyCharGrid() {
         char[][] oldCharGrid;
         char[][] currentChars = mainPanel.getAsciiPanel().getChars();
-        oldCharGrid = new char[currentChars.length][currentChars[0].length];
-        for (int y = 0; y < currentChars.length; y++) {
-            for (int x = 0; x < currentChars[0].length; x++) {
-                oldCharGrid[y][x] = currentChars[y][x];
+        int width = mainPanel.getAsciiPanel().getWidthInCharacters();
+        int height = mainPanel.getAsciiPanel().getHeightInCharacters();
+        oldCharGrid = new char[width][height];
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                oldCharGrid[x][y] = currentChars[x][y];
             }
         }
         return oldCharGrid;
+    }
+
+    public static Color[][] copyBCGrid() {
+        Color[][] oldColorGrid;
+        Color[][] currentColorGrid = mainPanel.getAsciiPanel().getOldBackgroundColors();
+        int width = mainPanel.getAsciiPanel().getWidthInCharacters();
+        int height = mainPanel.getAsciiPanel().getHeightInCharacters();
+        oldColorGrid = new Color[width][height];
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                oldColorGrid[x][y] = currentColorGrid[x][y];
+            }
+        }
+        return oldColorGrid;
+    }
+
+    public static Color[][] copyFCGrid() {
+        Color[][] oldColorGrid;
+        Color[][] currentColorGrid = mainPanel.getAsciiPanel().getOldForegroundColors();
+        int width = mainPanel.getAsciiPanel().getWidthInCharacters();
+        int height = mainPanel.getAsciiPanel().getHeightInCharacters();
+        oldColorGrid = new Color[width][height];
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                oldColorGrid[x][y] = currentColorGrid[x][y];
+            }
+        }
+        return oldColorGrid;
     }
 
 

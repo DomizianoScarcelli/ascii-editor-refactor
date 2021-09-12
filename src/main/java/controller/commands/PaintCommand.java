@@ -4,6 +4,7 @@ import controller.ToolsPanelController;
 import view.MainPanel;
 
 import java.awt.*;
+import java.util.Arrays;
 
 
 /**
@@ -27,6 +28,8 @@ public class PaintCommand implements Command {
 
 
     private char[][] oldCharGrid;
+    private Color[][] oldForegroundColorGrid;
+    private Color[][] oldBackgroundColorGrid;
 
     public PaintCommand(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
@@ -39,7 +42,9 @@ public class PaintCommand implements Command {
     @Override
     public void execute() {
         oldCharGrid = ToolsPanelController.copyCharGrid();
-
+        oldForegroundColorGrid = ToolsPanelController.copyFCGrid();
+        oldBackgroundColorGrid = ToolsPanelController.copyBCGrid();
+        oldForegroundColorGrid = (mainPanel.getAsciiPanel().getOldForegroundColors());
         cursorX = mainPanel.getAsciiPanel().getMouseCursorX();
         cursorY = mainPanel.getAsciiPanel().getMouseCursorY();
         mainPanel.getAsciiPanel().setCursorX(cursorX);
@@ -47,7 +52,9 @@ public class PaintCommand implements Command {
         oldChar = mainPanel.getAsciiPanel().pickChar(cursorX, cursorY);
         if (mainPanel.getCurrentButtonPressed() == 1) {
             //Prevents a char is not written twice on the same position, so the undo doesn't fully work.
-            if (!(oldChar == mainPanel.getSelectedChar() && cursorX == mainPanel.getAsciiPanel().getMouseCursorX() && cursorY == mainPanel.getAsciiPanel().getMouseCursorY())) {
+            if (!(oldChar == mainPanel.getSelectedChar()
+                    && cursorX == mainPanel.getAsciiPanel().getMouseCursorX()
+                    && cursorY == mainPanel.getAsciiPanel().getMouseCursorY())) {
                 mainPanel.getAsciiPanel().write((char) mainPanel.getSelectedChar(), mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
                 mainPanel.getCommandStack().push(this);
             }
@@ -55,10 +62,9 @@ public class PaintCommand implements Command {
             mainPanel.getAsciiPanel().write((char) 0);
         }
         mainPanel.getAsciiPanel().repaint();
-//        System.out.println(mainPanel.getSelectedChar());
+
         ToolsPanelController.selectButton(mainPanel.getPaint());
-//        System.out.println(mainPanel.getCommandStack().length());
-//        System.out.println(mainPanel.getCommandStack());
+
     }
 
 
@@ -67,15 +73,17 @@ public class PaintCommand implements Command {
      */
     @Override
     public void undo() {
-        mainPanel.getAsciiPanel().setChars(oldCharGrid);
-//        mainPanel.getAsciiPanel().setCursorX(cursorX);
-//        mainPanel.getAsciiPanel().setCursorY(cursorY);
-//        mainPanel.getAsciiPanel().write((char) oldChar);
+        int width = mainPanel.getAsciiPanel().getWidthInCharacters();
+        int height = mainPanel.getAsciiPanel().getHeightInCharacters();
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                mainPanel.getAsciiPanel().setCursorX(x);
+                mainPanel.getAsciiPanel().setCursorY(y);
+                mainPanel.getAsciiPanel().write(oldCharGrid[x][y], oldForegroundColorGrid[x][y], oldBackgroundColorGrid[x][y]);
+            }
+        }
         mainPanel.getAsciiPanel().repaint();
-//        if (this.previousCommand != null) {
-//            System.out.println("daje");
-//            this.previousCommand.undo();
-//        }
+
     }
 
 }

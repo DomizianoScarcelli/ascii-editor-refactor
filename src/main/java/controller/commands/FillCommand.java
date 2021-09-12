@@ -23,6 +23,8 @@ public class FillCommand implements Command {
     private int cursorX, cursorY;
 
     private char[][] oldCharGrid;
+    private Color[][] oldForegroundColorGrid;
+    private Color[][] oldBackgroundColorGrid;
 
     public FillCommand(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
@@ -31,6 +33,8 @@ public class FillCommand implements Command {
     @Override
     public void execute() {
         oldCharGrid = ToolsPanelController.copyCharGrid();
+        oldForegroundColorGrid = ToolsPanelController.copyFCGrid();
+        oldBackgroundColorGrid = ToolsPanelController.copyBCGrid();
         cursorX = mainPanel.getAsciiPanel().getMouseCursorX();
         cursorY = mainPanel.getAsciiPanel().getMouseCursorY();
 
@@ -49,7 +53,15 @@ public class FillCommand implements Command {
 
     @Override
     public void undo() {
-        mainPanel.getAsciiPanel().setChars(oldCharGrid);
+        int width = mainPanel.getAsciiPanel().getWidthInCharacters();
+        int height = mainPanel.getAsciiPanel().getHeightInCharacters();
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                mainPanel.getAsciiPanel().setCursorX(x);
+                mainPanel.getAsciiPanel().setCursorY(y);
+                mainPanel.getAsciiPanel().write(oldCharGrid[x][y], oldForegroundColorGrid[x][y], oldBackgroundColorGrid[x][y]);
+            }
+        }
         mainPanel.getAsciiPanel().repaint();
     }
 
