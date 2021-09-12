@@ -13,19 +13,18 @@ public class EraseCommand implements Command {
     private int cursorX, cursorY;
     private int oldChar;
 
-
     private char[][] oldCharGrid;
 
-    public EraseCommand(MainPanel mainPanel) {
+    public EraseCommand(MainPanel mainPanel, int cursorX, int cursorY) {
         this.mainPanel = mainPanel;
+        this.cursorY = cursorY;
+        this.cursorX = cursorX;
     }
 
     @Override
     public void execute() {
         oldCharGrid = ToolsPanelController.copyCharGrid();
 
-        cursorX = mainPanel.getAsciiPanel().getMouseCursorX();
-        cursorY = mainPanel.getAsciiPanel().getMouseCursorY();
         mainPanel.getAsciiPanel().setCursorX(cursorX);
         mainPanel.getAsciiPanel().setCursorY(cursorY);
         oldChar = mainPanel.getAsciiPanel().pickChar(cursorX, cursorY);

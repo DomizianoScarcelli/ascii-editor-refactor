@@ -4,11 +4,7 @@ import controller.ToolsPanelController;
 import controller.commands.Command;
 import view.MainPanel;
 
-import java.util.Arrays;
-
-
 public class CircleCommand implements Command {
-
     private int cursorX;
     private int cursorY;
     private MainPanel mainPanel = MainPanel.getInstance();
@@ -22,10 +18,8 @@ public class CircleCommand implements Command {
     @Override
     public void execute() {
         oldCharGrid = ToolsPanelController.copyCharGrid();
-
         cursorX = mainPanel.getAsciiPanel().getCursorX();
         cursorY = mainPanel.getAsciiPanel().getCursorY();
-
         mainPanel.getCommandStack().push(this);
         midPointCircleDraw(cursorX, cursorY, radius);
     }
@@ -34,11 +28,8 @@ public class CircleCommand implements Command {
     //Source: https://www.geeksforgeeks.org/mid-point-circle-drawing-algorithm/
     public void midPointCircleDraw(int x_centre, int y_centre, int r) {
         int x = r, y = 0;
-
-
         // Printing the initial point on the axes after translation
         drawPoint(x + x_centre, y + y_centre);
-
         // When radius is zero only a single point will be printed
         if (r > 0) {
             drawPoint(x + x_centre, -y + y_centre);
@@ -56,16 +47,13 @@ public class CircleCommand implements Command {
                 x--;
                 P = P + 2 * y - 2 * x + 1;
             }
-
             // All the perimeter points have already been printed
             if (x < y) break;
-
             // Printing the generated point and its reflection in the other octants after translation
             drawPoint(x + x_centre, y + y_centre);
             drawPoint(-x + x_centre, y + y_centre);
             drawPoint(x + x_centre, -y + y_centre);
             drawPoint(-x + x_centre, -y + y_centre);
-
             // If the generated point is on the line x = y then the perimeter points have already been printed
             if (x != y) {
                 drawPoint(y + x_centre, x + y_centre);
@@ -82,7 +70,6 @@ public class CircleCommand implements Command {
         mainPanel.getAsciiPanel().write((char) mainPanel.getSelectedChar(), mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
     }
 
-
     @Override
     public void undo() {
         mainPanel.getAsciiPanel().setCursorX(mainPanel.getAsciiPanelMouseListener().getInitialCursorX());
@@ -90,5 +77,4 @@ public class CircleCommand implements Command {
         mainPanel.getAsciiPanel().setChars(oldCharGrid);
         mainPanel.getAsciiPanel().repaint();
     }
-
 }

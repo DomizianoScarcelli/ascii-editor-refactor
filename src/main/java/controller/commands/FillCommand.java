@@ -26,8 +26,10 @@ public class FillCommand implements Command {
     private Color[][] oldForegroundColorGrid;
     private Color[][] oldBackgroundColorGrid;
 
-    public FillCommand(MainPanel mainPanel) {
+    public FillCommand(MainPanel mainPanel, int cursorX, int cursorY) {
         this.mainPanel = mainPanel;
+        this.cursorY = cursorY;
+        this.cursorX = cursorX;
     }
 
     @Override
@@ -35,11 +37,10 @@ public class FillCommand implements Command {
         oldCharGrid = ToolsPanelController.copyCharGrid();
         oldForegroundColorGrid = ToolsPanelController.copyFCGrid();
         oldBackgroundColorGrid = ToolsPanelController.copyBCGrid();
-        cursorX = mainPanel.getAsciiPanel().getMouseCursorX();
-        cursorY = mainPanel.getAsciiPanel().getMouseCursorY();
+        
 
         if (mainPanel.getCurrentButtonPressed() == 1) {
-            mainPanel.getAsciiPanel().fill((char) mainPanel.getSelectedChar(), mainPanel.getAsciiPanel().getMouseCursorX(), mainPanel.getAsciiPanel().getMouseCursorY(), mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
+            mainPanel.getAsciiPanel().fill((char) mainPanel.getSelectedChar(), cursorX, cursorY, mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
         } else {
             mainPanel.getAsciiPanel().fill((char) (0), cursorX, cursorY, Color.black, Color.black);
         }

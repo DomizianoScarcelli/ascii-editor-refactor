@@ -52,9 +52,11 @@ public class AsciiPanelMouseListener implements MouseListener {
         mainPanel.setCurrentButtonPressed(e.getButton());
 
         Command currentCommand = mainPanel.getCommand();
-        if (currentCommand instanceof FillCommand) mainPanel.setCommand(new FillCommand(mainPanel));
+        if (currentCommand instanceof FillCommand)
+            mainPanel.setCommand(new FillCommand(mainPanel, mainPanel.getAsciiPanel().getMouseCursorX(), mainPanel.getAsciiPanel().getMouseCursorY()));
         else if (currentCommand instanceof PickCommand) mainPanel.setCommand(new PickCommand(mainPanel));
-        else if (currentCommand instanceof PaintCommand) mainPanel.setCommand(new PaintCommand(mainPanel));
+        else if (currentCommand instanceof PaintCommand)
+            mainPanel.setCommand(new PaintCommand(mainPanel, mainPanel.getAsciiPanel().getMouseCursorX(), mainPanel.getAsciiPanel().getMouseCursorY()));
         else if (currentCommand instanceof PasteCommand) {
             int x = mainPanel.getAsciiPanel().getMouseCursorX();
             int y = mainPanel.getAsciiPanel().getMouseCursorY();

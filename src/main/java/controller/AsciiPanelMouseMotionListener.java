@@ -53,9 +53,11 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
         int pointDistance = (int) Math.round(Math.sqrt(Math.pow((middleCursorX - x1), 2) + Math.pow((middleCursorY - y1), 2)));
 
         Command currentCommand = mainPanel.getCommand();
-        if (currentCommand instanceof FillCommand) mainPanel.setCommand(new FillCommand(mainPanel));
+        if (currentCommand instanceof FillCommand)
+            mainPanel.setCommand(new FillCommand(mainPanel, mainPanel.getAsciiPanel().getMouseCursorX(), mainPanel.getAsciiPanel().getMouseCursorY()));
         else if (currentCommand instanceof PickCommand) mainPanel.setCommand(new PickCommand(mainPanel));
-        else if (currentCommand instanceof PaintCommand) mainPanel.setCommand(new PaintCommand(mainPanel));
+        else if (currentCommand instanceof PaintCommand)
+            mainPanel.setCommand(new PaintCommand(mainPanel, mainPanel.getAsciiPanel().getMouseCursorX(), mainPanel.getAsciiPanel().getMouseCursorY()));
 
 
         if ((currentCommand instanceof FillCommand || currentCommand instanceof PickCommand || currentCommand instanceof PaintCommand) || currentCommand instanceof EraseCommand) {
@@ -65,14 +67,14 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
             //TODO sta cosa però non risolve niente per quanto riguarda il Paste e il Move
             Command previousCommand = mainPanel.getCommandStack().peek();
             if (mainPanel.isDrag && !(currentCommand instanceof PasteCommand)) {
-                System.out.println("sono qui");
                 mainPanel.getCommandStack().pop();
                 previousCommand.undo();
             }
 
             if (currentCommand instanceof SquareCommand)
                 mainPanel.setCommand(new SquareCommand((int) Math.round(pointDistance / Math.sqrt(2)) + 1));
-            else if (currentCommand instanceof CircleCommand) mainPanel.setCommand(new CircleCommand(pointDistance));
+            else if (currentCommand instanceof CircleCommand)
+                mainPanel.setCommand(new CircleCommand(pointDistance));
             else if (currentCommand instanceof SelectCommand)
                 mainPanel.setCommand(new SelectCommand(x1, y1, middleCursorX, middleCursorY));
             else if (currentCommand instanceof RectCommand)

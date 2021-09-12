@@ -31,8 +31,10 @@ public class PaintCommand implements Command {
     private Color[][] oldForegroundColorGrid;
     private Color[][] oldBackgroundColorGrid;
 
-    public PaintCommand(MainPanel mainPanel) {
+    public PaintCommand(MainPanel mainPanel, int cursorX, int cursorY) {
         this.mainPanel = mainPanel;
+        this.cursorY = cursorY;
+        this.cursorX = cursorX;
     }
 
 
@@ -45,8 +47,7 @@ public class PaintCommand implements Command {
         oldForegroundColorGrid = ToolsPanelController.copyFCGrid();
         oldBackgroundColorGrid = ToolsPanelController.copyBCGrid();
         oldForegroundColorGrid = (mainPanel.getAsciiPanel().getOldForegroundColors());
-        cursorX = mainPanel.getAsciiPanel().getMouseCursorX();
-        cursorY = mainPanel.getAsciiPanel().getMouseCursorY();
+
         mainPanel.getAsciiPanel().setCursorX(cursorX);
         mainPanel.getAsciiPanel().setCursorY(cursorY);
         oldChar = mainPanel.getAsciiPanel().pickChar(cursorX, cursorY);

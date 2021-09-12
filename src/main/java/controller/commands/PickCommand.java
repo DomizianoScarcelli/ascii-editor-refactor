@@ -19,6 +19,7 @@ public class PickCommand implements Command {
 
     public PickCommand(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
+
     }
 
     @Override
@@ -36,7 +37,7 @@ public class PickCommand implements Command {
         mainPanel.getForegroundColorPanel().repaint();
         mainPanel.getBackgroundColorPanel().repaint();
         ToolsPanelController toolsPanelController = ToolsPanelController.getInstance();
-        mainPanel.setCommand(new PaintCommand(mainPanel));
+        mainPanel.setCommand(new PaintCommand(mainPanel, mainPanel.getAsciiPanel().getMouseCursorX(), mainPanel.getAsciiPanel().getMouseCursorY()));
         toolsPanelController.updatePreview();
 
         mainPanel.getCommandStack().push(this);

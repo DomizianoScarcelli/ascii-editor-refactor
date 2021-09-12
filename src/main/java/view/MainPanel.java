@@ -19,7 +19,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-
 //TODO documenta tutto
 
 public class MainPanel extends JFrame {
@@ -27,37 +26,25 @@ public class MainPanel extends JFrame {
     private int selectedChar = 1;
     private Color defaultForegroundColor = Color.WHITE;
     private Color defaultBackgroundColor = Color.BLACK;
-
     private AsciiPanel charPreviewPanel;
     private JPanel foregroundColorPanel;
     private JPanel backgroundColorPanel;
-
     private JButton paint, fill, pick, eraser;
-
     public boolean isDrag = false;
-
     private BufferedImage importedBufferedImage;
-
     private JPanel mainContainer;
-
     private int currentButtonPressed = 1;
-
     private CommandStack commandStack = new CommandStack();
     private CommandStack redoCommandStack = new CommandStack();
-
     public SelectCommand currentSelection;
     public char[][] beforeSelectionGrid;
     public ArrayList<int[]> selectedPoints;
     public ArrayList<int[]> selectionChars = new ArrayList<>();
-
     public MoveCommandAlt currentMove = null;
     private Command command;
-
     private AsciiPanelMouseListener asciiPanelMouseListener;
     private AsciiPanelMouseMotionListener asciiPanelMouseMotionListener;
-
     public ArrayList<JButton> toolButtonList = new ArrayList<>();
-
     private static MainPanel instance;
 
     public static MainPanel getInstance() {
@@ -72,33 +59,29 @@ public class MainPanel extends JFrame {
         this.setSize(800, 800);
         this.setMinimumSize(new Dimension(700, 700));
         this.setLayout(new BorderLayout());
-
-        this.command = new PaintCommand(this);
-
+        asciiPanel = new AsciiPanel(80, 60, AsciiFont.CP437_16x16);
+        int cursorX = asciiPanel.getMouseCursorX();
+        int cursorY = asciiPanel.getMouseCursorY();
+        this.command = new PaintCommand(this, cursorX, cursorY);
         //---------------------MenuBar items-------------------------
         //Creates the Menu Bar and puts it on the top of the window
         JMenuBar menuBar = new JMenuBar();
         JMenu menuBarFile = new JMenu("File");
-
         //Undo button and listener
         JButton undo = ButtonFactory.menuBarButton("src/main/resources/undo.png");
         menuBar.add(undo);
         undo.addActionListener(e -> {
-            System.out.println(commandStack.length());
             Command command = commandStack.pop();
             command.undo();
-            System.out.println(commandStack.length());
-
+            redoCommandStack.push(command);
         });
-
         JButton redo = ButtonFactory.menuBarButton("src/main/resources/redo.png");
         menuBar.add(redo);
         redo.addActionListener(e -> {
             Command command = redoCommandStack.pop();
             command.execute();
+            commandStack.push(command);
         });
-
-
         menuBar.add(menuBarFile);
         this.add(menuBar, BorderLayout.NORTH);
         JMenuItem menuBarFileNew = new JMenuItem("New...");
@@ -109,18 +92,15 @@ public class MainPanel extends JFrame {
         menuBarFile.add(menuBarFileLoad);
         menuBarFile.add(menuBarFileSave);
         menuBarFile.add(menuBarFileImport);
-
         //MenuBar action listeners
         menuBarFileNew.addActionListener(new MenuBarActionNew());
         menuBarFileLoad.addActionListener(new MenuBarActionLoad());
         menuBarFileSave.addActionListener(new MenuBarActionSave());
         menuBarFileImport.addActionListener(new MenuBarActionImport());
-
         //Creates the main container
         mainContainer = new JPanel();
         mainContainer.setLayout(new BorderLayout());
         this.add(mainContainer, BorderLayout.CENTER);
-
         //JPanel containing the buttons
         JPanel buttonPanel = new JPanel();
         paint = ButtonFactory.createToolButton("Paint", "src/main/resources/pencil.png");
@@ -131,9 +111,7 @@ public class MainPanel extends JFrame {
         buttonPanel.add(fill);
         buttonPanel.add(pick);
         buttonPanel.add(eraser);
-
         paint.setBackground(Color.GRAY);
-
         //JPanel containing color selection and color display
         JPanel colorPanel = new JPanel(new GridLayout(2, 2));
         foregroundColorPanel = new JPanel();
@@ -149,10 +127,8 @@ public class MainPanel extends JFrame {
         colorPanel.add(new JPanel()); //aggiungo due pannelli vuoti per dare l'effetto scacchiera
         colorPanel.add(new JPanel());
         colorPanel.add((backgroundColorPanel));
-
         //JPanel containing the character preview and character selector
         JPanel characterPanel = new JPanel(new BorderLayout());
-
         charPreviewPanel = new AsciiPanel(3, 3, AsciiFont.CP437_16x16);
         charPreviewPanel.setBackground(Color.BLACK);
         charPreviewPanel.setPreferredSize(new Dimension(40, 50));
@@ -160,12 +136,10 @@ public class MainPanel extends JFrame {
         characterPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         JButton previousCharacter = ButtonFactory.createCharacterSelectorButton("src/main/resources/previous.png");
         JButton nextCharacter = ButtonFactory.createCharacterSelectorButton("src/main/resources/next.png");
-
         JPanel characterNextPrevSelectorPanel = new JPanel();
         characterNextPrevSelectorPanel.add(previousCharacter);
         characterNextPrevSelectorPanel.add(nextCharacter);
         characterPanel.add(characterNextPrevSelectorPanel, BorderLayout.SOUTH);
-
         //JPanel containing other JPanels that contains tools
         JPanel toolsPanel = new JPanel();
         toolsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 0));
@@ -174,12 +148,9 @@ public class MainPanel extends JFrame {
         toolsPanel.add(buttonPanel);
         toolsPanel.add(characterPanel);
         toolsPanel.add(colorPanel);
-
-
         JPanel otherTools = new JPanel();
         toolsPanel.add(otherTools);
         otherTools.setLayout(new GridLayout(2, 2));
-
         JButton squareButton = ButtonFactory.createSmallToolButton("src/main/resources/square.png");
         otherTools.add(squareButton);
         JButton circleButton = ButtonFactory.createSmallToolButton("src/main/resources/dry-clean.png");
@@ -192,8 +163,6 @@ public class MainPanel extends JFrame {
         toolsPanel.add(moveButton);
         JButton cloneButton = ButtonFactory.createSmallToolButton("src/main/resources/stamp.png");
         toolsPanel.add(cloneButton);
-
-
         squareButton.addActionListener(e -> {
             changeCursor("src/main/resources/whiteIcons/square.png");
             ToolsPanelController.selectButton(squareButton);
@@ -207,12 +176,12 @@ public class MainPanel extends JFrame {
         rectButton.addActionListener(e -> {
             changeCursor("src/main/resources/whiteIcons/rect.png");
             ToolsPanelController.selectButton(rectButton);
-            this.command = new RectCommand(asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY(), asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY());
+            this.command = new RectCommand(cursorX, cursorY, cursorX, cursorY);
         });
         selectButton.addActionListener(e -> {
             changeCursor("src/main/resources/whiteIcons/select.png");
             ToolsPanelController.selectButton(selectButton);
-            this.command = new SelectCommand(asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY(), asciiPanel.getMouseCursorX(), asciiPanel.getMouseCursorY());
+            this.command = new SelectCommand(cursorX, cursorY, cursorX, cursorY);
         });
         moveButton.addActionListener(e -> {
             changeCursor("src/main/resources/whiteIcons/move.png");
@@ -224,7 +193,6 @@ public class MainPanel extends JFrame {
             ToolsPanelController.selectButton(cloneButton);
             this.command = new PasteCommand(0, 0);
         });
-
         //-----------------Adds the tool buttons to the list-------------------
         toolButtonList.add(paint);
         toolButtonList.add(fill);
@@ -236,47 +204,34 @@ public class MainPanel extends JFrame {
         toolButtonList.add(selectButton);
         toolButtonList.add(moveButton);
         toolButtonList.add(cloneButton);
-
         mainContainer.add(toolsPanel, BorderLayout.NORTH);
-
         charPreviewPanel.write((char) selectedChar, 1, 1);
         charPreviewPanel.repaint();
-
         //JPanel containing the AsciiPanel
-        asciiPanel = new AsciiPanel(80, 60, AsciiFont.CP437_16x16);
         mainContainer.add(asciiPanel, BorderLayout.CENTER);
-
         asciiPanel.write("Marion");
         asciiPanel.setCursorX(0);
         asciiPanel.setCursorY(0);
-
         asciiPanelMouseListener = new AsciiPanelMouseListener(this);
         asciiPanelMouseMotionListener = new AsciiPanelMouseMotionListener(this);
-
         //Initialize beforeSelectionGrid
         beforeSelectionGrid = new char[asciiPanel.getChars().length][asciiPanel.getChars()[0].length];
-
         // -------------------------------------Add Listeners-------------------------------------------------
         asciiPanel.addMouseListener(asciiPanelMouseListener);
         asciiPanel.addMouseMotionListener(asciiPanelMouseMotionListener);
-
         // Adds character selector event listeners
         characterPanel.addMouseListener(new CharacterPanelMouseListener());
         previousCharacter.addActionListener(new PreviousCharacterActionListener());
         nextCharacter.addActionListener(new NextCharacterActionListener());
-
         //-------------------Color Panels Mouse Listeners-----------------
         foregroundColorPanel.addMouseListener(new ColorPanelMouseListener(foregroundColorPanel, false));
         backgroundColorPanel.addMouseListener(new ColorPanelMouseListener(backgroundColorPanel, true));
-
-
         // -------Change current command on tool button click-------
         changeCursor("src/main/resources/whiteIcons/pencil2.png");
-
         paint.addActionListener(e -> {
             changeCursor("src/main/resources/whiteIcons/pencil2.png");
             ToolsPanelController.selectButton(paint);
-            this.command = new PaintCommand(this);
+            this.command = new PaintCommand(this, cursorX, cursorY);
         });
         pick.addActionListener(e -> {
             changeCursor("src/main/resources/whiteIcons/tap.png");
@@ -286,17 +241,15 @@ public class MainPanel extends JFrame {
         fill.addActionListener(e -> {
             changeCursor("src/main/resources/whiteIcons/bucket.png");
             ToolsPanelController.selectButton(fill);
-            this.command = new FillCommand(this);
+            this.command = new FillCommand(this, cursorX, cursorY);
         });
         eraser.addActionListener((e -> {
             changeCursor("src/main/resources/whiteIcons/eraser.png");
             ToolsPanelController.selectButton(eraser);
-            this.command = new EraseCommand(this);
+            this.command = new EraseCommand(this, cursorX, cursorY);
         }));
         this.setFocusable(true);
         this.addKeyListener(new MainPanelKeyListener());
-
-
     }
 
     public AsciiPanel getAsciiPanel() {
@@ -319,11 +272,9 @@ public class MainPanel extends JFrame {
         this.selectedChar = selectedChar;
     }
 
-
     public AsciiPanel getCharPreviewPanel() {
         return charPreviewPanel;
     }
-
 
     public Color getDefaultBackgroundColor() {
         return defaultBackgroundColor;
@@ -407,7 +358,6 @@ public class MainPanel extends JFrame {
 
     public void setCommand(Command strategy) {
         this.command = strategy;
-
     }
 
     public void executeCommand() {
@@ -425,7 +375,6 @@ public class MainPanel extends JFrame {
     public void setCommandStack(CommandStack commandStack) {
         this.commandStack = commandStack;
     }
-
 
     public AsciiPanelMouseListener getAsciiPanelMouseListener() {
         return asciiPanelMouseListener;
@@ -445,6 +394,4 @@ public class MainPanel extends JFrame {
         Cursor c = toolkit.createCustomCursor(image, new Point(0, 0), "Cursor");
         asciiPanel.setCursor(c);
     }
-
-
 }
