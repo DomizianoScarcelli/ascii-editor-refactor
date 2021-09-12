@@ -39,6 +39,6 @@ public class EraseCommand implements Command {
 
     @Override
     public void undo() {
-
+        //TODO implementa undo
     }
 }

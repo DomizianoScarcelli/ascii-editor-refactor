@@ -1257,4 +1257,13 @@ public class AsciiPanel extends JPanel {
     public Color[][] getOldForegroundColors() {
         return oldForegroundColors;
     }
+
+
+    public void setBackgroundColors(Color[][] backgroundColors) {
+        this.backgroundColors = backgroundColors;
+    }
+
+    public void setForegroundColors(Color[][] foregroundColors) {
+        this.foregroundColors = foregroundColors;
+    }
 }

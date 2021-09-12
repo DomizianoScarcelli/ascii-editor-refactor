@@ -35,14 +35,15 @@ public class PasteCommand implements Command {
             try {
                 mainPanel.getAsciiPanel().setCursorX(x + offsetX);
                 mainPanel.getAsciiPanel().setCursorY(y + offsetY);
-                //TODO recupera qua i colori invece di usare quelli di default altrimenti si bugga se si cambia colore tra il copy e il paste
                 mainPanel.getAsciiPanel().write(
                         mainPanel.beforeSelectionGrid[y][x],
-                        mainPanel.currentSelection.getForegroundColorGrid()[mainPanel.getAsciiPanel().getCursorX()][mainPanel.getAsciiPanel().getCursorY()],
-                        mainPanel.currentSelection.getBackgroundColorGrid()[mainPanel.getAsciiPanel().getCursorX()][mainPanel.getAsciiPanel().getCursorY()]
+                        mainPanel.currentSelection.getForegroundColorGrid()[x][y],
+                        mainPanel.currentSelection.getBackgroundColorGrid()[x][y]
                 );
 
+
             } catch (ArrayIndexOutOfBoundsException ignored) {
+                System.out.println("Occhioo");
             }
         }
         mainPanel.getCommandStack().push(this);
@@ -51,6 +52,8 @@ public class PasteCommand implements Command {
 
     @Override
     public void undo() {
+        mainPanel.getAsciiPanel().setForegroundColors(mainPanel.getAsciiPanel().getOldForegroundColors());
+        mainPanel.getAsciiPanel().setBackgroundColors(mainPanel.getAsciiPanel().getOldBackgroundColors());
         mainPanel.getAsciiPanel().setChars(oldCharGrid);
         mainPanel.getAsciiPanel().repaint();
     }
