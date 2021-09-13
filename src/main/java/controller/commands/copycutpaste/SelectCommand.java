@@ -92,7 +92,6 @@ public class SelectCommand implements Command {
         selectedPoints.addAll(points);
         mainPanel.selectionChars.addAll(points);
 
-
 //        selectedPoints.forEach(point -> {
 //            int x = point[0];
 //            int y = point[1];
@@ -103,7 +102,6 @@ public class SelectCommand implements Command {
 
         selectedPoints.removeIf(point -> mainPanel.getAsciiPanel().pickChar(point[0], point[1]) == 219); //delete the selection char in order to not paste it on the ascii panel
 
-
         mainPanel.getAsciiPanel().repaint();
         for (int x = x1 + 1; x <= x2 - 1; x++) {
             for (int y = y1 + 1; y <= y2 - 1; y++) {
@@ -112,7 +110,6 @@ public class SelectCommand implements Command {
             }
         }
         mainPanel.selectedPoints = selectedPoints;
-
 
         mainPanel.getCommandStack().push(this);
     }

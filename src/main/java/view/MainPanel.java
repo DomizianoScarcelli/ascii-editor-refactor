@@ -394,4 +394,13 @@ public class MainPanel extends JFrame {
         Cursor c = toolkit.createCustomCursor(image, new Point(0, 0), "Cursor");
         asciiPanel.setCursor(c);
     }
+
+    public void replaceAsciiPanel(AsciiPanel asciiPanel) {
+        this.setVisible(false);
+        new MainPanel().setVisible(true);
+    }
+
+    private void setUpListeners() {
+
+    }
 }

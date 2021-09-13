@@ -27,51 +27,41 @@ public class RectCommand implements Command {
         oldCharGrid = ToolsPanelController.copyCharGrid();
         oldForegroundColorGrid = ToolsPanelController.copyFCGrid();
         oldBackgroundColorGrid = ToolsPanelController.copyBCGrid();
-
         mainPanel.getCommandStack().push(this);
-
         if (x2 > x1) {
             for (int x = x1; x <= x2; x++) {
                 rectPoints.add(new int[]{x, y1});
                 rectPoints.add(new int[]{x, y2});
             }
         }
-
         if (x1 >= x2) {
             for (int x = x2; x <= x1; x++) {
                 rectPoints.add(new int[]{x, y1});
                 rectPoints.add(new int[]{x, y2});
             }
         }
-
         if (y2 > y1) {
             for (int y = y1; y <= y2; y++) {
                 rectPoints.add(new int[]{x1, y});
                 rectPoints.add(new int[]{x2, y});
             }
         }
-
         if (y1 > y2) {
             for (int y = y2; y <= y1; y++) {
                 rectPoints.add(new int[]{x1, y});
                 rectPoints.add(new int[]{x2, y});
             }
         }
-
-
         for (int[] point : rectPoints) {
             mainPanel.getAsciiPanel().setCursorX(point[0]);
             mainPanel.getAsciiPanel().setCursorY(point[1]);
             mainPanel.getAsciiPanel().write((char) mainPanel.getSelectedChar(), mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
             mainPanel.getAsciiPanel().repaint();
         }
-
-
     }
 
     @Override
     public void undo() {
-
 ////        //TODO vedi come gestire sta cosa del rettangolo poi
 ////        for (int[] point : rectPoints) {
 ////            int x = point[0];

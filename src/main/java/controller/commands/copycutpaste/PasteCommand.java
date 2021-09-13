@@ -10,7 +10,6 @@ import java.util.Optional;
 
 public class PasteCommand implements Command {
     private MainPanel mainPanel = MainPanel.getInstance();
-
     private char[][] oldCharGrid;
     private int x2, y2;
 
@@ -40,7 +39,6 @@ public class PasteCommand implements Command {
                         mainPanel.currentSelection.getForegroundColorGrid()[x][y],
                         mainPanel.currentSelection.getBackgroundColorGrid()[x][y]
                 );
-
 
             } catch (ArrayIndexOutOfBoundsException ignored) {
                 System.out.println("Occhioo");
