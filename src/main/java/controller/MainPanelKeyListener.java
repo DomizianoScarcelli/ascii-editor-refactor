@@ -8,9 +8,10 @@ import view.MainPanel;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+/**
+ * Models the key listener that is used to trigger the keyboard shortcuts
+ */
 public class MainPanelKeyListener implements KeyListener {
-
-
     @Override
     public void keyTyped(KeyEvent e) {
 

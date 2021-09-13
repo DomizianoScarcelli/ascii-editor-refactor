@@ -1,6 +1,5 @@
 package controller;
 
-
 import controller.commands.*;
 import controller.commands.copycutpaste.MoveCommandAlt;
 import controller.commands.copycutpaste.PasteCommand;
@@ -22,8 +21,6 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
      */
     private MainPanel mainPanel;
     private int middleCursorX, middleCursorY;
-    ;
-
 
     /**
      * Class constructor from an {@link MainPanel} object.
@@ -34,7 +31,6 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
         this.mainPanel = mainPanel;
     }
 
-
     @Override
     public void mouseDragged(MouseEvent e) {
         /*
@@ -44,7 +40,6 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
         per tutti gli elementi all'interno della lista dei comandi.
          */
         updateMousePosition(e);
-
 
         middleCursorX = mainPanel.getAsciiPanel().getMouseCursorX();
         middleCursorY = mainPanel.getAsciiPanel().getMouseCursorY();
@@ -59,14 +54,13 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
         else if (currentCommand instanceof PaintCommand)
             mainPanel.setCommand(new PaintCommand(mainPanel, mainPanel.getAsciiPanel().getMouseCursorX(), mainPanel.getAsciiPanel().getMouseCursorY()));
 
-
         if ((currentCommand instanceof FillCommand || currentCommand instanceof PickCommand || currentCommand instanceof PaintCommand) || currentCommand instanceof EraseCommand) {
             mainPanel.executeCommand();
         } else {
             //Solves a bug where the shape couldn't be drawn twice
             //TODO sta cosa però non risolve niente per quanto riguarda il Paste e il Move
             Command previousCommand = mainPanel.getCommandStack().peek();
-            if (mainPanel.isDrag && !(currentCommand instanceof PasteCommand)) {
+            if (mainPanel.isDrag() && !(currentCommand instanceof PasteCommand)) {
                 mainPanel.getCommandStack().pop();
                 previousCommand.undo();
             }
@@ -84,10 +78,8 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
             else if (currentCommand instanceof PasteCommand)
                 mainPanel.setCommand(new PasteCommand(middleCursorX, middleCursorY));
 
-
             mainPanel.getCommand().execute();
-            mainPanel.isDrag = true;
-
+            mainPanel.setDrag(true);
 
         }
         mainPanel.getAsciiPanel().repaint();

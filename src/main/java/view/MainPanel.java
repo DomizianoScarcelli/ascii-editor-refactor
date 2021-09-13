@@ -19,41 +19,116 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-//TODO documenta tutto
 
 public class MainPanel extends JFrame {
+    /**
+     * The AsciiPanel where the characters are shown
+     */
     private AsciiPanel asciiPanel;
+    /**
+     * The ascii code of the current selected char
+     */
     private int selectedChar = 1;
+    /**
+     * The current selected foreground color
+     */
     private Color defaultForegroundColor = Color.WHITE;
+    /**
+     * The current selected background color
+     */
     private Color defaultBackgroundColor = Color.BLACK;
+    /**
+     * The AsciiPanel where the current selected character is shown
+     */
     private AsciiPanel charPreviewPanel;
+    /**
+     * The panel where the selected foreground color is shown
+     */
     private JPanel foregroundColorPanel;
+    /**
+     * The panel where the selected foreground color is shown
+     */
     private JPanel backgroundColorPanel;
+    /**
+     * The tool buttons
+     */
     private JButton paint, fill, pick, eraser;
-    public boolean isDrag = false;
+    /**
+     * A boolean that indicates if the mouse is being dragged through the ascii panel
+     */
+    private boolean isDrag = false;
+    /**
+     * The imported image
+     */
     private BufferedImage importedBufferedImage;
+    /**
+     * The panel that contais all the other elements
+     */
     private JPanel mainContainer;
+    /**
+     * The mouse button that is currently pressed //TODO togli sta cosa
+     */
     private int currentButtonPressed = 1;
+    /**
+     * The stack that remembers the recent 20 executed commands
+     */
     private CommandStack commandStack = new CommandStack();
+    /**
+     * The stack that remembres the recend 20 undone commands
+     */
     private CommandStack redoCommandStack = new CommandStack();
-    public SelectCommand currentSelection;
-    public char[][] beforeSelectionGrid;
-    public ArrayList<int[]> selectedPoints;
-    public ArrayList<int[]> selectionChars = new ArrayList<>();
-    public MoveCommandAlt currentMove = null;
+    /**
+     * The current selection command that was uses to select the current selected points
+     */
+    private SelectCommand currentSelection;
+    /**
+     * The char grid before the selection was done
+     */
+    private char[][] beforeSelectionGrid;
+    /**
+     * The list of selected points
+     */
+    private ArrayList<int[]> selectedPoints;
+    /**
+     * TODO credo sia la stessa cosa di selected points quindi vedi di toglierlo
+     */
+    private ArrayList<int[]> selectionChars = new ArrayList<>();
+    /**
+     * TODO togli se non riesci a implementare il MoveCommand
+     */
+    private MoveCommandAlt currentMove = null;
+    /**
+     * The current selected command that reflects the current selected tool
+     */
     private Command command;
+    /**
+     * The mouse listener used to write characters on mouse click
+     */
     private AsciiPanelMouseListener asciiPanelMouseListener;
+    /**
+     * The mouse listener used to write characters on mouse drag
+     */
     private AsciiPanelMouseMotionListener asciiPanelMouseMotionListener;
-    public ArrayList<JButton> toolButtonList = new ArrayList<>();
+    /**
+     * The list of tool buttons on the toolbar
+     */
+    private ArrayList<JButton> toolButtonList = new ArrayList<>();
+    /**
+     * The unique instance of the class
+     */
     private static MainPanel instance;
 
+    /**
+     * Gets the unique instance of the class if existing, creates it otherwise
+     *
+     * @return the unique instance of the class
+     */
     public static MainPanel getInstance() {
         if (instance == null) instance = new MainPanel();
         return instance;
     }
 
     private MainPanel() {
-        //TODO per fare il reset inizializza qua tutte le variabili al loro stato iniziale e inizializza una nuova istanza chiamando su di essa il metodo main
         super("Pannello principale");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(800, 800);
@@ -260,10 +335,6 @@ public class MainPanel extends JFrame {
         this.asciiPanel = asciiPanel;
     }
 
-    /**
-     * The selected character is the character on which the focus is on.
-     * This character is always displayed on the preview panel.
-     */
     public int getSelectedChar() {
         return selectedChar;
     }
@@ -282,26 +353,6 @@ public class MainPanel extends JFrame {
 
     public Color getDefaultForegroundColor() {
         return defaultForegroundColor;
-    }
-
-    public Color getInverseDefaultBackgroundColor() {
-        int red = getDefaultBackgroundColor().getRed();
-        int green = getDefaultBackgroundColor().getGreen();
-        int blue = getDefaultBackgroundColor().getBlue();
-        int newRed = Math.abs(red - 255);
-        int newGreen = Math.abs(green - 255);
-        int newBlue = Math.abs(blue - 255);
-        return new Color(newRed, newGreen, newBlue);
-    }
-
-    public Color getInverseDefaultForegroundColor() {
-        int red = getDefaultForegroundColor().getRed();
-        int green = getDefaultForegroundColor().getGreen();
-        int blue = getDefaultForegroundColor().getBlue();
-        int newRed = Math.abs(255 - red);
-        int newGreen = Math.abs(255 - green);
-        int newBlue = Math.abs(255 - blue);
-        return new Color(newRed, newGreen, newBlue);
     }
 
     public void setDefaultForegroundColor(Color defaultForegroundColor) {
@@ -395,12 +446,59 @@ public class MainPanel extends JFrame {
         asciiPanel.setCursor(c);
     }
 
-    public void replaceAsciiPanel(AsciiPanel asciiPanel) {
-        this.setVisible(false);
-        new MainPanel().setVisible(true);
+    public boolean isDrag() {
+        return isDrag;
     }
 
-    private void setUpListeners() {
+    public void setDrag(boolean drag) {
+        isDrag = drag;
+    }
 
+    public SelectCommand getCurrentSelection() {
+        return currentSelection;
+    }
+
+    public void setCurrentSelection(SelectCommand currentSelection) {
+        this.currentSelection = currentSelection;
+    }
+
+    public char[][] getBeforeSelectionGrid() {
+        return beforeSelectionGrid;
+    }
+
+    public void setBeforeSelectionGrid(char[][] beforeSelectionGrid) {
+        this.beforeSelectionGrid = beforeSelectionGrid;
+    }
+
+    public ArrayList<int[]> getSelectedPoints() {
+        return selectedPoints;
+    }
+
+    public void setSelectedPoints(ArrayList<int[]> selectedPoints) {
+        this.selectedPoints = selectedPoints;
+    }
+
+    public ArrayList<int[]> getSelectionChars() {
+        return selectionChars;
+    }
+
+    public void setSelectionChars(ArrayList<int[]> selectionChars) {
+        this.selectionChars = selectionChars;
+    }
+
+    public MoveCommandAlt getCurrentMove() {
+        return currentMove;
+    }
+
+    public void setCurrentMove(MoveCommandAlt currentMove) {
+        this.currentMove = currentMove;
+    }
+
+    public ArrayList<JButton> getToolButtonList() {
+        return toolButtonList;
+    }
+
+    public void setToolButtonList(ArrayList<JButton> toolButtonList) {
+        this.toolButtonList = toolButtonList;
     }
 }

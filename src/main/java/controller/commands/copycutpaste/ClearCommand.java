@@ -5,16 +5,24 @@ import view.MainPanel;
 
 import java.awt.*;
 
+/**
+ * The command that clears the current selection
+ */
 public class ClearCommand implements Command {
+    /**
+     * The MainPanel instance
+     */
     private MainPanel mainPanel = MainPanel.getInstance();
 
+    /**
+     * Clears the current selection
+     */
     @Override
     public void execute() {
-
-        for (int[] point : mainPanel.selectedPoints) {
+        for (int[] point : mainPanel.getSelectedPoints()) {
             int x = point[0];
             int y = point[1];
-            mainPanel.beforeSelectionGrid[y][x] = (char) (int) mainPanel.getAsciiPanel().pickChar(x, y);
+            mainPanel.getBeforeSelectionGrid()[y][x] = (char) (int) mainPanel.getAsciiPanel().pickChar(x, y);
             mainPanel.getAsciiPanel().setCursorX(x);
             mainPanel.getAsciiPanel().setCursorY(y);
             mainPanel.getAsciiPanel().write((char) 0, Color.BLACK, Color.BLACK);
@@ -23,8 +31,12 @@ public class ClearCommand implements Command {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void undo() {
         //TODO implementa l'undo
     }
+
 }

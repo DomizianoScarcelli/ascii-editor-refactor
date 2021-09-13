@@ -3,7 +3,6 @@ package controller.commands.copycutpaste;
 import view.MainPanel;
 
 public class MoveCommandAlt extends PasteCommand {
-
     private MainPanel mainPanel = MainPanel.getInstance();
 
     public MoveCommandAlt(int x2, int y2) {
@@ -12,10 +11,10 @@ public class MoveCommandAlt extends PasteCommand {
 
     @Override
     public void execute() {
-        if (mainPanel.currentMove != null) mainPanel.currentMove.undo();
+        if (mainPanel.getCurrentMove() != null) mainPanel.getCurrentMove().undo();
         new CutCommand().execute();
         super.execute();
-        mainPanel.currentMove = this;
+        mainPanel.setCurrentMove(this);
 
     }
 

@@ -22,7 +22,7 @@ public class CharacterSelectorActionListener implements MouseListener {
 
     /**
      * {@inheritDoc}
-     * Triggers the action that has to be done on the selected char i.
+     * Sets the selected character as the current one and update the selected character preview.
      */
     @Override
     public void mouseClicked(MouseEvent e) {

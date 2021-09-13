@@ -1,10 +1,7 @@
 package view;
 
-
-
 import controller.menubar.importerdialog.ImageImporterConvertActionListener;
 import controller.menubar.importerdialog.ImageImporterImportActionListener;
-
 
 import javax.swing.*;
 
@@ -14,6 +11,9 @@ import javax.swing.*;
  * This class implements the "singleton" design pattern.
  */
 public class ImageImporterDialog extends JDialog {
+    /**
+     * The unique instance of the class
+     */
     private static ImageImporterDialog instance;
 
     /**
@@ -63,61 +63,4 @@ public class ImageImporterDialog extends JDialog {
         instance.dispose();
         instance = null;
     }
-
-//    /**
-//     * The {@link JButton} component in the main GUI that triggers the action to import an image from the filesystem into the ascii panel.
-//     */
-//    public JButton getImportButton() {
-//        return importButton;
-//    }
-//
-//    public void setImportButton(JButton importButton) {
-//        this.importButton = importButton;
-//    }
-//
-//    /**
-//     * The {@link JButton} component inside the import GUI that triggers the conversion from image to ascii character grid.
-//     */
-//    public JButton getConvertButton() {
-//        return convertButton;
-//    }
-//
-//    public void setConvertButton(JButton convertButton) {
-//        this.convertButton = convertButton;
-//    }
-//
-//    /**
-//     * The {@link JLabel} component inside the import GUI that describes the threshold text field.
-//     */
-//    public JLabel getThresholdLabel() {
-//        return thresholdLabel;
-//    }
-//
-//    public void setThresholdLabel(JLabel thresholdLabel) {
-//        this.thresholdLabel = thresholdLabel;
-//    }
-//
-//    /**
-//     * The {@link JTextField} component inside the import GUI that allows to set the threshold value.
-//     */
-//    public JTextField getThresholdSetter() {
-//        return thresholdSetter;
-//    }
-//
-//    public void setThresholdSetter(JTextField thresholdSetter) {
-//        this.thresholdSetter = thresholdSetter;
-//    }
-//
-//    /**
-//     * {@link JCheckBox} component.
-//     * If checked, it convert the image into a 16-bit color ascii image.
-//     * If not checked, it converts it into a 4-bit color ascii image.
-//     */
-//    public JCheckBox getConvertColorOptions() {
-//        return convertColorOptions;
-//    }
-//
-//    public void setConvertColorOptions(JCheckBox convertColorOptions) {
-//        this.convertColorOptions = convertColorOptions;
-//    }
 }

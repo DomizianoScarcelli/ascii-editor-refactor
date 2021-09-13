@@ -3,10 +3,15 @@ package controller.commands.copycutpaste;
 import controller.commands.Command;
 import view.MainPanel;
 
-
+//TODO prima di documentare vedi se conviene o no togliere sta roba
 public class MoveCommand implements Command {
-
+    /**
+     *
+     */
     private int x1, y1, x2, y2;
+    /**
+     * The MainPanel instance
+     */
     private MainPanel mainPanel = MainPanel.getInstance();
     private char[][] oldCharGrid;
 
@@ -16,7 +21,6 @@ public class MoveCommand implements Command {
         this.x2 = x2;
         this.y2 = y2;
     }
-
 
     @Override
     public void execute() {
@@ -32,7 +36,7 @@ public class MoveCommand implements Command {
         int offsetX = x2 - x1;
         int offsetY = y2 - y1;
 
-        for (int[] point : mainPanel.selectedPoints) {
+        for (int[] point : mainPanel.getSelectedPoints()) {
             int x = point[0];
             int y = point[1];
             try {
@@ -40,12 +44,10 @@ public class MoveCommand implements Command {
                 mainPanel.getAsciiPanel().setCursorY(y + offsetY);
                 mainPanel.getAsciiPanel().write((char) (int) mainPanel.getAsciiPanel().pickChar(x, y), mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
 
-
 //                //TODO sta cosa crea un bug ma ci siamo quasi
 //                mainPanel.getAsciiPanel().setCursorX(x);
 //                mainPanel.getAsciiPanel().setCursorY(y);
 //                mainPanel.getAsciiPanel().write(mainPanel.beforeSelectionGrid[x][y], mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
-
 
             } catch (ArrayIndexOutOfBoundsException ignored) {
             }
@@ -56,12 +58,11 @@ public class MoveCommand implements Command {
 
 //        System.out.println(offsetX);
 //        System.out.println(offsetY);
-        mainPanel.selectedPoints.forEach(point -> {
+        mainPanel.getSelectedPoints().forEach(point -> {
             point[0] = point[0] + offsetX;
             point[1] = point[1] + offsetY;
         });
     }
-
 
     @Override
     public void undo() {
@@ -71,7 +72,7 @@ public class MoveCommand implements Command {
         mainPanel.getAsciiPanel().repaint();
         int offsetX = x2 - x1;
         int offsetY = y2 - y1;
-        mainPanel.selectedPoints.forEach(point -> {
+        mainPanel.getSelectedPoints().forEach(point -> {
             point[0] -= offsetX;
             point[1] -= offsetY;
         });

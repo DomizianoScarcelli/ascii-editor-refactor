@@ -7,11 +7,27 @@ import view.MainPanel;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * The command that draws a rectangle
+ */
 public class RectCommand implements Command {
+    /**
+     * The MainPanel instance
+     */
     private MainPanel mainPanel = MainPanel.getInstance();
+    /**
+     * The char grid before the action
+     */
     private char[][] oldCharGrid;
+    /**
+     * The up-right and down-left point coordinates
+     */
     private int x1, y1, x2, y2;
+    /**
+     * The point that form the rectangle (inside points included)
+     */
     private ArrayList<int[]> rectPoints = new ArrayList<>();
+    //TODO vedi se usare o meno questa cosa e quindi documenta di conseguenza
     private Color[][] oldForegroundColorGrid;
     private Color[][] oldBackgroundColorGrid;
 
@@ -22,6 +38,11 @@ public class RectCommand implements Command {
         this.y2 = y2;
     }
 
+    //TODO vedi se riesci a usare l'eredità per non usare due volte lo stesso codice sia qua che in select
+
+    /**
+     * Draws a rectangle on the ascii panel in correspondence of the mouse position
+     */
     @Override
     public void execute() {
         oldCharGrid = ToolsPanelController.copyCharGrid();
@@ -60,6 +81,9 @@ public class RectCommand implements Command {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void undo() {
 ////        //TODO vedi come gestire sta cosa del rettangolo poi
@@ -78,27 +102,4 @@ public class RectCommand implements Command {
         mainPanel.getAsciiPanel().repaint();
     }
 
-    public ArrayList<int[]> getRectPoints() {
-        return rectPoints;
-    }
-
-    public int getX1() {
-        return x1;
-    }
-
-    public int getX2() {
-        return x2;
-    }
-
-    public int getY1() {
-        return y1;
-    }
-
-    public int getY2() {
-        return y2;
-    }
-
-    public char[][] getOldCharGrid() {
-        return oldCharGrid;
-    }
 }

@@ -1,6 +1,5 @@
 package controller;
 
-import com.sun.tools.javac.Main;
 import model.AsciiFont;
 import model.AsciiPanel;
 import view.MainPanel;
@@ -28,7 +27,7 @@ public class ToolsPanelController {
     }
 
     public static void selectButton(JButton button) {
-        mainPanel.toolButtonList.forEach(b -> b.setBackground(Color.WHITE));
+        mainPanel.getToolButtonList().forEach(b -> b.setBackground(Color.WHITE));
         button.setBackground(Color.GRAY);
     }
 

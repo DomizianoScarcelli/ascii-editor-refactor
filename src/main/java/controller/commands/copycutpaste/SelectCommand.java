@@ -2,18 +2,38 @@ package controller.commands.copycutpaste;
 
 import controller.ToolsPanelController;
 import controller.commands.Command;
-import controller.commands.shapes.RectCommand;
 import view.MainPanel;
 
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * The command that selects the character in a certain area of the ascii panel
+ */
 public class SelectCommand implements Command {
+    /**
+     * The list of selected points
+     */
     private ArrayList<int[]> selectedPoints = new ArrayList<>();
+    /**
+     * The MainPanel instance
+     */
     private MainPanel mainPanel = MainPanel.getInstance();
+    /**
+     * The foreground and background grid that represent the colors before the action
+     */
     private Color[][] foregroundColorGrid, backgroundColorGrid;
+    /**
+     * The char grid before the action
+     */
     private char[][] oldCharGrid;
+    /**
+     * The up-right and down-left point coordinates in order to detect the selected area
+     */
     private int x1, y1, x2, y2;
+    /**
+     * The point that form the rectangle
+     */
     private ArrayList<int[]> rectPoints = new ArrayList<>();
 
     public SelectCommand(int x1, int y1, int x2, int y2) {
@@ -23,11 +43,14 @@ public class SelectCommand implements Command {
         this.y2 = y2;
     }
 
+    /**
+     * Select the character in a certain area of the ascii panel
+     */
     @Override
     public void execute() {
-        if (mainPanel.currentSelection != null) {
-            mainPanel.currentSelection.undo();
-            mainPanel.currentSelection = null;
+        if (mainPanel.getCurrentSelection() != null) {
+            mainPanel.getCurrentSelection().undo();
+            mainPanel.setCurrentSelection(null);
         }
 
         int height = mainPanel.getAsciiPanel().getHeightInCharacters();
@@ -43,7 +66,7 @@ public class SelectCommand implements Command {
             }
         }
 
-        mainPanel.currentSelection = this;
+        mainPanel.setCurrentSelection(this);
 //        super.execute();
         //--OLD SUPER--//
         oldCharGrid = ToolsPanelController.copyCharGrid();
@@ -90,7 +113,7 @@ public class SelectCommand implements Command {
 
         ArrayList<int[]> points = rectPoints;
         selectedPoints.addAll(points);
-        mainPanel.selectionChars.addAll(points);
+        mainPanel.getSelectionChars().addAll(points);
 
 //        selectedPoints.forEach(point -> {
 //            int x = point[0];
@@ -109,11 +132,14 @@ public class SelectCommand implements Command {
                 selectedPoints.add(point); //TODO anche qui ci sta la cosa del verificare se x è maggiore di y eccetera, altrimenti succ cose strane
             }
         }
-        mainPanel.selectedPoints = selectedPoints;
+        mainPanel.setSelectedPoints(selectedPoints);
 
         mainPanel.getCommandStack().push(this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void undo() {
         for (int[] point : rectPoints) {
@@ -123,7 +149,7 @@ public class SelectCommand implements Command {
             mainPanel.getAsciiPanel().setCursorY(y);
             mainPanel.getAsciiPanel().write(oldCharGrid[x][y], mainPanel.getAsciiPanel().getOldForegroundColors()[x][y], mainPanel.getAsciiPanel().getOldBackgroundColors()[x][y]);
         }
-        mainPanel.selectedPoints = new ArrayList<>();
+        mainPanel.setSelectedPoints(new ArrayList<>());
     }
 
     public Color[][] getBackgroundColorGrid() {

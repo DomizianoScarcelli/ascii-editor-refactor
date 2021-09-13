@@ -4,19 +4,34 @@ import controller.ToolsPanelController;
 import controller.commands.Command;
 import view.MainPanel;
 
-
+/**
+ * The command that draws a square
+ */
 public class SquareCommand implements Command {
-
-    private int cursorX;
-    private int cursorY;
+    /**
+     * The mouse cursor position
+     */
+    private int cursorX, cursorY;
+    /**
+     * The MainPanel instance
+     */
     private MainPanel mainPanel = MainPanel.getInstance();
+    /**
+     * The square side dimension
+     */
     private int sideDimension;
+    /**
+     * The char grid before the action
+     */
     private char[][] oldCharGrid;
 
     public SquareCommand(int sideDimension) {
         this.sideDimension = sideDimension;
     }
 
+    /**
+     * Draws a square on the ascii panel in correspondence of the mouse position
+     */
     @Override
     public void execute() {
 
@@ -37,7 +52,9 @@ public class SquareCommand implements Command {
         mainPanel.getCommandStack().push(this);
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void undo() {
         mainPanel.getAsciiPanel().setCursorX(mainPanel.getAsciiPanelMouseListener().getInitialCursorX());

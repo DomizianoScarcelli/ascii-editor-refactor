@@ -5,16 +5,23 @@ import view.MainPanel;
 
 import java.awt.*;
 
-
 /**
  * The action performed after the "Pick" button is pressed by the mouse and a character on the panel is selected.
  * When this happens the character, with his foreground and background colors, is set as the selected character
  * and the char preview panel is updated to show the selected character.
  */
 public class PickCommand implements Command {
+    /**
+     * The MainPanel instance
+     */
     private MainPanel mainPanel;
-
+    /**
+     * The selected char before the pick action
+     */
     private int oldSelectedChar;
+    /**
+     * The previous selected char foreground and background colors
+     */
     private Color oldBackground, oldForeground;
 
     public PickCommand(MainPanel mainPanel) {
@@ -22,6 +29,9 @@ public class PickCommand implements Command {
 
     }
 
+    /**
+     * Sets the character in correspondence of the mouse position as selected character and changes the default colors
+     */
     @Override
     public void execute() {
         oldSelectedChar = mainPanel.getSelectedChar();
@@ -44,6 +54,9 @@ public class PickCommand implements Command {
         ToolsPanelController.selectButton(mainPanel.getPick());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void undo() {
         mainPanel.setSelectedChar(oldSelectedChar);

@@ -17,13 +17,25 @@ import java.awt.*;
  * </ol>
  */
 public class FillCommand implements Command {
-
+    /**
+     * The MainPanel instance
+     */
     private MainPanel mainPanel;
-
+    /**
+     * The mouse cursor position
+     */
     private int cursorX, cursorY;
-
+    /**
+     * The char grid before the action
+     */
     private char[][] oldCharGrid;
+    /**
+     * The color grid that stores the foreground color of the characters before the action
+     */
     private Color[][] oldForegroundColorGrid;
+    /**
+     * The color grid that stores the background color of the characters before the action
+     */
     private Color[][] oldBackgroundColorGrid;
 
     public FillCommand(MainPanel mainPanel, int cursorX, int cursorY) {
@@ -32,12 +44,14 @@ public class FillCommand implements Command {
         this.cursorX = cursorX;
     }
 
+    /**
+     * Fills up the area with the current selected character in correspondence of the mouse position
+     */
     @Override
     public void execute() {
         oldCharGrid = ToolsPanelController.copyCharGrid();
         oldForegroundColorGrid = ToolsPanelController.copyFCGrid();
         oldBackgroundColorGrid = ToolsPanelController.copyBCGrid();
-        
 
         if (mainPanel.getCurrentButtonPressed() == 1) {
             mainPanel.getAsciiPanel().fill((char) mainPanel.getSelectedChar(), cursorX, cursorY, mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
@@ -52,6 +66,9 @@ public class FillCommand implements Command {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void undo() {
         int width = mainPanel.getAsciiPanel().getWidthInCharacters();

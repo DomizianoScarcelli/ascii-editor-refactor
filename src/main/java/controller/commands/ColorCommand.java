@@ -5,37 +5,51 @@ import view.MainPanel;
 
 import java.awt.*;
 
+/**
+ * The command that changes the foreground or background color of the characters inside the current selection
+ */
 public class ColorCommand implements Command {
-
+    /**
+     * A boolean that indicates whether the foreground or background color of the character has to be
+     * changes.
+     * If true the command changes the foreground color, if false it changes the background color.
+     */
     private boolean colorForeground;
+    /**
+     * The MainPanel instance
+     */
     private MainPanel mainPanel = MainPanel.getInstance();
-    private AsciiPanel asciiPanel = mainPanel.getAsciiPanel();
-
 
     public ColorCommand(boolean colorForeground) {
         this.colorForeground = colorForeground;
     }
 
+    /**
+     * Change the foreground or background color of the characters inside the current selection
+     */
     @Override
     public void execute() {
-        char[][] currentChars = asciiPanel.getChars();
-        for (int[] point : mainPanel.selectedPoints) {
+        char[][] currentChars = mainPanel.getAsciiPanel().getChars();
+        for (int[] point : mainPanel.getSelectedPoints()) {
             int x = point[0];
             int y = point[1];
             char currentChar = currentChars[x][y];
-            Color currentFC = asciiPanel.pickFC(x, y);
-            Color currentBC = asciiPanel.pickBC(x, y);
+            Color currentFC = mainPanel.getAsciiPanel().pickFC(x, y);
+            Color currentBC = mainPanel.getAsciiPanel().pickBC(x, y);
             Color selectedFC = mainPanel.getDefaultForegroundColor();
             Color selectedBC = mainPanel.getDefaultBackgroundColor();
-            asciiPanel.setCursorX(x);
-            asciiPanel.setCursorY(y);
+            mainPanel.getAsciiPanel().setCursorX(x);
+            mainPanel.getAsciiPanel().setCursorY(y);
             if (colorForeground)
-                asciiPanel.write(currentChar, selectedFC, currentBC);
-            else asciiPanel.write(currentChar, currentFC, selectedBC);
+                mainPanel.getAsciiPanel().write(currentChar, selectedFC, currentBC);
+            else mainPanel.getAsciiPanel().write(currentChar, currentFC, selectedBC);
         }
-        asciiPanel.repaint();
+        mainPanel.getAsciiPanel().repaint();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void undo() {
         //TODO implementa undo

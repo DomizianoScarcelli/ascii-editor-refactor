@@ -4,17 +4,34 @@ import controller.ToolsPanelController;
 import controller.commands.Command;
 import view.MainPanel;
 
+/**
+ * The command that draws a circle
+ */
 public class CircleCommand implements Command {
-    private int cursorX;
-    private int cursorY;
+    /**
+     * The mouse cursor position
+     */
+    private int cursorX, cursorY;
+    /**
+     * The MainPanel instance
+     */
     private MainPanel mainPanel = MainPanel.getInstance();
+    /**
+     * The circle radius
+     */
     private int radius;
+    /**
+     * The char grid before the action
+     */
     private char[][] oldCharGrid;
 
     public CircleCommand(int radius) {
         this.radius = radius;
     }
 
+    /**
+     * Draws a circle on the ascii panel in correspondence of the mouse position
+     */
     @Override
     public void execute() {
         oldCharGrid = ToolsPanelController.copyCharGrid();
@@ -64,12 +81,21 @@ public class CircleCommand implements Command {
         }
     }
 
-    public void drawPoint(int x, int y) {
+    /**
+     * Draws the selected char on the ascii panel in the (x,y) location
+     *
+     * @param x the x coordinate
+     * @param y the y coordinate
+     */
+    private void drawPoint(int x, int y) {
         mainPanel.getAsciiPanel().setCursorX(x);
         mainPanel.getAsciiPanel().setCursorY(y);
         mainPanel.getAsciiPanel().write((char) mainPanel.getSelectedChar(), mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void undo() {
         mainPanel.getAsciiPanel().setCursorX(mainPanel.getAsciiPanelMouseListener().getInitialCursorX());

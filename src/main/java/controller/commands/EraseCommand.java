@@ -1,18 +1,29 @@
 package controller.commands;
 
 import controller.ToolsPanelController;
-import controller.commands.Command;
-import controller.commands.PaintCommand;
 import view.MainPanel;
 
 import java.awt.*;
 
+/**
+ * The command that erases the character in correspondence of the mouse position
+ */
 public class EraseCommand implements Command {
-    MainPanel mainPanel;
-    //Stores the cursor position so that it can undo the last command
+    /**
+     * The MainPanel instance
+     */
+    private MainPanel mainPanel;
+    /**
+     * The mouse cursor position
+     */
     private int cursorX, cursorY;
+    /**
+     * The char on the mouse cursor position before the erase
+     */
     private int oldChar;
-
+    /**
+     * The char grid before the action
+     */
     private char[][] oldCharGrid;
 
     public EraseCommand(MainPanel mainPanel, int cursorX, int cursorY) {
@@ -21,10 +32,12 @@ public class EraseCommand implements Command {
         this.cursorX = cursorX;
     }
 
+    /**
+     * Erases the character in correspondence of the mouse position
+     */
     @Override
     public void execute() {
         oldCharGrid = ToolsPanelController.copyCharGrid();
-
         mainPanel.getAsciiPanel().setCursorX(cursorX);
         mainPanel.getAsciiPanel().setCursorY(cursorY);
         oldChar = mainPanel.getAsciiPanel().pickChar(cursorX, cursorY);
@@ -36,6 +49,9 @@ public class EraseCommand implements Command {
         mainPanel.getAsciiPanel().repaint();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void undo() {
         //TODO implementa undo

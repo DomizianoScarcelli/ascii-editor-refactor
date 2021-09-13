@@ -9,12 +9,10 @@ import controller.commands.copycutpaste.PasteCommand;
 import javax.swing.*;
 import java.util.ArrayList;
 
-
 public class RightClickMenu extends JPopupMenu {
     private ArrayList<int[]> copiedChars;
     private int rightClickMouseCursorX;
     private int rightClickMouseCursorY;
-
     private static RightClickMenu instance;
 
     public static RightClickMenu getInstance() {
@@ -39,26 +37,26 @@ public class RightClickMenu extends JPopupMenu {
 
         colorForegroundButton.addActionListener(e -> {
             new ColorCommand(true).execute();
-            MainPanel.getInstance().currentSelection.undo();
+            MainPanel.getInstance().getCurrentSelection().undo();
         });
 
         colorBackgroundButton.addActionListener(e -> {
             new ColorCommand(false).execute();
-            MainPanel.getInstance().currentSelection.undo();
+            MainPanel.getInstance().getCurrentSelection().undo();
         });
 
         clearButton.addActionListener(e -> {
             new ClearCommand().execute();
-            MainPanel.getInstance().currentSelection.undo();
+            MainPanel.getInstance().getCurrentSelection().undo();
         });
         copyButton.addActionListener(e -> {
             new CopyCommand().execute();
-            MainPanel.getInstance().currentSelection.undo();
+            MainPanel.getInstance().getCurrentSelection().undo();
         });
 
         cutButton.addActionListener(e -> {
             new CutCommand().execute();
-            MainPanel.getInstance().currentSelection.undo();
+            MainPanel.getInstance().getCurrentSelection().undo();
         });
 
         pasteButton.addActionListener(e -> {
@@ -67,9 +65,7 @@ public class RightClickMenu extends JPopupMenu {
             new PasteCommand(x, y).execute();
         });
 
-
     }
-
 
     public ArrayList<int[]> getCopiedChars() {
         return copiedChars;

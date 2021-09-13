@@ -1,11 +1,7 @@
 package controller;
 
-
 import controller.commands.*;
-import controller.commands.copycutpaste.MoveCommand;
 import controller.commands.copycutpaste.PasteCommand;
-import controller.commands.copycutpaste.SelectCommand;
-import controller.commands.shapes.SquareCommand;
 import view.MainPanel;
 import view.RightClickMenu;
 
@@ -23,14 +19,12 @@ public class AsciiPanelMouseListener implements MouseListener {
     private int initialCursorX;
     private int initialCursorY;
 
-
     /**
      * Class constructor from an {@link MainPanel} object.
      */
     public AsciiPanelMouseListener(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
     }
-
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -68,24 +62,20 @@ public class AsciiPanelMouseListener implements MouseListener {
             mainPanel.getAsciiPanel().repaint();
         }
 
-
     }
-
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        mainPanel.isDrag = false;
+        mainPanel.setDrag(false);
         if (e.isPopupTrigger())
             doPop(e);
 
     }
 
-
     @Override
     public void mouseEntered(MouseEvent e) {
 
     }
-
 
     @Override
     public void mouseExited(MouseEvent e) {
@@ -103,10 +93,8 @@ public class AsciiPanelMouseListener implements MouseListener {
         return initialCursorX;
     }
 
-
     public int getInitialCursorY() {
         return initialCursorY;
     }
-
 
 }

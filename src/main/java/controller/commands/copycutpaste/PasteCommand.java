@@ -8,9 +8,21 @@ import view.RightClickMenu;
 import java.util.Comparator;
 import java.util.Optional;
 
+/**
+ * The command that pastes the current selection into the ascii panel in correspondence of the mouse position
+ */
 public class PasteCommand implements Command {
+    /**
+     * The MainPanel instance
+     */
     private MainPanel mainPanel = MainPanel.getInstance();
+    /**
+     * The char grid before the action
+     */
     private char[][] oldCharGrid;
+    /**
+     * The coordinates where the selection has to be pasted
+     */
     private int x2, y2;
 
     public PasteCommand(int x2, int y2) {
@@ -18,6 +30,9 @@ public class PasteCommand implements Command {
         this.y2 = y2;
     }
 
+    /**
+     * Paste the current selection into the ascii panel in correspondence of the mouse position
+     */
     @Override
     public void execute() {
         oldCharGrid = ToolsPanelController.copyCharGrid();
@@ -35,9 +50,9 @@ public class PasteCommand implements Command {
                 mainPanel.getAsciiPanel().setCursorX(x + offsetX);
                 mainPanel.getAsciiPanel().setCursorY(y + offsetY);
                 mainPanel.getAsciiPanel().write(
-                        mainPanel.beforeSelectionGrid[y][x],
-                        mainPanel.currentSelection.getForegroundColorGrid()[x][y],
-                        mainPanel.currentSelection.getBackgroundColorGrid()[x][y]
+                        mainPanel.getBeforeSelectionGrid()[y][x],
+                        mainPanel.getCurrentSelection().getForegroundColorGrid()[x][y],
+                        mainPanel.getCurrentSelection().getBackgroundColorGrid()[x][y]
                 );
 
             } catch (ArrayIndexOutOfBoundsException ignored) {
@@ -48,6 +63,9 @@ public class PasteCommand implements Command {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void undo() {
         mainPanel.getAsciiPanel().setForegroundColors(mainPanel.getAsciiPanel().getOldForegroundColors());

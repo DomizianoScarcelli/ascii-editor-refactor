@@ -6,7 +6,6 @@ import view.MainPanel;
 import java.awt.*;
 import java.util.Arrays;
 
-
 /**
  * Writes the selected char on the panel when the left mouse button is pressed.
  * the character is written on the mouse current position.
@@ -20,15 +19,29 @@ import java.util.Arrays;
  * </ol>
  */
 public class PaintCommand implements Command {
+    /**
+     * The MainPanel instance
+     */
     private MainPanel mainPanel;
-
-    //Stores the cursor position so that it can undo the last command
+    /**
+     * The mouse cursor position
+     */
     private int cursorX, cursorY;
+    /**
+     * The char on the mouse cursor position before the erase
+     */
     private int oldChar;
-
-
+    /**
+     * The char grid before the action
+     */
     private char[][] oldCharGrid;
+    /**
+     * The color grid that stores the foreground color of the characters before the action
+     */
     private Color[][] oldForegroundColorGrid;
+    /**
+     * The color grid that stores the background color of the characters before the action
+     */
     private Color[][] oldBackgroundColorGrid;
 
     public PaintCommand(MainPanel mainPanel, int cursorX, int cursorY) {
@@ -37,9 +50,8 @@ public class PaintCommand implements Command {
         this.cursorX = cursorX;
     }
 
-
     /**
-     * Execute the command
+     * Paints the current selected character on the ascii panel in correspondence of the mouse position
      */
     @Override
     public void execute() {
@@ -68,9 +80,8 @@ public class PaintCommand implements Command {
 
     }
 
-
     /**
-     * Undo the command
+     * {@inheritDoc}
      */
     @Override
     public void undo() {

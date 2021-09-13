@@ -1,6 +1,5 @@
 package view;
 
-
 import controller.menubar.ImageNewActionNew;
 
 import javax.swing.*;
@@ -11,13 +10,8 @@ import javax.swing.*;
  * This class implements the "singleton" design pattern.
  */
 public class ImageNewDialog extends JDialog {
-
     private static final long serialVersionUID = -1844498949903148619L;
     private static ImageNewDialog instance;
-
-    private JTextField widthSetter;
-    private JTextField heightSetter;
-
 
     /**
      * Private class constructor.
@@ -31,10 +25,10 @@ public class ImageNewDialog extends JDialog {
         this.setLayout(null);
 
         JLabel widthLabel = new JLabel("Width:");
-        widthSetter = new JTextField("80");
+        JTextField widthSetter = new JTextField("80");
         JLabel heightLabel = new JLabel("Height:");
-        heightSetter = new JTextField("60");
-        JButton  proceedButton = new JButton("Create New");
+        JTextField heightSetter = new JTextField("60");
+        JButton proceedButton = new JButton("Create New");
         proceedButton.addActionListener(new ImageNewActionNew());
         this.add(widthLabel);
         this.add(widthSetter);
@@ -59,52 +53,5 @@ public class ImageNewDialog extends JDialog {
         return instance;
     }
 
-    /**
-     * The {@link JTextField} component inside the "new" GUI that allows to set the width of the new panel.
-     */
-    public JTextField getWidthSetter() {
-        return widthSetter;
-    }
-
-    /**
-     * The {@link JTextField} component that allows to set the height of the new panel.
-     */
-    public JTextField getHeightSetter() {
-        return heightSetter;
-    }
-
-//
-//    /**
-//     * The {@link JButton} component that triggers the creation of the new panel.
-//     */
-//    public JButton getProceedButton() {
-//        return proceedButton;
-//    }
-//
-//    public void setProceedButton(JButton proceedButton) {
-//        this.proceedButton = proceedButton;
-//    }
-//
-//    /**
-//     * The {@link JLabel} component that describes the width text field.
-//     */
-//    public JLabel getWidthLabel() {
-//        return widthLabel;
-//    }
-//
-//    public void setWidthLabel(JLabel widthLabel) {
-//        this.widthLabel = widthLabel;
-//    }
-//
-//    /**
-//     * The {@link JLabel} component that describes the height text field.
-//     */
-//    public JLabel getHeightLabel() {
-//        return heightLabel;
-//    }
-//
-//    public void setHeightLabel(JLabel heightLabel) {
-//        this.heightLabel = heightLabel;
-//    }
 }
 
