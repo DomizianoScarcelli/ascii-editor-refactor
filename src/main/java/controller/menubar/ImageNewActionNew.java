@@ -23,18 +23,16 @@ public class ImageNewActionNew implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        MainPanel mainPanel = MainPanel.getInstance();
-
-        mainPanel.replaceAsciiPanel(new AsciiPanel(20, 20));
+        MainPanel.getInstance().getAsciiPanel().clear();
 
 //        MainPanel mainPanel = MainPanel.getInstance();
-        ImageNewDialog imageNew = ImageNewDialog.getInstance();
+//        ImageNewDialog imageNew = ImageNewDialog.getInstance();
 //        try {
 //            int width = Integer.parseInt(imageNew.getWidthSetter().getText());
 //            int height = Integer.parseInt(imageNew.getHeightSetter().getText());
-//            ToolsPanelController.reset(width, height); //TODO inserisci il codice direttamente qua senza creare una funzione a parte
-        mainPanel.repaint();
-        imageNew.setVisible(false);
+//            ToolsPanelController.reset(width, height);
+//        mainPanel.repaint();
+//        imageNew.setVisible(false);
 //            mainPanel.setCommandStack(new CommandStack());
 //        } catch (Exception exception) {
 //            exception.printStackTrace();
