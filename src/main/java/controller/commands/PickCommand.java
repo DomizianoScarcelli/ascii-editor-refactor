@@ -54,9 +54,6 @@ public class PickCommand implements Command {
         ToolsPanelController.selectButton(mainPanel.getPick());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void undo() {
         mainPanel.setSelectedChar(oldSelectedChar);

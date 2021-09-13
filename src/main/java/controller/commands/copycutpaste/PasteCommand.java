@@ -63,9 +63,6 @@ public class PasteCommand implements Command {
 
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void undo() {
         mainPanel.getAsciiPanel().setForegroundColors(mainPanel.getAsciiPanel().getOldForegroundColors());

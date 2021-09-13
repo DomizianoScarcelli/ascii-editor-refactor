@@ -80,9 +80,6 @@ public class PaintCommand implements Command {
 
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void undo() {
         int width = mainPanel.getAsciiPanel().getWidthInCharacters();

@@ -27,9 +27,6 @@ public class CopyCommand implements Command {
 
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void undo() {
         //TODO implementa undo

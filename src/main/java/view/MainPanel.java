@@ -114,6 +114,14 @@ public class MainPanel extends JFrame {
      */
     private ArrayList<JButton> toolButtonList = new ArrayList<>();
     /**
+     * The eraser tool size
+     */
+    private int eraserSize = 1;
+    /**
+     * The panel containing the eraser size slider and the label
+     */
+    private JPanel sliderPanel;
+    /**
      * The unique instance of the class
      */
     private static MainPanel instance;
@@ -318,11 +326,27 @@ public class MainPanel extends JFrame {
             ToolsPanelController.selectButton(fill);
             this.command = new FillCommand(this, cursorX, cursorY);
         });
+        JSlider eraserSizeSlider = new JSlider(1, 30, 1);
+        JLabel eraserSizeSliderLabel = new JLabel("Erases Size: " + eraserSizeSlider.getValue());
+        sliderPanel = new JPanel(new GridLayout(2, 1));
+        toolsPanel.add(sliderPanel);
+        sliderPanel.add(eraserSizeSliderLabel);
+        sliderPanel.add(eraserSizeSlider);
+        sliderPanel.setVisible(false);
+
         eraser.addActionListener((e -> {
             changeCursor("src/main/resources/whiteIcons/eraser.png");
             ToolsPanelController.selectButton(eraser);
             this.command = new EraseCommand(this, cursorX, cursorY);
+            //Makes the slider visible
+            sliderPanel.setVisible(true);
         }));
+
+        eraserSizeSlider.addChangeListener(e -> {
+            eraserSizeSliderLabel.setText("Erases Size: " + eraserSizeSlider.getValue());
+            this.eraserSize = eraserSizeSlider.getValue();
+        });
+
         this.setFocusable(true);
         this.addKeyListener(new MainPanelKeyListener());
     }
@@ -500,5 +524,21 @@ public class MainPanel extends JFrame {
 
     public void setToolButtonList(ArrayList<JButton> toolButtonList) {
         this.toolButtonList = toolButtonList;
+    }
+
+    public int getEraserSize() {
+        return eraserSize;
+    }
+
+    public void setEraserSize(int eraserSize) {
+        this.eraserSize = eraserSize;
+    }
+
+    public JPanel getSliderPanel() {
+        return sliderPanel;
+    }
+
+    public void setSliderPanel(JPanel sliderPanel) {
+        this.sliderPanel = sliderPanel;
     }
 }

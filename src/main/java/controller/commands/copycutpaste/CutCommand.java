@@ -19,9 +19,6 @@ public class CutCommand extends ClearCommand {
         MainPanel.getInstance().setSelectedPoints(new ArrayList<>());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void undo() {
         //TODO implementa undo

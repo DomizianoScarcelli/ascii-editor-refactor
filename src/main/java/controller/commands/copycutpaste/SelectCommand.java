@@ -137,9 +137,6 @@ public class SelectCommand implements Command {
         mainPanel.getCommandStack().push(this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void undo() {
         for (int[] point : rectPoints) {

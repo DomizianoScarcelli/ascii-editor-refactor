@@ -31,9 +31,6 @@ public class ClearCommand implements Command {
 
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void undo() {
         //TODO implementa l'undo

@@ -47,9 +47,6 @@ public class ColorCommand implements Command {
         mainPanel.getAsciiPanel().repaint();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void undo() {
         //TODO implementa undo

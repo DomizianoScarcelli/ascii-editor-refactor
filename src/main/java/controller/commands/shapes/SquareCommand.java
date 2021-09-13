@@ -52,9 +52,6 @@ public class SquareCommand implements Command {
         mainPanel.getCommandStack().push(this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void undo() {
         mainPanel.getAsciiPanel().setCursorX(mainPanel.getAsciiPanelMouseListener().getInitialCursorX());

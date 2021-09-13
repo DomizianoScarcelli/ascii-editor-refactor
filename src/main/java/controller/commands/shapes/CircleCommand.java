@@ -93,9 +93,6 @@ public class CircleCommand implements Command {
         mainPanel.getAsciiPanel().write((char) mainPanel.getSelectedChar(), mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void undo() {
         mainPanel.getAsciiPanel().setCursorX(mainPanel.getAsciiPanelMouseListener().getInitialCursorX());

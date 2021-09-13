@@ -20,6 +20,7 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
      * The {@link MainPanel} object that allows to edit the image on the ascii panel when an action is performed.
      */
     private MainPanel mainPanel;
+    //TODO documenta
     private int middleCursorX, middleCursorY;
 
     /**
@@ -49,10 +50,12 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
 
         Command currentCommand = mainPanel.getCommand();
         if (currentCommand instanceof FillCommand)
-            mainPanel.setCommand(new FillCommand(mainPanel, mainPanel.getAsciiPanel().getMouseCursorX(), mainPanel.getAsciiPanel().getMouseCursorY()));
+            mainPanel.setCommand(new FillCommand(mainPanel, middleCursorX, middleCursorY));
         else if (currentCommand instanceof PickCommand) mainPanel.setCommand(new PickCommand(mainPanel));
         else if (currentCommand instanceof PaintCommand)
-            mainPanel.setCommand(new PaintCommand(mainPanel, mainPanel.getAsciiPanel().getMouseCursorX(), mainPanel.getAsciiPanel().getMouseCursorY()));
+            mainPanel.setCommand(new PaintCommand(mainPanel, middleCursorX, middleCursorY));
+        else if (currentCommand instanceof EraseCommand)
+            mainPanel.setCommand(new EraseCommand(mainPanel, middleCursorX, middleCursorY));
 
         if ((currentCommand instanceof FillCommand || currentCommand instanceof PickCommand || currentCommand instanceof PaintCommand) || currentCommand instanceof EraseCommand) {
             mainPanel.executeCommand();
@@ -94,6 +97,11 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
         updateMousePosition(e);
     }
 
+    /**
+     * Updates the mouse cursor position
+     *
+     * @param e the MouseEvent
+     */
     public void updateMousePosition(MouseEvent e) {
         mainPanel.getAsciiPanel().setMouseCursorX(e.getX() / 16);
         mainPanel.getAsciiPanel().setMouseCursorY(e.getY() / 16);

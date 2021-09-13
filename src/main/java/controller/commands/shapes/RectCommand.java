@@ -81,21 +81,8 @@ public class RectCommand implements Command {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void undo() {
-////        //TODO vedi come gestire sta cosa del rettangolo poi
-////        for (int[] point : rectPoints) {
-////            int x = point[0];
-////            int y = point[1];
-////            mainPanel.getAsciiPanel().setCursorX(x);
-////            mainPanel.getAsciiPanel().setCursorY(y);
-////            mainPanel.getAsciiPanel().write(oldCharGrid[y][x], mainPanel.getAsciiPanel().getOldForegroundColors()[y][x], mainPanel.getAsciiPanel().getOldBackgroundColors()[y][x]);
-////        }
-////
-//        //TODO risolvi bug colori di background quando viene disegnata una figura
         mainPanel.getAsciiPanel().setCursorX(mainPanel.getAsciiPanelMouseListener().getInitialCursorX());
         mainPanel.getAsciiPanel().setCursorY(mainPanel.getAsciiPanelMouseListener().getInitialCursorY());
         mainPanel.getAsciiPanel().setChars(oldCharGrid);
