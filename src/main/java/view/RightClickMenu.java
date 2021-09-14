@@ -1,6 +1,6 @@
 package view;
 
-import controller.commands.ColorCommand;
+import controller.commands.colorfilters.ColorCommand;
 import controller.commands.copycutpaste.ClearCommand;
 import controller.commands.copycutpaste.CopyCommand;
 import controller.commands.copycutpaste.CutCommand;

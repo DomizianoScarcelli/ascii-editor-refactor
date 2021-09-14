@@ -1,5 +1,6 @@
-package controller.commands;
+package controller.commands.colorfilters;
 
+import controller.commands.Command;
 import model.AsciiPanel;
 import view.MainPanel;
 

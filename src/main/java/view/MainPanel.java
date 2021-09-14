@@ -2,6 +2,8 @@ package view;
 
 import controller.*;
 import controller.commands.*;
+import controller.commands.colorfilters.BlackWhiteCommand;
+import controller.commands.colorfilters.InvertColorsCommand;
 import controller.commands.copycutpaste.MoveCommandAlt;
 import controller.commands.copycutpaste.PasteCommand;
 import controller.commands.copycutpaste.SelectCommand;
@@ -345,6 +347,17 @@ public class MainPanel extends JFrame {
 
         this.setFocusable(true);
         this.addKeyListener(new MainPanelKeyListener());
+        //TODO bottoni provvisori
+        JButton blackWhite = new JButton("BlackWhiteFilter");
+        toolsPanel.add(blackWhite);
+        blackWhite.addActionListener(e -> {
+            new BlackWhiteCommand().execute();
+        });
+        JButton invert = new JButton("InvertFilter");
+        toolsPanel.add(invert);
+        invert.addActionListener(e -> {
+            new InvertColorsCommand().execute();
+        });
     }
 
     public AsciiPanel getAsciiPanel() {
