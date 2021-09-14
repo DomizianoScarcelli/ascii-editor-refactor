@@ -90,10 +90,6 @@ public class MainPanel extends JFrame {
      */
     private ArrayList<int[]> selectedPoints;
     /**
-     * TODO credo sia la stessa cosa di selected points quindi vedi di toglierlo
-     */
-    private ArrayList<int[]> selectionChars = new ArrayList<>();
-    /**
      * TODO togli se non riesci a implementare il MoveCommand
      */
     private MoveCommandAlt currentMove = null;
@@ -249,7 +245,7 @@ public class MainPanel extends JFrame {
         squareButton.addActionListener(e -> {
             changeCursor("src/main/resources/whiteIcons/square.png");
             ToolsPanelController.selectButton(squareButton);
-            this.command = new SquareCommand(1);
+            this.command = new SquareCommand(cursorX, cursorY, 1);
         });
         circleButton.addActionListener(e -> {
             changeCursor("src/main/resources/whiteIcons/circle.png");
@@ -500,14 +496,6 @@ public class MainPanel extends JFrame {
 
     public void setSelectedPoints(ArrayList<int[]> selectedPoints) {
         this.selectedPoints = selectedPoints;
-    }
-
-    public ArrayList<int[]> getSelectionChars() {
-        return selectionChars;
-    }
-
-    public void setSelectionChars(ArrayList<int[]> selectionChars) {
-        this.selectionChars = selectionChars;
     }
 
     public MoveCommandAlt getCurrentMove() {

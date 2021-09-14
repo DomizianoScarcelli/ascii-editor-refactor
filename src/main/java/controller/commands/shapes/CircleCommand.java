@@ -42,8 +42,16 @@ public class CircleCommand implements Command {
     }
 
     //TODO aggiusta sta cosa, non so perchè ma due punti non vengono disegnati (mi sa che devi proprio cambiare implementazione dell'algoritmo)
-    //Source: https://www.geeksforgeeks.org/mid-point-circle-drawing-algorithm/
-    public void midPointCircleDraw(int x_centre, int y_centre, int r) {
+
+    /**
+     * Draws a circle in the asciipanel
+     * Source: https://www.geeksforgeeks.org/mid-point-circle-drawing-algorithm/
+     *
+     * @param x_centre the x coordinate of the circle centre
+     * @param y_centre the x coordinate of the circle centre
+     * @param r        the circle radius
+     */
+    private void midPointCircleDraw(int x_centre, int y_centre, int r) {
         int x = r, y = 0;
         // Printing the initial point on the axes after translation
         drawPoint(x + x_centre, y + y_centre);

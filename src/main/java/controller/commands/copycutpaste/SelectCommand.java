@@ -113,15 +113,6 @@ public class SelectCommand implements Command {
 
         ArrayList<int[]> points = rectPoints;
         selectedPoints.addAll(points);
-        mainPanel.getSelectionChars().addAll(points);
-
-//        selectedPoints.forEach(point -> {
-//            int x = point[0];
-//            int y = point[1];
-//            mainPanel.getAsciiPanel().setCursorX(x);
-//            mainPanel.getAsciiPanel().setCursorY(y);
-//            mainPanel.getAsciiPanel().write((char) 219, Color.white, Color.black);
-//        });
 
         selectedPoints.removeIf(point -> mainPanel.getAsciiPanel().pickChar(point[0], point[1]) == 219); //delete the selection char in order to not paste it on the ascii panel
 

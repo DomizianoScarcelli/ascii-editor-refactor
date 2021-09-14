@@ -4,7 +4,6 @@ import controller.ToolsPanelController;
 import controller.commands.Command;
 import view.MainPanel;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -27,9 +26,6 @@ public class RectCommand implements Command {
      * The point that form the rectangle (inside points included)
      */
     private ArrayList<int[]> rectPoints = new ArrayList<>();
-    //TODO vedi se usare o meno questa cosa e quindi documenta di conseguenza
-    private Color[][] oldForegroundColorGrid;
-    private Color[][] oldBackgroundColorGrid;
 
     public RectCommand(int x1, int y1, int x2, int y2) {
         this.x1 = x1;
@@ -46,8 +42,7 @@ public class RectCommand implements Command {
     @Override
     public void execute() {
         oldCharGrid = ToolsPanelController.copyCharGrid();
-        oldForegroundColorGrid = ToolsPanelController.copyFCGrid();
-        oldBackgroundColorGrid = ToolsPanelController.copyBCGrid();
+
         mainPanel.getCommandStack().push(this);
         if (x2 > x1) {
             for (int x = x1; x <= x2; x++) {

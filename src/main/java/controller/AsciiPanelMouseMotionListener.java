@@ -69,7 +69,7 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
             }
 
             if (currentCommand instanceof SquareCommand)
-                mainPanel.setCommand(new SquareCommand((int) Math.round(pointDistance / Math.sqrt(2)) + 1));
+                mainPanel.setCommand(new SquareCommand(x1, y1, pointDistance));
             else if (currentCommand instanceof CircleCommand)
                 mainPanel.setCommand(new CircleCommand(pointDistance));
             else if (currentCommand instanceof SelectCommand)
