@@ -1,6 +1,5 @@
 package view;
 
-import controller.commands.colorfilters.ColorCommand;
 import controller.commands.copycutpaste.ClearCommand;
 import controller.commands.copycutpaste.CopyCommand;
 import controller.commands.copycutpaste.CutCommand;
@@ -9,6 +8,7 @@ import controller.commands.copycutpaste.PasteCommand;
 import javax.swing.*;
 import java.util.ArrayList;
 
+//TODO documenta tutto
 public class RightClickMenu extends JPopupMenu {
     private ArrayList<int[]> copiedChars;
     private int rightClickMouseCursorX;
@@ -21,30 +21,22 @@ public class RightClickMenu extends JPopupMenu {
     }
 
     private RightClickMenu() {
-        JMenuItem colorForegroundButton = new JMenuItem("Color Foreground");
-        JMenuItem colorBackgroundButton = new JMenuItem("Color Background");
+
+        JMenuItem deselectButton = new JMenuItem("Deselect"); //TODO da implementare
         JMenuItem clearButton = new JMenuItem("Clear");
         JMenuItem copyButton = new JMenuItem("Copy");
         JMenuItem cutButton = new JMenuItem("Cut");
         JMenuItem pasteButton = new JMenuItem("Paste");
 
-        add(colorForegroundButton);
-        add(colorBackgroundButton);
+        add(deselectButton);
         add(clearButton);
         add(copyButton);
         add(cutButton);
         add(pasteButton);
 
-        colorForegroundButton.addActionListener(e -> {
-            new ColorCommand(true).execute();
+        deselectButton.addActionListener(e -> {
             MainPanel.getInstance().getCurrentSelection().undo();
         });
-
-        colorBackgroundButton.addActionListener(e -> {
-            new ColorCommand(false).execute();
-            MainPanel.getInstance().getCurrentSelection().undo();
-        });
-
         clearButton.addActionListener(e -> {
             new ClearCommand().execute();
             MainPanel.getInstance().getCurrentSelection().undo();

@@ -12,7 +12,7 @@ public class BlackWhiteCommand extends Command {
     @Override
     public void execute() {
         super.execute();
-        if (mainPanel.getSelectedPoints() == null) {
+        if (mainPanel.getSelectedPoints() == null || mainPanel.getSelectedPoints().isEmpty()) {
             int width = mainPanel.getAsciiPanel().getWidthInCharacters();
             int height = mainPanel.getAsciiPanel().getHeightInCharacters();
             for (int x = 0; x < width; x++) {

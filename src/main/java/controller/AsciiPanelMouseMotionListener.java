@@ -1,7 +1,6 @@
 package controller;
 
 import controller.commands.*;
-import controller.commands.copycutpaste.MoveCommandAlt;
 import controller.commands.copycutpaste.PasteCommand;
 import controller.commands.copycutpaste.SelectCommand;
 import controller.commands.shapes.CircleCommand;
@@ -76,8 +75,8 @@ public class AsciiPanelMouseMotionListener implements MouseMotionListener {
                 mainPanel.setCommand(new SelectCommand(x1, y1, middleCursorX, middleCursorY));
             else if (currentCommand instanceof RectCommand)
                 mainPanel.setCommand(new RectCommand(x1, y1, middleCursorX, middleCursorY));
-            else if (currentCommand instanceof MoveCommandAlt)
-                mainPanel.setCommand(new MoveCommandAlt(middleCursorX, middleCursorY));
+//            else if (currentCommand instanceof MoveCommand)
+//                mainPanel.setCommand(new MoveCommand(middleCursorX, middleCursorY));
             else if (currentCommand instanceof PasteCommand)
                 mainPanel.setCommand(new PasteCommand(middleCursorX, middleCursorY));
 

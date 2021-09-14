@@ -3,8 +3,8 @@ package view;
 import controller.*;
 import controller.commands.*;
 import controller.commands.colorfilters.BlackWhiteCommand;
+import controller.commands.colorfilters.ColorCommand;
 import controller.commands.colorfilters.InvertColorsCommand;
-import controller.commands.copycutpaste.MoveCommandAlt;
 import controller.commands.copycutpaste.PasteCommand;
 import controller.commands.copycutpaste.SelectCommand;
 import controller.commands.shapes.CircleCommand;
@@ -92,10 +92,6 @@ public class MainPanel extends JFrame {
      */
     private ArrayList<int[]> selectedPoints;
     /**
-     * TODO togli se non riesci a implementare il MoveCommand
-     */
-    private MoveCommandAlt currentMove = null;
-    /**
      * The current selected command that reflects the current selected tool
      */
     private Command command;
@@ -148,6 +144,7 @@ public class MainPanel extends JFrame {
         //Creates the Menu Bar and puts it on the top of the window
         JMenuBar menuBar = new JMenuBar();
         JMenu menuBarFile = new JMenu("File");
+        JMenu menuBarFilters = new JMenu("Filters");
         //Undo button and listener
         JButton undo = ButtonFactory.menuBarButton("src/main/resources/undo.png");
         menuBar.add(undo);
@@ -165,6 +162,7 @@ public class MainPanel extends JFrame {
         });
         menuBar.add(menuBarFile);
         this.add(menuBar, BorderLayout.NORTH);
+        //Add items inside the "File" menu bar
         JMenuItem menuBarFileNew = new JMenuItem("New...");
         JMenuItem menuBarFileLoad = new JMenuItem("Load...");
         JMenuItem menuBarFileSave = new JMenuItem("Save...");
@@ -173,11 +171,39 @@ public class MainPanel extends JFrame {
         menuBarFile.add(menuBarFileLoad);
         menuBarFile.add(menuBarFileSave);
         menuBarFile.add(menuBarFileImport);
-        //MenuBar action listeners
+        //MenuBar File action listeners
         menuBarFileNew.addActionListener(new MenuBarActionNew());
         menuBarFileLoad.addActionListener(new MenuBarActionLoad());
         menuBarFileSave.addActionListener(new MenuBarActionSave());
         menuBarFileImport.addActionListener(new MenuBarActionImport());
+        //Add items inside the "Filters" menu bar
+        menuBar.add(menuBarFilters);
+        JMenuItem menuBarFilterColorForeGround = new JMenuItem("Color Foreground");
+        JMenuItem menuBarFilterColorBackground = new JMenuItem("Color Background");
+        JMenuItem menuBarFilterInvert = new JMenuItem("Invert");
+        JMenuItem menuBarFilterBlackWhite = new JMenuItem("Black & White");
+        menuBarFilters.add(menuBarFilterColorForeGround);
+        menuBarFilters.add(menuBarFilterColorBackground);
+        menuBarFilters.add(menuBarFilterInvert);
+        menuBarFilters.add(menuBarFilterBlackWhite);
+        //Menu bar Filters action listeners
+        menuBarFilterColorForeGround.addActionListener(e -> {
+            new ColorCommand(true).execute();
+            MainPanel.getInstance().getCurrentSelection().undo();
+        });
+        menuBarFilterColorBackground.addActionListener(e -> {
+            new ColorCommand(false).execute();
+            MainPanel.getInstance().getCurrentSelection().undo();
+        });
+        menuBarFilterInvert.addActionListener(e -> {
+            new InvertColorsCommand().execute();
+            MainPanel.getInstance().getCurrentSelection().undo();
+        });
+        menuBarFilterBlackWhite.addActionListener(e -> {
+            new BlackWhiteCommand().execute();
+            MainPanel.getInstance().getCurrentSelection().undo();
+
+        });
         //Creates the main container
         mainContainer = new JPanel();
         mainContainer.setLayout(new BorderLayout());
@@ -267,7 +293,7 @@ public class MainPanel extends JFrame {
         moveButton.addActionListener(e -> {
             changeCursor("src/main/resources/whiteIcons/move.png");
             ToolsPanelController.selectButton(moveButton);
-            this.command = new MoveCommandAlt(0, 0);
+//            this.command = new MoveCommand(0, 0);
         });
         cloneButton.addActionListener(e -> {
             changeCursor("src/main/resources/whiteIcons/stamp.png");
@@ -347,17 +373,7 @@ public class MainPanel extends JFrame {
 
         this.setFocusable(true);
         this.addKeyListener(new MainPanelKeyListener());
-        //TODO bottoni provvisori
-        JButton blackWhite = new JButton("BlackWhiteFilter");
-        toolsPanel.add(blackWhite);
-        blackWhite.addActionListener(e -> {
-            new BlackWhiteCommand().execute();
-        });
-        JButton invert = new JButton("InvertFilter");
-        toolsPanel.add(invert);
-        invert.addActionListener(e -> {
-            new InvertColorsCommand().execute();
-        });
+
     }
 
     public AsciiPanel getAsciiPanel() {
@@ -509,14 +525,6 @@ public class MainPanel extends JFrame {
 
     public void setSelectedPoints(ArrayList<int[]> selectedPoints) {
         this.selectedPoints = selectedPoints;
-    }
-
-    public MoveCommandAlt getCurrentMove() {
-        return currentMove;
-    }
-
-    public void setCurrentMove(MoveCommandAlt currentMove) {
-        this.currentMove = currentMove;
     }
 
     public ArrayList<JButton> getToolButtonList() {

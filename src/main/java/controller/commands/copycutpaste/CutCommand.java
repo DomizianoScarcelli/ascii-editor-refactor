@@ -1,6 +1,5 @@
 package controller.commands.copycutpaste;
 
-import view.MainPanel;
 import view.RightClickMenu;
 
 import java.util.ArrayList;

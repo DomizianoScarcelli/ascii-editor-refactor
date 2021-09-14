@@ -1,8 +1,6 @@
 package controller.commands.colorfilters;
 
 import controller.commands.Command;
-import model.AsciiPanel;
-import view.MainPanel;
 
 import java.awt.*;
 
@@ -26,11 +24,26 @@ public class ColorCommand extends Command {
      */
     @Override
     public void execute() {
-        char[][] currentChars = mainPanel.getAsciiPanel().getChars();
-        for (int[] point : mainPanel.getSelectedPoints()) {
-            int x = point[0];
-            int y = point[1];
-            char currentChar = currentChars[x][y];
+        super.execute();
+        if (mainPanel.getSelectedPoints() == null || mainPanel.getSelectedPoints().isEmpty()) {
+            int width = mainPanel.getAsciiPanel().getWidthInCharacters();
+            int height = mainPanel.getAsciiPanel().getHeightInCharacters();
+            for (int x = 0; x < width; x++) {
+                for (int y = 0; y < height; y++) {
+                    applyFilter(x, y);
+                }
+            }
+        } else {
+            for (int[] point : mainPanel.getSelectedPoints()) {
+                applyFilter(point[0], point[1]);
+            }
+        }
+        mainPanel.getAsciiPanel().repaint();
+    }
+
+    private void applyFilter(int x, int y) {
+        try {
+            char currentChar = oldCharGrid[x][y];
             Color currentFC = mainPanel.getAsciiPanel().pickFC(x, y);
             Color currentBC = mainPanel.getAsciiPanel().pickBC(x, y);
             Color selectedFC = mainPanel.getDefaultForegroundColor();
@@ -40,12 +53,9 @@ public class ColorCommand extends Command {
             if (colorForeground)
                 mainPanel.getAsciiPanel().write(currentChar, selectedFC, currentBC);
             else mainPanel.getAsciiPanel().write(currentChar, currentFC, selectedBC);
+        } catch (NullPointerException ignored) {
         }
-        mainPanel.getAsciiPanel().repaint();
     }
 
-    @Override
-    public void undo() {
-        //TODO implementa undo
-    }
 }
+
