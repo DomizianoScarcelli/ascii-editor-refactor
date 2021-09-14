@@ -9,15 +9,7 @@ import java.util.ArrayList;
 /**
  * The command that draws a rectangle
  */
-public class RectCommand implements Command {
-    /**
-     * The MainPanel instance
-     */
-    private MainPanel mainPanel = MainPanel.getInstance();
-    /**
-     * The char grid before the action
-     */
-    private char[][] oldCharGrid;
+public class RectCommand extends Command {
     /**
      * The up-right and down-left point coordinates
      */
@@ -41,9 +33,7 @@ public class RectCommand implements Command {
      */
     @Override
     public void execute() {
-        oldCharGrid = ToolsPanelController.copyCharGrid();
-
-        mainPanel.getCommandStack().push(this);
+        super.execute();
         if (x2 > x1) {
             for (int x = x1; x <= x2; x++) {
                 rectPoints.add(new int[]{x, y1});
@@ -74,14 +64,6 @@ public class RectCommand implements Command {
             mainPanel.getAsciiPanel().write((char) mainPanel.getSelectedChar(), mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
             mainPanel.getAsciiPanel().repaint();
         }
-    }
-
-    @Override
-    public void undo() {
-        mainPanel.getAsciiPanel().setCursorX(mainPanel.getAsciiPanelMouseListener().getInitialCursorX());
-        mainPanel.getAsciiPanel().setCursorY(mainPanel.getAsciiPanelMouseListener().getInitialCursorY());
-        mainPanel.getAsciiPanel().setChars(oldCharGrid);
-        mainPanel.getAsciiPanel().repaint();
     }
 
 }

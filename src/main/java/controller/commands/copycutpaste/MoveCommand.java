@@ -4,7 +4,7 @@ import controller.commands.Command;
 import view.MainPanel;
 
 //TODO prima di documentare vedi se conviene o no togliere sta roba
-public class MoveCommand implements Command {
+public class MoveCommand extends Command {
     /**
      *
      */

@@ -14,9 +14,9 @@ public class CutCommand extends ClearCommand {
      */
     @Override
     public void execute() {
-        RightClickMenu.getInstance().setCopiedChars(MainPanel.getInstance().getSelectedPoints());
+        RightClickMenu.getInstance().setCopiedChars(mainPanel.getSelectedPoints());
         super.execute();
-        MainPanel.getInstance().setSelectedPoints(new ArrayList<>());
+        mainPanel.setSelectedPoints(new ArrayList<>());
     }
 
     @Override

@@ -10,23 +10,11 @@ import java.util.ArrayList;
 /**
  * The command that selects the character in a certain area of the ascii panel
  */
-public class SelectCommand implements Command {
+public class SelectCommand extends Command {
     /**
      * The list of selected points
      */
     private ArrayList<int[]> selectedPoints = new ArrayList<>();
-    /**
-     * The MainPanel instance
-     */
-    private MainPanel mainPanel = MainPanel.getInstance();
-    /**
-     * The foreground and background grid that represent the colors before the action
-     */
-    private Color[][] foregroundColorGrid, backgroundColorGrid;
-    /**
-     * The char grid before the action
-     */
-    private char[][] oldCharGrid;
     /**
      * The up-right and down-left point coordinates in order to detect the selected area
      */
@@ -48,30 +36,12 @@ public class SelectCommand implements Command {
      */
     @Override
     public void execute() {
+        super.execute();
         if (mainPanel.getCurrentSelection() != null) {
             mainPanel.getCurrentSelection().undo();
             mainPanel.setCurrentSelection(null);
         }
-
-        int height = mainPanel.getAsciiPanel().getHeightInCharacters();
-        int width = mainPanel.getAsciiPanel().getWidthInCharacters();
-        foregroundColorGrid = new Color[width][height];
-        backgroundColorGrid = new Color[width][height];
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                mainPanel.getAsciiPanel().setCursorX(x);
-                mainPanel.getAsciiPanel().setCursorY(y);
-                foregroundColorGrid[x][y] = mainPanel.getAsciiPanel().pickFC(x, y);
-                backgroundColorGrid[x][y] = mainPanel.getAsciiPanel().pickBC(x, y);
-            }
-        }
-
         mainPanel.setCurrentSelection(this);
-//        super.execute();
-        //--OLD SUPER--//
-        oldCharGrid = ToolsPanelController.copyCharGrid();
-
-        mainPanel.getCommandStack().push(this);
 
         if (x2 > x1) {
             for (int x = x1; x <= x2; x++) {
@@ -107,7 +77,7 @@ public class SelectCommand implements Command {
             int y = point[1];
             mainPanel.getAsciiPanel().setCursorX(x);
             mainPanel.getAsciiPanel().setCursorY(y);
-            mainPanel.getAsciiPanel().write((char) 219, foregroundColorGrid[x][y], backgroundColorGrid[x][y]);
+            mainPanel.getAsciiPanel().write((char) 219, oldForegroundColorGrid[x][y], oldBackgroundColorGrid[x][y]);
         }
         mainPanel.getAsciiPanel().repaint();
 
@@ -141,10 +111,10 @@ public class SelectCommand implements Command {
     }
 
     public Color[][] getBackgroundColorGrid() {
-        return backgroundColorGrid;
+        return oldBackgroundColorGrid;
     }
 
     public Color[][] getForegroundColorGrid() {
-        return foregroundColorGrid;
+        return oldForegroundColorGrid;
     }
 }

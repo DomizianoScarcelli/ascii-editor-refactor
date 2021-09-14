@@ -11,15 +11,7 @@ import java.util.Optional;
 /**
  * The command that pastes the current selection into the ascii panel in correspondence of the mouse position
  */
-public class PasteCommand implements Command {
-    /**
-     * The MainPanel instance
-     */
-    private MainPanel mainPanel = MainPanel.getInstance();
-    /**
-     * The char grid before the action
-     */
-    private char[][] oldCharGrid;
+public class PasteCommand extends Command {
     /**
      * The coordinates where the selection has to be pasted
      */
@@ -35,8 +27,7 @@ public class PasteCommand implements Command {
      */
     @Override
     public void execute() {
-        oldCharGrid = ToolsPanelController.copyCharGrid();
-        //Gets the top left corner of the selection
+        super.execute();        //Gets the top left corner of the selection
         Optional<int[]> min = RightClickMenu.getInstance().getCopiedChars().stream().min(Comparator.comparingInt(point -> point[0] + point[1]));
         int x1 = min.get()[0];
         int y1 = min.get()[1];
@@ -63,11 +54,4 @@ public class PasteCommand implements Command {
 
     }
 
-    @Override
-    public void undo() {
-        mainPanel.getAsciiPanel().setForegroundColors(mainPanel.getAsciiPanel().getOldForegroundColors());
-        mainPanel.getAsciiPanel().setBackgroundColors(mainPanel.getAsciiPanel().getOldBackgroundColors());
-        mainPanel.getAsciiPanel().setChars(oldCharGrid);
-        mainPanel.getAsciiPanel().repaint();
-    }
 }

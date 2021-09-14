@@ -16,9 +16,4 @@ public class SquareCommand extends RectCommand {
         super.execute();
     }
 
-    @Override
-    public void undo() {
-        super.undo();
-    }
-
 }

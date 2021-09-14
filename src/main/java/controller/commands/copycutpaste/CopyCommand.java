@@ -7,7 +7,7 @@ import view.RightClickMenu;
 /**
  * The command that copies the current selections
  */
-public class CopyCommand implements Command {
+public class CopyCommand extends Command {
     /**
      * The MainPanel instance
      */

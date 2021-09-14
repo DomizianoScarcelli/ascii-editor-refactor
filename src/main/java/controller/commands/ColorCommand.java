@@ -8,17 +8,13 @@ import java.awt.*;
 /**
  * The command that changes the foreground or background color of the characters inside the current selection
  */
-public class ColorCommand implements Command {
+public class ColorCommand extends Command {
     /**
      * A boolean that indicates whether the foreground or background color of the character has to be
      * changes.
      * If true the command changes the foreground color, if false it changes the background color.
      */
     private boolean colorForeground;
-    /**
-     * The MainPanel instance
-     */
-    private MainPanel mainPanel = MainPanel.getInstance();
 
     public ColorCommand(boolean colorForeground) {
         this.colorForeground = colorForeground;

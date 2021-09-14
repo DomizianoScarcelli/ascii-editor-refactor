@@ -10,11 +10,7 @@ import java.awt.*;
  * When this happens the character, with his foreground and background colors, is set as the selected character
  * and the char preview panel is updated to show the selected character.
  */
-public class PickCommand implements Command {
-    /**
-     * The MainPanel instance
-     */
-    private MainPanel mainPanel;
+public class PickCommand extends Command {
     /**
      * The selected char before the pick action
      */

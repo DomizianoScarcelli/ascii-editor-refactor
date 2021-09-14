@@ -6,19 +6,11 @@ import view.MainPanel;
 /**
  * The command that erases the character in correspondence of the mouse position
  */
-public class EraseCommand implements Command {
-    /**
-     * The MainPanel instance
-     */
-    private MainPanel mainPanel;
+public class EraseCommand extends Command {
     /**
      * The mouse cursor position
      */
     private int cursorX, cursorY;
-    /**
-     * The char grid before the action
-     */
-    private char[][] oldCharGrid;
 
     public EraseCommand(MainPanel mainPanel, int cursorX, int cursorY) {
         this.mainPanel = mainPanel;
@@ -32,7 +24,7 @@ public class EraseCommand implements Command {
      */
     @Override
     public void execute() {
-        oldCharGrid = ToolsPanelController.copyCharGrid();
+        super.execute();
         try {
             mainPanel.getAsciiPanel().clear((char) 0, cursorX, cursorY, mainPanel.getEraserSize(), mainPanel.getEraserSize());
         } catch (IllegalArgumentException ignored) {
@@ -40,8 +32,4 @@ public class EraseCommand implements Command {
 
     }
 
-    @Override
-    public void undo() {
-        //TODO implementa undo
-    }
 }

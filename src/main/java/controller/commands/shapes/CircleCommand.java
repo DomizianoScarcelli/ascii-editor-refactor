@@ -7,23 +7,15 @@ import view.MainPanel;
 /**
  * The command that draws a circle
  */
-public class CircleCommand implements Command {
+public class CircleCommand extends Command {
     /**
      * The mouse cursor position
      */
     private int cursorX, cursorY;
     /**
-     * The MainPanel instance
-     */
-    private MainPanel mainPanel = MainPanel.getInstance();
-    /**
      * The circle radius
      */
     private int radius;
-    /**
-     * The char grid before the action
-     */
-    private char[][] oldCharGrid;
 
     public CircleCommand(int radius) {
         this.radius = radius;
@@ -34,10 +26,9 @@ public class CircleCommand implements Command {
      */
     @Override
     public void execute() {
-        oldCharGrid = ToolsPanelController.copyCharGrid();
+        super.execute();
         cursorX = mainPanel.getAsciiPanel().getCursorX();
         cursorY = mainPanel.getAsciiPanel().getCursorY();
-        mainPanel.getCommandStack().push(this);
         midPointCircleDraw(cursorX, cursorY, radius);
     }
 
