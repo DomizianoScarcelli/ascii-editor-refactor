@@ -10,97 +10,77 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-
 /**
  * Models the two dimension array where the ascii characters will appear.
  * The panel is represented as a character matrix.
  */
 public class AsciiPanel extends JPanel {
     private static final long serialVersionUID = -4167851861147593092L;
-
     /**
      * The color black (pure black).
      */
     public static final Color BLACK = new Color(0, 0, 0);
-
     /**
      * The color red.
      */
     public static final Color RED = new Color(128, 0, 0);
-
     /**
      * The color green.
      */
     public static final Color GREEN = new Color(0, 128, 0);
-
     /**
      * The color yellow.
      */
     public static final Color YELLOW = new Color(128, 128, 0);
-
     /**
      * The color blue.
      */
     public static final Color BLUE = new Color(0, 0, 128);
-
     /**
      * The color magenta.
      */
     public static final Color MAGENTA = new Color(128, 0, 128);
-
     /**
      * The color cyan.
      */
     public static final Color CYAN = new Color(0, 128, 128);
-
     /**
      * The color white (light gray).
      */
     public static final Color WHITE = new Color(192, 192, 192);
-
     /**
      * A brighter black (dark gray).
      */
     public static final Color BRIGHT_BLACK = new Color(128, 128, 128);
-
     /**
      * A brighter red.
      */
     public static final Color BRIGHT_RED = new Color(255, 0, 0);
-
     /**
      * A brighter green.
      */
     public static final Color BRIGHT_GREEN = new Color(0, 255, 0);
-
     /**
      * A brighter yellow.
      */
     public static final Color BRIGHT_YELLOW = new Color(255, 255, 0);
-
     /**
      * A brighter blue.
      */
     public static final Color BRIGHT_BLUE = new Color(0, 0, 255);
-
     /**
      * A brighter magenta.
      */
     public static final Color BRIGHT_MAGENTA = new Color(255, 0, 255);
-
     /**
      * A brighter cyan.
      */
     public static final Color BRIGHT_CYAN = new Color(0, 255, 255);
-
     /**
      * A brighter white (pure white).
      */
     public static final Color BRIGHT_WHITE = new Color(255, 255, 255);
-
-
     private Image offscreenBuffer;
-
     private Graphics offscreenGraphics;
     /**
      * {@link #getWidthInCharacters()}
@@ -119,7 +99,6 @@ public class AsciiPanel extends JPanel {
      */
     private int charHeight = 16;
     private String terminalFontFile = "cp437_9x16.png";
-
     /**
      * {@link #getDefaultBackgroundColor()}
      */
@@ -136,7 +115,6 @@ public class AsciiPanel extends JPanel {
      * {@link #getCursorY()}
      */
     private int cursorY;
-
     private BufferedImage glyphSprite;
     /**
      * {@link #getGlyphs()}
@@ -205,7 +183,7 @@ public class AsciiPanel extends JPanel {
         heightInCharacters = height;
 
         defaultBackgroundColor = BLACK;
-        defaultForegroundColor = WHITE;
+        defaultForegroundColor = Color.white;
 
         setChars(new char[widthInCharacters][heightInCharacters]);
         backgroundColors = new Color[widthInCharacters][heightInCharacters];
@@ -469,7 +447,6 @@ public class AsciiPanel extends JPanel {
                     if (fg == null) fg = Color.black;
                     if (bg == null) bg = Color.black;
 
-
                     bw.write((int) getChars()[x][y]
                             + "\t" + fg.getRGB()
                             + "\t" + bg.getRGB() + "\n");
@@ -480,7 +457,6 @@ public class AsciiPanel extends JPanel {
             System.out.println("Error saving:");
             System.exit(1);
         }
-
 
     }
 
@@ -625,7 +601,6 @@ public class AsciiPanel extends JPanel {
 
         if (y + height > heightInCharacters)
             throw new IllegalArgumentException("y + height " + (y + height) + " must be less than " + (heightInCharacters + 1) + ".");
-
 
         return clear(character, x, y, width, height, defaultForegroundColor, defaultBackgroundColor);
     }
@@ -801,7 +776,6 @@ public class AsciiPanel extends JPanel {
                 }
         return this;
     }
-
 
     /**
      * Fills the panel starting from position (x,y) with the character in input.
@@ -1179,7 +1153,6 @@ public class AsciiPanel extends JPanel {
         return backgroundColors[px][py];
     }
 
-
 //    public Color pickInverseFC(int px, int py){
 //        int red = foregroundColors[px][py].getRed();
 //        int green = foregroundColors[px][py].getGreen();
@@ -1257,7 +1230,6 @@ public class AsciiPanel extends JPanel {
     public Color[][] getOldForegroundColors() {
         return oldForegroundColors;
     }
-
 
     public void setBackgroundColors(Color[][] backgroundColors) {
         this.backgroundColors = backgroundColors;

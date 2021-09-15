@@ -32,16 +32,17 @@ public class BlackWhiteCommand extends Command {
         mainPanel.getAsciiPanel().setCursorX(x);
         mainPanel.getAsciiPanel().setCursorY(y);
         try {
-            int rF = oldForegroundColorGrid[x][y].getRed();
-            int gF = oldForegroundColorGrid[x][y].getGreen();
-            int bF = oldForegroundColorGrid[x][y].getBlue();
-            int rB = oldBackgroundColorGrid[x][y].getRed();
-            int gB = oldBackgroundColorGrid[x][y].getGreen();
-            int bB = oldBackgroundColorGrid[x][y].getBlue();
+            int rF = mainPanel.getAsciiPanel().pickFC(x, y).getRed();
+            int gF = mainPanel.getAsciiPanel().pickFC(x, y).getGreen();
+            int bF = mainPanel.getAsciiPanel().pickFC(x, y).getBlue();
+            int rB = mainPanel.getAsciiPanel().pickBC(x, y).getRed();
+            int gB = mainPanel.getAsciiPanel().pickBC(x, y).getGreen();
+            int bB = mainPanel.getAsciiPanel().pickBC(x, y).getBlue();
             int greyF = Math.round((rF + gF + bF) / 3);
             int greyB = Math.round((rB + gB + bB) / 3);
-            mainPanel.getAsciiPanel().write(oldCharGrid[x][y], new Color(greyF, greyF, greyF), new Color(greyB, greyB, greyB));
+            mainPanel.getAsciiPanel().write((char) (int) mainPanel.getAsciiPanel().pickChar(x, y), new Color(greyF, greyF, greyF), new Color(greyB, greyB, greyB));
         } catch (NullPointerException ignored) {
         }
+
     }
 }

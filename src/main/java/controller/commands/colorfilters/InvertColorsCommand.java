@@ -32,13 +32,13 @@ public class InvertColorsCommand extends Command {
         mainPanel.getAsciiPanel().setCursorX(x);
         mainPanel.getAsciiPanel().setCursorY(y);
         try {
-            int rF = oldForegroundColorGrid[x][y].getRed();
-            int gF = oldForegroundColorGrid[x][y].getGreen();
-            int bF = oldForegroundColorGrid[x][y].getBlue();
-            int rB = oldBackgroundColorGrid[x][y].getRed();
-            int gB = oldBackgroundColorGrid[x][y].getGreen();
-            int bB = oldBackgroundColorGrid[x][y].getBlue();
-            mainPanel.getAsciiPanel().write(oldCharGrid[x][y], new Color(255 - rF, 255 - gF, 255 - bF), new Color(255 - rB, 255 - gB, 255 - bB));
+            int rF = mainPanel.getAsciiPanel().pickFC(x, y).getRed();
+            int gF = mainPanel.getAsciiPanel().pickFC(x, y).getGreen();
+            int bF = mainPanel.getAsciiPanel().pickFC(x, y).getBlue();
+            int rB = mainPanel.getAsciiPanel().pickBC(x, y).getRed();
+            int gB = mainPanel.getAsciiPanel().pickBC(x, y).getGreen();
+            int bB = mainPanel.getAsciiPanel().pickBC(x, y).getBlue();
+            mainPanel.getAsciiPanel().write((char) (int) mainPanel.getAsciiPanel().pickChar(x, y), new Color(255 - rF, 255 - gF, 255 - bF), new Color(255 - rB, 255 - gB, 255 - bB));
         } catch (NullPointerException ignored) {
         }
     }

@@ -22,26 +22,38 @@ public class ImageImporterDialog extends JDialog {
     private ImageImporterDialog() {
         this.setTitle("Import an image");
         setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-        this.setBounds(0, 0, 320, 230);
+        this.setBounds(0, 0, 320, 360);
         this.setResizable(false);
         this.setLayout(null);
         JLabel thresholdLabel = new JLabel("Threshold:");
         JTextField thresholdSetter = new JTextField("240");
-        JCheckBox convertColorOptions = new JCheckBox("all colors", true);
+        JCheckBox convertColorOptions = new JCheckBox("All colors (16-bit)", true);
+        //Checkbox for filters
+        JLabel filterLable = new JLabel("Apply filers:");
+        JCheckBox blackWhiteFilter = new JCheckBox("Black and White");
+        JCheckBox invertFilter = new JCheckBox("Invert colors");
         JButton convertButton = new JButton("Convert");
         JButton importButton = new JButton("Import ...");
-        importButton.addActionListener(new ImageImporterImportActionListener());
-        convertButton.addActionListener(new ImageImporterConvertActionListener(MainPanel.getInstance().getAsciiPanel(), thresholdSetter, convertColorOptions));
         this.add(importButton);
         this.add(thresholdLabel);
         this.add(thresholdSetter);
         this.add(convertColorOptions);
+        //Add filters' components
+        this.add(filterLable);
+        this.add(blackWhiteFilter);
+        this.add(invertFilter);
         this.add(convertButton);
         importButton.setBounds(0, 0, 320, 40);
         thresholdLabel.setBounds(0, 40, 320, 40);
         thresholdSetter.setBounds(0, 80, 320, 40);
         convertColorOptions.setBounds(0, 120, 320, 40);
-        convertButton.setBounds(0, 160, 320, 40);
+        filterLable.setBounds(0, 160, 320, 40);
+        blackWhiteFilter.setBounds(0, 200, 320, 40);
+        invertFilter.setBounds(0, 240, 320, 40);
+        convertButton.setBounds(0, 280, 320, 40);
+        importButton.addActionListener(new ImageImporterImportActionListener());
+        convertButton.addActionListener(new ImageImporterConvertActionListener(MainPanel.getInstance().getAsciiPanel(), thresholdSetter, convertColorOptions, blackWhiteFilter, invertFilter));
+
     }
 
     /**

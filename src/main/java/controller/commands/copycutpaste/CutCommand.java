@@ -1,5 +1,6 @@
 package controller.commands.copycutpaste;
 
+import view.MainPanel;
 import view.RightClickMenu;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class CutCommand extends ClearCommand {
      */
     @Override
     public void execute() {
-        RightClickMenu.getInstance().setCopiedChars(mainPanel.getSelectedPoints());
+        RightClickMenu.getInstance().setCopiedChars(MainPanel.getInstance().getSelectedPoints());
         super.execute();
         mainPanel.setSelectedPoints(new ArrayList<>());
     }

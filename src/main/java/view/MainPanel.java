@@ -133,7 +133,7 @@ public class MainPanel extends JFrame {
     private MainPanel() {
         super("Pannello principale");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setSize(800, 800);
+        this.setSize(900, 800);
         this.setMinimumSize(new Dimension(700, 700));
         this.setLayout(new BorderLayout());
         asciiPanel = new AsciiPanel(80, 60, AsciiFont.CP437_16x16);
@@ -223,7 +223,7 @@ public class MainPanel extends JFrame {
         JPanel colorPanel = new JPanel(new GridLayout(2, 2));
         foregroundColorPanel = new JPanel();
         backgroundColorPanel = new JPanel();
-        foregroundColorPanel.setBackground(AsciiPanel.WHITE);
+        foregroundColorPanel.setBackground(Color.WHITE);
         backgroundColorPanel.setBackground(Color.black);
         foregroundColorPanel.setBorder(BorderFactory.createLineBorder(Color.white));
         backgroundColorPanel.setBorder(BorderFactory.createLoweredBevelBorder());
@@ -266,8 +266,7 @@ public class MainPanel extends JFrame {
         otherTools.add(rectButton);
         JButton selectButton = ButtonFactory.createSmallToolButton("src/main/resources/selection.png");
         toolsPanel.add(selectButton);
-        JButton moveButton = ButtonFactory.createSmallToolButton("src/main/resources/move.png");
-        toolsPanel.add(moveButton);
+
         JButton cloneButton = ButtonFactory.createSmallToolButton("src/main/resources/stamp.png");
         toolsPanel.add(cloneButton);
         squareButton.addActionListener(e -> {
@@ -290,11 +289,7 @@ public class MainPanel extends JFrame {
             ToolsPanelController.selectButton(selectButton);
             this.command = new SelectCommand(cursorX, cursorY, cursorX, cursorY);
         });
-        moveButton.addActionListener(e -> {
-            changeCursor("src/main/resources/whiteIcons/move.png");
-            ToolsPanelController.selectButton(moveButton);
-//            this.command = new MoveCommand(0, 0);
-        });
+
         cloneButton.addActionListener(e -> {
             changeCursor("src/main/resources/whiteIcons/stamp.png");
             ToolsPanelController.selectButton(cloneButton);
@@ -309,14 +304,13 @@ public class MainPanel extends JFrame {
         toolButtonList.add(circleButton);
         toolButtonList.add(rectButton);
         toolButtonList.add(selectButton);
-        toolButtonList.add(moveButton);
         toolButtonList.add(cloneButton);
         mainContainer.add(toolsPanel, BorderLayout.NORTH);
         charPreviewPanel.write((char) selectedChar, 1, 1);
         charPreviewPanel.repaint();
         //JPanel containing the AsciiPanel
         mainContainer.add(asciiPanel, BorderLayout.CENTER);
-        asciiPanel.write("Marion");
+        asciiPanel.write("Empty");
         asciiPanel.setCursorX(0);
         asciiPanel.setCursorY(0);
         asciiPanelMouseListener = new AsciiPanelMouseListener(this);
@@ -424,10 +418,6 @@ public class MainPanel extends JFrame {
         return paint;
     }
 
-    public JButton getFill() {
-        return fill;
-    }
-
     public JButton getPick() {
         return pick;
     }
@@ -472,16 +462,8 @@ public class MainPanel extends JFrame {
         return commandStack;
     }
 
-    public void setCommandStack(CommandStack commandStack) {
-        this.commandStack = commandStack;
-    }
-
     public AsciiPanelMouseListener getAsciiPanelMouseListener() {
         return asciiPanelMouseListener;
-    }
-
-    public AsciiPanelMouseMotionListener getAsciiPanelMouseMotionListener() {
-        return asciiPanelMouseMotionListener;
     }
 
     public CommandStack getRedoCommandStack() {
@@ -515,10 +497,6 @@ public class MainPanel extends JFrame {
         return beforeSelectionGrid;
     }
 
-    public void setBeforeSelectionGrid(char[][] beforeSelectionGrid) {
-        this.beforeSelectionGrid = beforeSelectionGrid;
-    }
-
     public ArrayList<int[]> getSelectedPoints() {
         return selectedPoints;
     }
@@ -531,23 +509,12 @@ public class MainPanel extends JFrame {
         return toolButtonList;
     }
 
-    public void setToolButtonList(ArrayList<JButton> toolButtonList) {
-        this.toolButtonList = toolButtonList;
-    }
-
     public int getEraserSize() {
         return eraserSize;
-    }
-
-    public void setEraserSize(int eraserSize) {
-        this.eraserSize = eraserSize;
     }
 
     public JPanel getSliderPanel() {
         return sliderPanel;
     }
 
-    public void setSliderPanel(JPanel sliderPanel) {
-        this.sliderPanel = sliderPanel;
-    }
 }

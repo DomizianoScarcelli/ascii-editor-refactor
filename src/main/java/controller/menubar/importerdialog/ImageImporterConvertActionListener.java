@@ -1,6 +1,5 @@
 package controller.menubar.importerdialog;
 
-
 import java.awt.Color;
 import java.awt.Transparency;
 import java.awt.event.ActionEvent;
@@ -9,13 +8,13 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ColorConvertOp;
 import java.awt.image.DataBuffer;
 import java.awt.image.IndexColorModel;
-import java.util.HashMap;
-import java.util.Map;
-
+import java.util.*;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 
+import controller.commands.colorfilters.BlackWhiteCommand;
+import controller.commands.colorfilters.InvertColorsCommand;
 import model.AsciiPanel;
 import view.ImageImporterDialog;
 import view.MainPanel;
@@ -36,18 +35,22 @@ public class ImageImporterConvertActionListener implements ActionListener {
      * A toggle button component on the GUI that indicates whether to convert the image into a 16-bit color (checked) or a 4-bit color (not checked).
      */
     private JCheckBox convertColorOptions;
+    private JCheckBox blackWhite;
+    private JCheckBox invert;
 
     /**
      * Class constructor. Construct the class from an {@link AsciiPanel}, a {@link JTextField} component and a {@link JToggleButton} component.
      *
-     * @param asciiPanel the {@link AsciiPanel} where the action has to be done.
-     * @param threshold     the {@link JTextField} containing the threshold value.
-     * @param convertColorOptions     the {@link JCheckBox} that indicates whether the the image has to be converted to 16-bit or 4-bit colors.
+     * @param asciiPanel          the {@link AsciiPanel} where the action has to be done.
+     * @param threshold           the {@link JTextField} containing the threshold value.
+     * @param convertColorOptions the {@link JCheckBox} that indicates whether the the image has to be converted to 16-bit or 4-bit colors.
      */
-    public ImageImporterConvertActionListener(AsciiPanel asciiPanel, JTextField threshold, JCheckBox convertColorOptions) {
+    public ImageImporterConvertActionListener(AsciiPanel asciiPanel, JTextField threshold, JCheckBox convertColorOptions, JCheckBox blackWhite, JCheckBox invert) {
         this.asciiPanel = asciiPanel;
         this.threshold = threshold;
         this.convertColorOptions = convertColorOptions;
+        this.blackWhite = blackWhite;
+        this.invert = invert;
     }
 
     /**
@@ -119,7 +122,7 @@ public class ImageImporterConvertActionListener implements ActionListener {
             int thi = Integer.parseInt(threshold.getText());
             BufferedImage[] glyphs = asciiPanel.getGlyphs();
 
-            Map<Integer, Integer> index2numpixels = new HashMap<Integer, Integer>();
+            Map<Integer, Integer> index2numpixels = new HashMap<>();
             for (int i = 0; i < glyphs.length; i++) {
                 BufferedImage bi = glyphs[i];
                 if (bi == null)
@@ -139,14 +142,12 @@ public class ImageImporterConvertActionListener implements ActionListener {
             }
 
             int[][] buffer = new int[bimage.getWidth()][bimage.getHeight()];
-            // BufferedImage bi=ImageIO.read(new
-            // File("resources/bitmaps/80x50Stefano.png"));
+
             for (int x = 0; x < bimage.getWidth(); x++)
                 for (int y = 0; y < bimage.getHeight(); y++) {
                     int c = bimage.getRGB(x, y);
                     Color cc = new Color(c);
                     int ri = Math.max(Math.max(cc.getRed(), cc.getGreen()), cc.getBlue());
-                    // if (cc.getRed()>0||cc.getGreen()>0||cc.getBlue()>0)
                     buffer[x][y] = Math.min(ri, thi);
                 }
 
@@ -156,7 +157,6 @@ public class ImageImporterConvertActionListener implements ActionListener {
             for (int x = 0; x < Math.min(bimage.getWidth(), 80); x++)
                 for (int y = 0; y < Math.min(bimage.getHeight(), 80); y++) {
                     int k = 255 - buffer[x][y];
-                    // System.out.println("**"+k);
                     while (!index2numpixels.containsKey(k) && k > 0) {
                         k--;
                     }
@@ -165,11 +165,14 @@ public class ImageImporterConvertActionListener implements ActionListener {
                     int c = bimage.getRGB(x, y);
                     Color cc = new Color(c);
                     asciiPanel.write((char) k, cc);
-
                 }
             asciiPanel.repaint();
             ImageImporterDialog.getInstance().setVisible(false);
             ImageImporterDialog.getInstance().close();
+
+            if (blackWhite.isSelected()) new BlackWhiteCommand().execute();
+            if (invert.isSelected()) new InvertColorsCommand().execute();
+
         }
     }
 }
