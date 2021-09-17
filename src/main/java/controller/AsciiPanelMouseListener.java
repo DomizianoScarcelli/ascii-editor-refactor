@@ -44,25 +44,26 @@ public class AsciiPanelMouseListener implements MouseListener {
         initialCursorY = mainPanel.getAsciiPanel().getMouseCursorY();
 
         mainPanel.setCurrentButtonPressed(e.getButton());
+        if (mainPanel.getCurrentButtonPressed() == 1) {
+            Command currentCommand = mainPanel.getCommand();
+            if (currentCommand instanceof FillCommand)
+                mainPanel.setCommand(new FillCommand(mainPanel, initialCursorX, initialCursorY));
+            else if (currentCommand instanceof PickCommand) mainPanel.setCommand(new PickCommand(mainPanel));
+            else if (currentCommand instanceof PaintCommand)
+                mainPanel.setCommand(new PaintCommand(mainPanel, initialCursorX, initialCursorY));
+            else if (currentCommand instanceof PasteCommand) {
+                mainPanel.setCommand(new PasteCommand(initialCursorX, initialCursorY));
+            } else if (currentCommand instanceof EraseCommand)
+                mainPanel.setCommand(new EraseCommand(mainPanel, initialCursorX, initialCursorY));
 
-        Command currentCommand = mainPanel.getCommand();
-        if (currentCommand instanceof FillCommand)
-            mainPanel.setCommand(new FillCommand(mainPanel, initialCursorX, initialCursorY));
-        else if (currentCommand instanceof PickCommand) mainPanel.setCommand(new PickCommand(mainPanel));
-        else if (currentCommand instanceof PaintCommand)
-            mainPanel.setCommand(new PaintCommand(mainPanel, initialCursorX, initialCursorY));
-        else if (currentCommand instanceof PasteCommand) {
-            mainPanel.setCommand(new PasteCommand(initialCursorX, initialCursorY));
-        } else if (currentCommand instanceof EraseCommand)
-            mainPanel.setCommand(new EraseCommand(mainPanel, initialCursorX, initialCursorY));
+            if ((currentCommand instanceof FillCommand || currentCommand instanceof PickCommand || currentCommand instanceof PaintCommand || currentCommand instanceof EraseCommand || currentCommand instanceof PasteCommand)) {
+                mainPanel.executeCommand();
+                mainPanel.getAsciiPanel().repaint();
+            }
 
-        if ((currentCommand instanceof FillCommand || currentCommand instanceof PickCommand || currentCommand instanceof PaintCommand || currentCommand instanceof EraseCommand || currentCommand instanceof PasteCommand)) {
-            mainPanel.executeCommand();
-            mainPanel.getAsciiPanel().repaint();
-        }
-
-        if (!(currentCommand instanceof EraseCommand)) {
-            mainPanel.getSliderPanel().setVisible(false);
+            if (!(currentCommand instanceof EraseCommand)) {
+                mainPanel.getSliderPanel().setVisible(false);
+            }
         }
 
     }

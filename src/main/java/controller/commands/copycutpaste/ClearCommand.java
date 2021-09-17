@@ -12,7 +12,6 @@ public class ClearCommand extends Command {
     @Override
     public void execute() {
         super.execute();
-
         for (int[] point : mainPanel.getSelectedPoints()) {
             int x = point[0];
             int y = point[1];

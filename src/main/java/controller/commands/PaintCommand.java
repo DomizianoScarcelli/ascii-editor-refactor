@@ -44,21 +44,18 @@ public class PaintCommand extends Command {
         mainPanel.getAsciiPanel().setCursorX(cursorX);
         mainPanel.getAsciiPanel().setCursorY(cursorY);
         oldChar = mainPanel.getAsciiPanel().pickChar(cursorX, cursorY);
-        if (mainPanel.getCurrentButtonPressed() == 1) {
-            //Prevents a char is not written twice on the same position, so the undo doesn't fully work.
-            if (!(oldChar == mainPanel.getSelectedChar()
-                    && cursorX == mainPanel.getAsciiPanel().getMouseCursorX()
-                    && cursorY == mainPanel.getAsciiPanel().getMouseCursorY())) {
-                mainPanel.getAsciiPanel().write((char) mainPanel.getSelectedChar(), mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
-                mainPanel.getCommandStack().push(this);
-            }
-        } else {
-            mainPanel.getAsciiPanel().write((char) 0);
+
+        //Prevents a char is not written twice on the same position, so the undo doesn't fully work.
+        if (!(oldChar == mainPanel.getSelectedChar()
+                && cursorX == mainPanel.getAsciiPanel().getMouseCursorX()
+                && cursorY == mainPanel.getAsciiPanel().getMouseCursorY())) {
+            mainPanel.getAsciiPanel().write((char) mainPanel.getSelectedChar(), mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
+            mainPanel.getCommandStack().push(this);
         }
+
         mainPanel.getAsciiPanel().repaint();
 
         ToolsPanelController.selectButton(mainPanel.getPaint());
 
     }
-
 }

@@ -35,13 +35,8 @@ public class FillCommand extends Command {
     public void execute() {
         super.execute();
 
-        if (mainPanel.getCurrentButtonPressed() == 1) {
-            mainPanel.getAsciiPanel().fill((char) mainPanel.getSelectedChar(), cursorX, cursorY, mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
-        } else {
-            mainPanel.getAsciiPanel().fill((char) (0), cursorX, cursorY, Color.black, Color.black);
-        }
+        mainPanel.getAsciiPanel().fill((char) mainPanel.getSelectedChar(), cursorX, cursorY, mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
         mainPanel.getAsciiPanel().repaint();
 
     }
-
 }

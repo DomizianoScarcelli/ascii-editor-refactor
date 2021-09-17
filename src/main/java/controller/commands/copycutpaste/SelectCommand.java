@@ -87,12 +87,26 @@ public class SelectCommand extends Command {
         selectedPoints.removeIf(point -> mainPanel.getAsciiPanel().pickChar(point[0], point[1]) == 219); //delete the selection char in order to not paste it on the ascii panel
 
         mainPanel.getAsciiPanel().repaint();
-        for (int x = x1 + 1; x <= x2 - 1; x++) {
-            for (int y = y1 + 1; y <= y2 - 1; y++) {
+        int tempx1 = x1;
+        int tempx2 = x2;
+        int tempy1 = y1;
+        int tempy2 = y2;
+        if (x1 > x2) {
+            tempx2 = x1;
+            tempx1 = x2;
+        }
+        if (y1 > y2) {
+            tempy1 = y2;
+            tempy2 = y1;
+        }
+        for (int x = tempx1 + 1; x <= tempx2 - 1; x++) {
+            for (int y = tempy1 + 1; y <= tempy2 - 1; y++) {
+
                 int[] point = new int[]{x, y};
-                selectedPoints.add(point); //TODO anche qui ci sta la cosa del verificare se x è maggiore di y eccetera, altrimenti succ cose strane
+                selectedPoints.add(point);
             }
         }
+
         mainPanel.setSelectedPoints(selectedPoints);
 
         mainPanel.getCommandStack().push(this);

@@ -68,7 +68,7 @@ public class MainPanel extends JFrame {
      */
     private JPanel mainContainer;
     /**
-     * The mouse button that is currently pressed //TODO togli sta cosa
+     * The mouse button that is currently pressed
      */
     private int currentButtonPressed = 1;
     /**

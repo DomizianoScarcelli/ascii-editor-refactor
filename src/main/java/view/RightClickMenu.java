@@ -8,21 +8,39 @@ import controller.commands.copycutpaste.PasteCommand;
 import javax.swing.*;
 import java.util.ArrayList;
 
-//TODO documenta tutto
+/**
+ * The menu that pops up when the mouse right click is clicked.
+ */
 public class RightClickMenu extends JPopupMenu {
+    /**
+     * The list of points that indicates the coordinates of the copied characters.
+     */
     private ArrayList<int[]> copiedChars;
+    /**
+     * The mouse x coordinate when the right click is clicked
+     */
     private int rightClickMouseCursorX;
+    /**
+     * The mouse y coordinate when the right click is clicked
+     */
     private int rightClickMouseCursorY;
+    /**
+     * The unique instance of the class
+     */
     private static RightClickMenu instance;
 
+    /**
+     * Gets the unique instance of the class if existing, creates it otherwise.
+     *
+     * @return
+     */
     public static RightClickMenu getInstance() {
         if (instance == null) instance = new RightClickMenu();
         return instance;
     }
 
     private RightClickMenu() {
-
-        JMenuItem deselectButton = new JMenuItem("Deselect"); //TODO da implementare
+        JMenuItem deselectButton = new JMenuItem("Deselect");
         JMenuItem clearButton = new JMenuItem("Clear");
         JMenuItem copyButton = new JMenuItem("Copy");
         JMenuItem cutButton = new JMenuItem("Cut");

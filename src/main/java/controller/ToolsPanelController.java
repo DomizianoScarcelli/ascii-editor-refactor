@@ -40,7 +40,6 @@ public class ToolsPanelController {
         mainPanel.getAsciiPanel().setCursorY(0);
         mainPanel.getAsciiPanel().write("Empty");
         mainPanel.getAsciiPanel().addMouseMotionListener(new AsciiPanelMouseMotionListener(mainPanel));
-        //TODO add all other things
         SwingUtilities.updateComponentTreeUI(mainPanel); //Prevents a weird bug when a character was selected
     }
 
