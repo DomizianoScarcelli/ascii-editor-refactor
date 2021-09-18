@@ -145,6 +145,7 @@ public class MainPanel extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         JMenu menuBarFile = new JMenu("File");
         JMenu menuBarFilters = new JMenu("Filters");
+        JMenu menuBarOther = new JMenu("Other");
         //Undo button and listener
         JButton undo = ButtonFactory.menuBarButton("src/main/resources/undo.png");
         menuBar.add(undo);
@@ -202,7 +203,24 @@ public class MainPanel extends JFrame {
         menuBarFilterBlackWhite.addActionListener(e -> {
             new BlackWhiteCommand().execute();
             MainPanel.getInstance().getCurrentSelection().undo();
-
+        });
+        //Add items inside the "Other" menu bar
+        menuBar.add(menuBarOther);
+        JMenuItem menuBarCharRemover = new JMenuItem("Remove selected character");
+        JMenuItem menuBarCharRemoverFC = new JMenuItem("Remove selected character from foreground color");
+        JMenuItem menuBarCharRemoverBC = new JMenuItem("Remove selected character from background color");
+        menuBarOther.add(menuBarCharRemover);
+        menuBarOther.add(menuBarCharRemoverFC);
+        menuBarOther.add(menuBarCharRemoverBC);
+        //Menu bar Other action listeners
+        menuBarCharRemover.addActionListener(e -> {
+            new RemoveCharCommand().execute();
+        });
+        menuBarCharRemoverFC.addActionListener(e -> {
+            new ColorRemoverCommand(true).execute();
+        });
+        menuBarCharRemoverBC.addActionListener(e -> {
+            new ColorRemoverCommand(false).execute();
         });
         //Creates the main container
         mainContainer = new JPanel();
@@ -345,7 +363,7 @@ public class MainPanel extends JFrame {
             this.command = new FillCommand(this, cursorX, cursorY);
         });
         JSlider eraserSizeSlider = new JSlider(1, 30, 1);
-        JLabel eraserSizeSliderLabel = new JLabel("Erases Size: " + eraserSizeSlider.getValue());
+        JLabel eraserSizeSliderLabel = new JLabel("Eraser Size: " + eraserSizeSlider.getValue());
         sliderPanel = new JPanel(new GridLayout(2, 1));
         toolsPanel.add(sliderPanel);
         sliderPanel.add(eraserSizeSliderLabel);

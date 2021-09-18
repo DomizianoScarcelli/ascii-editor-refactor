@@ -44,9 +44,13 @@ public class PaintCommand extends Command {
         mainPanel.getAsciiPanel().setCursorX(cursorX);
         mainPanel.getAsciiPanel().setCursorY(cursorY);
         oldChar = mainPanel.getAsciiPanel().pickChar(cursorX, cursorY);
+        Color oldFC = mainPanel.getAsciiPanel().pickFC(cursorX, cursorY);
+        Color oldBC = mainPanel.getAsciiPanel().pickFC(cursorX, cursorY);
 
         //Prevents a char is not written twice on the same position, so the undo doesn't fully work.
         if (!(oldChar == mainPanel.getSelectedChar()
+                && oldFC == mainPanel.getDefaultForegroundColor()
+                && oldBC == mainPanel.getDefaultBackgroundColor()
                 && cursorX == mainPanel.getAsciiPanel().getMouseCursorX()
                 && cursorY == mainPanel.getAsciiPanel().getMouseCursorY())) {
             mainPanel.getAsciiPanel().write((char) mainPanel.getSelectedChar(), mainPanel.getDefaultForegroundColor(), mainPanel.getDefaultBackgroundColor());
