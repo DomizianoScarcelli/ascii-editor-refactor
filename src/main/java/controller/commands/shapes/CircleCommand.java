@@ -1,8 +1,6 @@
 package controller.commands.shapes;
 
-import controller.ToolsPanelController;
 import controller.commands.Command;
-import view.MainPanel;
 
 /**
  * The command that draws a circle
@@ -31,8 +29,6 @@ public class CircleCommand extends Command {
         cursorY = mainPanel.getAsciiPanel().getCursorY();
         midPointCircleDraw(cursorX, cursorY, radius);
     }
-
-    //TODO aggiusta sta cosa, non so perchè ma due punti non vengono disegnati (mi sa che devi proprio cambiare implementazione dell'algoritmo)
 
     /**
      * Draws a circle in the asciipanel

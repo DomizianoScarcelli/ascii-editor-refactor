@@ -18,7 +18,6 @@ public class ImageNewDialog extends JDialog {
      */
     private ImageNewDialog() {
         this.setTitle("New Image");
-//        super("ASCII MainPanel - New");
         setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         this.setBounds(0, 0, 320, 230);
         this.setResizable(false);

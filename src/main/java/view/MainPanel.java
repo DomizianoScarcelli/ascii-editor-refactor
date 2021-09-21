@@ -139,7 +139,7 @@ public class MainPanel extends JFrame {
         asciiPanel = new AsciiPanel(80, 60, AsciiFont.CP437_16x16);
         int cursorX = asciiPanel.getMouseCursorX();
         int cursorY = asciiPanel.getMouseCursorY();
-        this.command = new PaintCommand(this, cursorX, cursorY);
+        this.command = new PaintCommand(cursorX, cursorY);
         //---------------------MenuBar items-------------------------
         //Creates the Menu Bar and puts it on the top of the window
         JMenuBar menuBar = new JMenuBar();
@@ -213,15 +213,9 @@ public class MainPanel extends JFrame {
         menuBarOther.add(menuBarCharRemoverFC);
         menuBarOther.add(menuBarCharRemoverBC);
         //Menu bar Other action listeners
-        menuBarCharRemover.addActionListener(e -> {
-            new RemoveCharCommand().execute();
-        });
-        menuBarCharRemoverFC.addActionListener(e -> {
-            new ColorRemoverCommand(true).execute();
-        });
-        menuBarCharRemoverBC.addActionListener(e -> {
-            new ColorRemoverCommand(false).execute();
-        });
+        menuBarCharRemover.addActionListener(e -> new RemoveCharCommand().execute());
+        menuBarCharRemoverFC.addActionListener(e -> new ColorRemoverCommand(true).execute());
+        menuBarCharRemoverBC.addActionListener(e -> new ColorRemoverCommand(false).execute());
         //Creates the main container
         mainContainer = new JPanel();
         mainContainer.setLayout(new BorderLayout());
@@ -350,17 +344,17 @@ public class MainPanel extends JFrame {
         paint.addActionListener(e -> {
             changeCursor("src/main/resources/whiteIcons/pencil2.png");
             ToolsPanelController.selectButton(paint);
-            this.command = new PaintCommand(this, cursorX, cursorY);
+            this.command = new PaintCommand(cursorX, cursorY);
         });
         pick.addActionListener(e -> {
             changeCursor("src/main/resources/whiteIcons/tap.png");
             ToolsPanelController.selectButton(pick);
-            this.command = new PickCommand(this);
+            this.command = new PickCommand();
         });
         fill.addActionListener(e -> {
             changeCursor("src/main/resources/whiteIcons/bucket.png");
             ToolsPanelController.selectButton(fill);
-            this.command = new FillCommand(this, cursorX, cursorY);
+            this.command = new FillCommand(cursorX, cursorY);
         });
         JSlider eraserSizeSlider = new JSlider(1, 30, 1);
         JLabel eraserSizeSliderLabel = new JLabel("Eraser Size: " + eraserSizeSlider.getValue());
@@ -373,7 +367,7 @@ public class MainPanel extends JFrame {
         eraser.addActionListener((e -> {
             changeCursor("src/main/resources/whiteIcons/eraser.png");
             ToolsPanelController.selectButton(eraser);
-            this.command = new EraseCommand(this, cursorX, cursorY);
+            this.command = new EraseCommand(cursorX, cursorY);
             //Makes the slider visible
             sliderPanel.setVisible(true);
         }));

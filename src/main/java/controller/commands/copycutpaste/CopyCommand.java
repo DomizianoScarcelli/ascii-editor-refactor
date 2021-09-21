@@ -1,7 +1,6 @@
 package controller.commands.copycutpaste;
 
 import controller.commands.Command;
-import view.MainPanel;
 import view.RightClickMenu;
 
 import java.util.ArrayList;
@@ -10,10 +9,6 @@ import java.util.ArrayList;
  * The command that copies the current selections
  */
 public class CopyCommand extends Command {
-    /**
-     * The MainPanel instance
-     */
-    private MainPanel mainPanel = MainPanel.getInstance();
     /**
      * The copied chars before the executions of the command.
      */
@@ -24,7 +19,6 @@ public class CopyCommand extends Command {
      */
     @Override
     public void execute() {
-
         if (RightClickMenu.getInstance().getCopiedChars() != null) {
             previousCopiedChars = (ArrayList<int[]>) RightClickMenu.getInstance().getCopiedChars().clone();
         } else {

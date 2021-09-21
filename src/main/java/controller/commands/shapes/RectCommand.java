@@ -1,8 +1,6 @@
 package controller.commands.shapes;
 
-import controller.ToolsPanelController;
 import controller.commands.Command;
-import view.MainPanel;
 
 import java.util.ArrayList;
 
@@ -25,8 +23,6 @@ public class RectCommand extends Command {
         this.x2 = x2;
         this.y2 = y2;
     }
-
-    //TODO vedi se riesci a usare l'eredità per non usare due volte lo stesso codice sia qua che in select
 
     /**
      * Draws a rectangle on the ascii panel in correspondence of the mouse position

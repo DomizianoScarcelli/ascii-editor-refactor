@@ -1,8 +1,6 @@
 package controller.commands.copycutpaste;
 
-import controller.ToolsPanelController;
 import controller.commands.Command;
-import view.MainPanel;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -71,7 +69,6 @@ public class SelectCommand extends Command {
             }
         }
 
-        //TODO aggiusta un po' sta cosa ma diciamo che più o meno ci siamo dai (per i colori intendo)
         for (int[] point : rectPoints) {
             int x = point[0];
             int y = point[1];

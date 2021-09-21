@@ -12,9 +12,7 @@ public class EraseCommand extends Command {
      */
     private int cursorX, cursorY;
 
-    public EraseCommand(MainPanel mainPanel, int cursorX, int cursorY) {
-        this.mainPanel = mainPanel;
-
+    public EraseCommand(int cursorX, int cursorY) {
         this.cursorX = cursorX;
         this.cursorY = cursorY;
     }

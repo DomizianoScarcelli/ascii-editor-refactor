@@ -11,7 +11,13 @@ import java.awt.event.MouseListener;
  * Models the mouse listener used to trigger an action when the user clicks on the color palette
  */
 public class ColorPanelMouseListener implements MouseListener {
+    /**
+     * The panel where the color is shown
+     */
     private JPanel colorPanel;
+    /**
+     * A boolean that indicates whether the panel references to the background color (True) or foreground color (False)
+     */
     private boolean isBackground;
 
     public ColorPanelMouseListener(JPanel colorPanel, boolean isBackground) {

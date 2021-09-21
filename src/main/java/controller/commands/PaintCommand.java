@@ -1,10 +1,8 @@
 package controller.commands;
 
 import controller.ToolsPanelController;
-import view.MainPanel;
 
 import java.awt.*;
-import java.util.Arrays;
 
 /**
  * Writes the selected char on the panel when the left mouse button is pressed.
@@ -28,8 +26,7 @@ public class PaintCommand extends Command {
      */
     private int oldChar;
 
-    public PaintCommand(MainPanel mainPanel, int cursorX, int cursorY) {
-        this.mainPanel = mainPanel;
+    public PaintCommand(int cursorX, int cursorY) {
         this.cursorY = cursorY;
         this.cursorX = cursorX;
     }

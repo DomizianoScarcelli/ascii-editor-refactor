@@ -20,11 +20,6 @@ public class PickCommand extends Command {
      */
     private Color oldBackground, oldForeground;
 
-    public PickCommand(MainPanel mainPanel) {
-        this.mainPanel = mainPanel;
-
-    }
-
     /**
      * Sets the character in correspondence of the mouse position as selected character and changes the default colors
      */
@@ -43,7 +38,7 @@ public class PickCommand extends Command {
         mainPanel.getForegroundColorPanel().repaint();
         mainPanel.getBackgroundColorPanel().repaint();
         ToolsPanelController toolsPanelController = ToolsPanelController.getInstance();
-        mainPanel.setCommand(new PaintCommand(mainPanel, mainPanel.getAsciiPanel().getMouseCursorX(), mainPanel.getAsciiPanel().getMouseCursorY()));
+        mainPanel.setCommand(new PaintCommand(mainPanel.getAsciiPanel().getMouseCursorX(), mainPanel.getAsciiPanel().getMouseCursorY()));
         toolsPanelController.updatePreview();
 
         mainPanel.getCommandStack().push(this);

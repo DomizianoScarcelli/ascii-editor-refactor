@@ -23,7 +23,7 @@ public class RemoveCharCommand extends Command {
         mainPanel.getAsciiPanel().repaint();
     }
 
-    public void applyFilter(int x, int y) {
+    private void applyFilter(int x, int y) {
         if (mainPanel.getAsciiPanel().pickChar(x, y) == mainPanel.getSelectedChar())
             mainPanel.getAsciiPanel().clear((char) 0, x, y, 1, 1);
     }

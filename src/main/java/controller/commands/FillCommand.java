@@ -1,10 +1,5 @@
 package controller.commands;
 
-import controller.ToolsPanelController;
-import view.MainPanel;
-
-import java.awt.*;
-
 /**
  * The action performed after the "Fill" button is clicked by the mouse.
  * It fills the closed area in the current mouse position with the selected character.
@@ -22,8 +17,7 @@ public class FillCommand extends Command {
      */
     private int cursorX, cursorY;
 
-    public FillCommand(MainPanel mainPanel, int cursorX, int cursorY) {
-        this.mainPanel = mainPanel;
+    public FillCommand(int cursorX, int cursorY) {
         this.cursorY = cursorY;
         this.cursorX = cursorX;
     }

@@ -1,8 +1,6 @@
 package controller.commands.copycutpaste;
 
-import controller.ToolsPanelController;
 import controller.commands.Command;
-import view.MainPanel;
 import view.RightClickMenu;
 
 import java.util.Comparator;
