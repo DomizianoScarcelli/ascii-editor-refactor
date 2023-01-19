@@ -1,6 +1,9 @@
 # Ascii Editor 
 
-The Java GUI app is based on the [Trystan's Ascii Panel](https://github.com/trystan/AsciiPanel). The project adds a GUI made in Java Swing that allows the user to edit the panel with his mouse.
+The Java GUI app is based on the [Trystan's Ascii Panel](https://github.com/trystan/AsciiPanel). The project adds a GUI made in Java Swing that allows the user to edit the panel with his mouse. 
+
+It was done as the final project for the "Metodologie di programmazione" (Methods for programming in english) course of the bachelor's degree in Computer Science at the University of Rome "La Sapienza".
+
 The app embeds the following tools
 
 - Paint
